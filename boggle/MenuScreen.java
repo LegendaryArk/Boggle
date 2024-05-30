@@ -13,5 +13,6 @@ public class MenuScreen extends JPanel{
 		this.mainFrame = mainFrame;
 		this.setBounds(0, 0, mainFrame.getScreenWidth(), mainFrame.getScreenHeight());
 
+
 	}
 }
