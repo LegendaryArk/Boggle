@@ -8,11 +8,18 @@ public class MenuScreen extends JPanel{
 	private JLayeredPane panel;
 	private ImageIcon backgroundImage;
 	private Boggle mainFrame;
+	//Dimensions.
+	private int w = mainFrame.getScreenWidth();
+	private int l = mainFrame.getScreenHeight();
+	//Images
 
 	public MenuScreen(Boggle mainFrame) {
-		this.mainFrame = mainFrame;
-		this.setBounds(0, 0, mainFrame.getScreenWidth(), mainFrame.getScreenHeight());
 
+		//Main Frame
+		this.mainFrame = mainFrame;
+		this.setBounds(0, 0, w, l);
+
+		//
 
 	}
 }

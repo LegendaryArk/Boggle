@@ -16,8 +16,9 @@ public class GameScreen extends JPanel {
 	private JLabel plr2PtsDisplay = new JLabel();
 	private JButton homeBtn = new JButton();
 	private JButton settingsBtn = new JButton();
-	private JLabel wordList = new JLabel();
+	private JPanel wordListBg = new JPanel();
 	private JScrollPane wordListScroll = new JScrollPane();
+	private WordList wordList;
 
 	private Boggle mainFrame;
 
@@ -66,9 +67,10 @@ public class GameScreen extends JPanel {
 		content.add(wordDisplay, c);
 //		layers.setLayer(wordDisplay, 1);
 
-		wordList.setMinimumSize(new Dimension((int) (0.23475 * w), (int) (0.802 * h)));
-		wordList.setPreferredSize(new Dimension((int) (0.23475 * w), (int) (0.802 * h)));
-		wordList.setBorder(new LineBorder(Color.gray, 5));
+		wordListBg.setLayout(new GridBagLayout());
+		wordListBg.setMinimumSize(new Dimension((int) (0.22 * w), (int) (1.2 * h)));
+		wordListBg.setPreferredSize(new Dimension((int) (0.22 * w), (int) (1.2 * h)));
+		wordListBg.setBorder(new LineBorder(Color.gray, 5));
 		c = new GridBagConstraints();
 		c.anchor = GridBagConstraints.FIRST_LINE_START;
 //		c.fill = GridBagConstraints.BOTH;
@@ -84,10 +86,13 @@ public class GameScreen extends JPanel {
 //		content.add(wordList, c);
 //		layers.setLayer(wordList, 1);
 
-		wordListScroll.setViewportView(wordList);
+		wordListScroll.setViewportView(wordListBg);
 		wordListScroll.setMinimumSize(new Dimension((int) (0.23475 * w), (int) (0.802 * h)));
 		wordListScroll.setPreferredSize(new Dimension((int) (0.23475 * w), (int) (0.802 * h)));
 		content.add(wordListScroll, c);
+
+		wordList = new WordList(mainFrame, wordListBg, wordListScroll);
+		wordList.addWord("Help", 4);
 
 		plr1TimeDisplay.setMinimumSize(new Dimension((int) (0.109375 * w), (int) (0.111 * h)));
 		plr1TimeDisplay.setPreferredSize(new Dimension((int) (0.109375 * w), (int) (0.111 * h)));
