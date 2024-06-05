@@ -10,15 +10,17 @@ public class GameScreen extends JPanel {
 	private JLabel background = new JLabel();
 	private JLabel playerTurnInd = new JLabel();
 	private JLabel wordDisplay = new JLabel();
+	private Board board;
+	private JPanel boardBg = new JPanel();
 	private JLabel plr1TimeDisplay = new JLabel();
 	private JLabel plr1PtsDisplay = new JLabel();
 	private JLabel plr2TimeDisplay = new JLabel();
 	private JLabel plr2PtsDisplay = new JLabel();
 	private JButton homeBtn = new JButton();
 	private JButton settingsBtn = new JButton();
+	private WordList wordList;
 	private JPanel wordListBg = new JPanel();
 	private JScrollPane wordListScroll = new JScrollPane();
-	private WordList wordList;
 
 	private Boggle mainFrame;
 
@@ -53,7 +55,12 @@ public class GameScreen extends JPanel {
 
 		wordDisplay.setMinimumSize(new Dimension((int) (0.365 * w), (int) (0.09 * h)));
 		wordDisplay.setPreferredSize(new Dimension((int) (0.365 * w), (int) (0.09 * h)));
-		wordDisplay.setBorder(new LineBorder(Color.gray, 5));
+//		wordDisplay.setBorder(new LineBorder(new Color(146, 146, 146), 15, true));
+		wordDisplay.setHorizontalTextPosition(JLabel.CENTER);
+		wordDisplay.setVerticalTextPosition(JLabel.CENTER);
+		wordDisplay.setHorizontalAlignment(JLabel.CENTER);
+		wordDisplay.setVerticalAlignment(JLabel.CENTER);
+		wordDisplay.setFont(new Font("Arial", Font.PLAIN, 40));
 		c = new GridBagConstraints();
 		c.anchor = GridBagConstraints.FIRST_LINE_START;
 //		c.fill = GridBagConstraints.BOTH;
@@ -61,7 +68,7 @@ public class GameScreen extends JPanel {
 		c.gridy = 0;
 //		c.ipadx = (int) (0.39 * w);
 //		c.ipady = (int) (0.111 * h);
-		c.insets = new Insets((int) (0.0395 * h), (int) (0.06 * w), (int) (0.02 * h), (int) (0.054 * w));
+		c.insets = new Insets((int) (0.0395 * h), (int) (0.059 * w), (int) (0.02 * h), (int) (0.05 * w));
 		c.weightx = 1;
 		c.weighty = 1;
 		content.add(wordDisplay, c);
@@ -80,7 +87,7 @@ public class GameScreen extends JPanel {
 		c.gridy = 1;
 //		c.ipadx = (int) (0.44 * w) / 2;
 //		c.ipady = (int) (0.234375 * h) / 2;
-		c.insets = new Insets(0, (int) (0.023 * w), 0, (int) (0.00625 * w));
+		c.insets = new Insets((int) (0.01 * h), (int) (0.023 * w), 0, (int) (0.00625 * w));
 		c.weightx = 1;
 		c.weighty = 1;
 //		content.add(wordList, c);
@@ -105,7 +112,7 @@ public class GameScreen extends JPanel {
 		c.gridy = 1;
 		c.weightx = 1;
 		c.weighty = 1;
-		c.insets = new Insets((int) (0.094 * h), (int) (0.013 * w), 0, (int) (0.007 * w));
+		c.insets = new Insets((int) (0.108 * h), (int) (0.016 * w), 0, (int) (0.007 * w));
 		content.add(plr1TimeDisplay, c);
 
 		plr1PtsDisplay.setMinimumSize(new Dimension((int) (0.109375 * w), (int) (0.111 * h)));
@@ -119,7 +126,7 @@ public class GameScreen extends JPanel {
 		c.gridy = 1;
 		c.weightx = 1;
 		c.weighty = 1;
-		c.insets = new Insets((int) (0.094 * h), 0, 0, (int) (0.024 * w));
+		c.insets = new Insets((int) (0.108 * h), 0, 0, (int) (0.024 * w));
 		content.add(plr1PtsDisplay, c);
 
 		plr2TimeDisplay.setMinimumSize(new Dimension((int) (0.109375 * w), (int) (0.111 * h)));
@@ -133,7 +140,7 @@ public class GameScreen extends JPanel {
 		c.gridy = 3;
 		c.weightx = 1;
 		c.weighty = 1;
-		c.insets = new Insets((int) (0.055 * h), (int) (0.013 * w), 0, (int) (0.007 * w));
+		c.insets = new Insets((int) (0.054 * h), (int) (0.016 * w), 0, (int) (0.007 * w));
 		content.add(plr2TimeDisplay, c);
 
 		plr2PtsDisplay.setMinimumSize(new Dimension((int) (0.109375 * w), (int) (0.111 * h)));
@@ -147,8 +154,23 @@ public class GameScreen extends JPanel {
 		c.gridy = 3;
 		c.weightx = 1;
 		c.weighty = 1;
-		c.insets = new Insets((int) (0.055 * h), 0, 0, (int) (0.024 * w));
+		c.insets = new Insets((int) (0.054 * h), 0, 0, (int) (0.024 * w));
 		content.add(plr2PtsDisplay, c);
+
+		boardBg.setMinimumSize(new Dimension((int) (0.44 * w), (int) (0.44 * w)));
+		boardBg.setPreferredSize(new Dimension((int) (0.44 * w), (int) (0.44 * w)));
+		boardBg.setOpaque(false);
+		c = new GridBagConstraints();
+		c.anchor = GridBagConstraints.ABOVE_BASELINE;
+		c.gridx = 1;
+		c.gridy = 1;
+		c.gridheight = 4;
+		c.insets = new Insets(0, (int) (0.01 * w), (int) (0.06 * h), 0);
+		c.weightx = 1;
+		c.weighty = 1;
+		content.add(boardBg, c);
+
+		board = new Board(mainFrame, boardBg, wordDisplay, wordList);
 
 		layers.add(content, new GridBagConstraints());
 		layers.setLayer(content, 1);

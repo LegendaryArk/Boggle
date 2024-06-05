@@ -19,6 +19,7 @@ public class Boggle extends JFrame {
 		}
 
 		gameScreen = new GameScreen(this);
+//		MenuScreen menuScreen = new MenuScreen(this);
 
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
