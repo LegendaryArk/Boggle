@@ -14,7 +14,7 @@ public class Trie {
 		vis = new boolean[N];
 	}
 
-	public void init() {
+	public void initDict() {
 		try {
 			Scanner sc = new Scanner(new File("src/Boggle/boggle/resources/dictionary.txt"));
 			while (sc.hasNextLine()) {

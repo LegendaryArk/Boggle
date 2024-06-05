@@ -5,89 +5,67 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-
-public class MenuScreen extends JPanel implements MouseListener{
-	private JLayeredPane panel;
-	private ImageIcon backgroundImage;
+public class MenuScreen extends JPanel implements MouseListener {
+	private JLabel background = new JLabel();
 	private Boggle mainFrame;
-	//Dimensions.
+	// Dimensions.
 	private int w;
 	private int h;
-	//Images
+	// Images
+	private ImageIcon backgroundImage = new ImageIcon(getClass().getResource("assets/MenuScreenBg.png"));
 	private ImageIcon playButton = new ImageIcon(getClass().getResource("assets/PlayButton.png"));
 	private ImageIcon playButtonHl = new ImageIcon(getClass().getResource("assets/PlayButtonHover.png"));
-	//Button
+	// Button
 	private JLabel playBtn;
 
-
 	public MenuScreen(Boggle mainFrame) {
-		//Main Frame
-		this.mainFrame = mainFrame;
-		panel = new JLayeredPane();
-
 		w = mainFrame.getScreenWidth();
 		h = mainFrame.getScreenHeight();
+
+		this.setBackground(Color.yellow);
 		this.setBounds(0, 0, w, h);
 
-		//Background
-		ImageIcon backgroundImage = new ImageIcon(getClass().getResource("assets/MenuScreenBg.png"));
-		JLabel backgroundLabel = new JLabel();
+		JLayeredPane pane = new JLayeredPane();
+		pane.setBounds(0, 0, w, h);
 
-		backgroundLabel.setIcon(new ImageIcon (backgroundImage.getImage().getScaledInstance(w,h,Image.SCALE_SMOOTH)));
-		backgroundLabel.setBounds(0,0,w,h);
-		backgroundLabel.setOpaque(true);
+		background.setIcon(new ImageIcon (backgroundImage.getImage().getScaledInstance(w,h,Image.SCALE_SMOOTH)));
+		background.setBounds(0,0,w,h);
+		background.setBackground(Color.black);
+		background.setVisible(true);
 
-		//Title
-		ImageIcon titleGif = new ImageIcon(getClass().getResource("assets/Title.gif"));
-		JLabel title = new JLabel();
 
-		title.setIcon(new ImageIcon(titleGif.getImage().getScaledInstance(((2*w)/5),(2*h/5),Image.SCALE_DEFAULT)));
-		title.setBounds(w/2,h/64,(2*w/5), (2*h/5));
-		title.setOpaque(false);
-
-		//Play Button
-		playBtn = new JLabel();
-		playBtn.setIcon(new ImageIcon(playButton.getImage().getScaledInstance((w/10),(h/20),Image.SCALE_SMOOTH)));
-		playBtn.setBounds(2*w/3,h/3,(w/10),(h/20));
-		playBtn.addMouseListener(this);
-
-		//Implimentation
+		pane.add(background, 0);
+		pane.setVisible(true);
+		this.add(pane);
 		mainFrame.setContentPane(this);
-
-		this.add(panel);
-		panel.add(playBtn);
-		panel.add(title);
-		panel.add(backgroundLabel);
-		this.setVisible(true);
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-
+		// Handle mouse click
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-
+		// Handle mouse press
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-
+		// Handle mouse release
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
 		if (e.getSource() == playBtn) {
-			playBtn.setIcon(new ImageIcon(playButtonHl.getImage().getScaledInstance((w/10),(h/20),Image.SCALE_SMOOTH)));
+			playBtn.setIcon(new ImageIcon(playButtonHl.getImage().getScaledInstance((w / 10), (h / 20), Image.SCALE_SMOOTH)));
 		}
-
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
 		if (e.getSource() == playBtn) {
-			playBtn.setIcon(new ImageIcon(playButton.getImage().getScaledInstance((w/10),(h/20),Image.SCALE_SMOOTH)));
+			playBtn.setIcon(new ImageIcon(playButton.getImage().getScaledInstance((w / 10), (h / 20), Image.SCALE_SMOOTH)));
 		}
 	}
 }

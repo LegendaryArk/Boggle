@@ -1,20 +1,16 @@
 package boggle;
 
 import javax.swing.*;
-import javax.swing.border.LineBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.ArrayList;
 
 public class Board implements MouseListener {
 	private JPanel bg;
 	private Dice[][] dice = new Dice[5][5];
-	private JLabel[][] connections = new JLabel[5][5];
+	private JLabel[][][][] connections = new JLabel[5][5][5][5];
 	private Trie dictionary;
-	private ArrayList<String> wordsEntered = new ArrayList<>();
+	private Trie wordsEntered;
 
 	private String wordSelected = "";
 
@@ -59,15 +55,17 @@ public class Board implements MouseListener {
 			}
 		}
 
-		dictionary = new Trie((int) 1.1e6, 26); // 1.1e6 in hex
-		dictionary.init();
+		dictionary = new Trie((int) 1.1e6, 26);
+		dictionary.initDict();
+
+		wordsEntered = new Trie((int) 1.1e6, 26);
 	}
 
 	public boolean isValidWord(String s) {
 		return dictionary.query(s) && s.length() > 2;
 	}
 	public boolean isNewWord(String s) {
-		return !wordsEntered.contains(s);
+		return !wordsEntered.query(s);
 	}
 
 	public int getPoints(String s) {
@@ -130,7 +128,7 @@ public class Board implements MouseListener {
 			if (isNewWord(wordSelected)) {
 				System.out.println("Valid word");
 				state = 1;
-				wordsEntered.add(wordSelected);
+				wordsEntered.insert(wordSelected);
 				wordList.addWord(wordSelected, getPoints(wordSelected));
 			} else {
 				System.out.println("Already entered");
