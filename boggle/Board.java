@@ -35,11 +35,13 @@ public class Board implements MouseListener {
 
 	private Player plr1;
 	private Player plr2 = null;
-	int plrTurn = 0;
+	private int plrTurn = 0;
 
-	public Board(Boggle mainFrame, JPanel bg, JLabel wordDisplay, WordList wordList, Player plr1, Player plr2) {
-		this.plr1 = plr1;
-		this.plr2 = plr2;
+	private boolean inOvertime = false;
+
+	public Board(Boggle mainFrame, JPanel bg, JLabel wordDisplay, WordList wordList, JLabel plr1Label, JLabel plr1PtsDisplay, JLabel plr1TimeDisplay, JLabel plr2Label, JLabel plr2PtsDisplay, JLabel plr2TimeDisplay) {
+		this.plr1 = new Player(plr1Label, plr1PtsDisplay, new Clock(plr1TimeDisplay, 1 * 60 * 1000, this));
+		this.plr2 = new Player(plr2Label, plr2PtsDisplay, new Clock(plr2TimeDisplay, 1 * 60 * 1000, this));
 		setup(mainFrame, bg, wordDisplay, wordList);
 
 		plr1.startTurn();
@@ -93,7 +95,7 @@ public class Board implements MouseListener {
 				plr1.startTurn();
 				break;
 		}
-		plrTurn = ++plrTurn % 2; // Switch between 0 and 1 -- use binary?
+		plrTurn = ++plrTurn % 2; // Switch between 0 and 1
 	}
 
 	public int getPoints(String s) {
@@ -105,6 +107,24 @@ public class Board implements MouseListener {
 			case 7 -> 5;
 			default -> 11;
 		};
+	}
+
+	public void overtime() {
+		inOvertime = true;
+		switch (plrTurn) {
+			case 0:
+				plr1.endTurn();
+				plr2.startTurn();
+				break;
+			case 1:
+				plr2.endTurn();
+				plr1.startTurn();
+				break;
+		}
+		plrTurn = ++plrTurn % 2;
+	}
+	public boolean isOvertime() {
+		return inOvertime;
 	}
 
 	/**

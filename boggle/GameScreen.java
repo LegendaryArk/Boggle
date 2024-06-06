@@ -11,8 +11,6 @@ public class GameScreen extends JPanel {
 
 	private JPanel content = new JPanel();
 
-	private Player plr1;
-	private Player plr2;
 	private JLabel plr1Label = new JLabel();
 	private JLabel plr1TimeDisplay = new JLabel();
 	private JLabel plr1PtsDisplay = new JLabel();
@@ -150,8 +148,6 @@ public class GameScreen extends JPanel {
 		c.insets = new Insets((int) (0.088 * h), 0, 0, (int) (0.024 * w));
 		content.add(plr1PtsDisplay, c);
 
-		plr1 = new Player(plr1Label, plr1PtsDisplay, new Clock(plr1TimeDisplay, 1 * 60 * 1000));
-
 		plr2Label.setMinimumSize(new Dimension((int) (0.22 * w), (int) (0.09 * h)));
 		plr2Label.setPreferredSize(new Dimension((int) (0.22 * w), (int) (0.09 * h)));
 		plr2Label.setHorizontalTextPosition(JLabel.CENTER);
@@ -200,8 +196,6 @@ public class GameScreen extends JPanel {
 		c.insets = new Insets((int) (0.026 * h), 0, 0, (int) (0.024 * w));
 		content.add(plr2PtsDisplay, c);
 
-		plr2 = new Player(plr2Label, plr2PtsDisplay, new Clock(plr2TimeDisplay, 1 * 60 * 1000));
-
 		boardBg.setMinimumSize(new Dimension((int) (0.44 * w), (int) (0.44 * w)));
 		boardBg.setPreferredSize(new Dimension((int) (0.44 * w), (int) (0.44 * w)));
 		boardBg.setOpaque(false);
@@ -215,7 +209,7 @@ public class GameScreen extends JPanel {
 		c.weighty = 1;
 		content.add(boardBg, c);
 
-		board = new Board(mainFrame, boardBg, wordDisplay, wordList, plr1, plr2);
+		board = new Board(mainFrame, boardBg, wordDisplay, wordList, plr1Label, plr1PtsDisplay, plr1TimeDisplay, plr2Label, plr2PtsDisplay, plr2TimeDisplay);
 
 		layers.add(content, new GridBagConstraints());
 		layers.setLayer(content, 1);

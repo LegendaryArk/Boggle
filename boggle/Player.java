@@ -7,7 +7,7 @@ public class Player {
 	private int points;
 	private Clock timer;
 
-	private ImageIcon plrTurnInd = new ImageIcon(getClass().getResource("assets/plrTurnIndicator.png"));
+	private ImageIcon plrTurnInd = new ImageIcon(getClass().getResource("assets/PlrTurnIndicator.png"));
 	private JLabel plrDisplay;
 	private JLabel ptsDisplay;
 

@@ -12,10 +12,10 @@ public class Clock {
 
 	private JLabel timeLabel;
 
-	String secStr = String.format("%02d", seconds);
-	String minStr = String.format("%02d", minutes);
+	private String secStr = String.format("%02d", seconds);
+	private String minStr = String.format("%02d", minutes);
 
-	Timer timer = new Timer(1000, new ActionListener() {
+	private Timer timer = new Timer(1000, new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			timeRemaining -= 1000;
@@ -28,13 +28,21 @@ public class Clock {
 			if (timeRemaining <= 0) {
 				timeLabel.setForeground(Color.RED);
 				timer.stop();
+				if (board.isOvertime()) {
+					return; // Draw
+				}
+				board.overtime();
 			}
 		}
 	});
 
-	Clock(JLabel timeLabel, int startTime) {
+	private Board board;
+
+	Clock(JLabel timeLabel, int startTime, Board board) {
 		this.timeLabel = timeLabel;
 		reset(startTime);
+
+		this.board = board;
 	}
 
 	void start() {
