@@ -93,7 +93,7 @@ public class Board implements MouseListener {
 				plr1.startTurn();
 				break;
 		}
-		plrTurn = ++plrTurn % 2;
+		plrTurn = ++plrTurn % 2; // Switch between 0 and 1 -- use binary?
 	}
 
 	public int getPoints(String s) {
@@ -213,9 +213,9 @@ public class Board implements MouseListener {
 			wordDisplay.setText(wordSelected);
 			((Timer) event.getSource()).stop();
 		});
-		if (state != 0) {
+		if (state != 0) { // Valid or old word -> Show player for 500 ms before clearing
 			clearSelected.setInitialDelay(500);
-		} else {
+		} else { // Not a word -> Clear immediately
 			clearSelected.setInitialDelay(0);
 		}
 		clearSelected.start();

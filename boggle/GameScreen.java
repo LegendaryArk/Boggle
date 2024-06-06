@@ -1,8 +1,9 @@
 package boggle;
 
 import javax.swing.*;
-import javax.swing.border.LineBorder;
 import java.awt.*;
+
+import static javax.swing.BorderFactory.createEmptyBorder;
 
 public class GameScreen extends JPanel {
 	private JLayeredPane layers = new JLayeredPane();
@@ -87,14 +88,16 @@ public class GameScreen extends JPanel {
 		c.gridheight = 5;
 		c.gridx = 0;
 		c.gridy = 0;
-		c.insets = new Insets((int) (0.16 * h), (int) (0.023 * w), 0, (int) (0.00625 * w));
+		c.insets = new Insets((int) (0.17 * h), (int) (0.023 * w), 0, (int) (0.00625 * w));
 		c.weightx = 1;
 		c.weighty = 1;
 
 		wordListScroll.setViewportView(wordListBg);
-		wordListScroll.setMinimumSize(new Dimension((int) (0.23475 * w), (int) (0.802 * h)));
-		wordListScroll.setPreferredSize(new Dimension((int) (0.23475 * w), (int) (0.802 * h)));
+		wordListScroll.setMinimumSize(new Dimension((int) (0.23475 * w), (int) (0.79 * h)));
+		wordListScroll.setPreferredSize(new Dimension((int) (0.23475 * w), (int) (0.79 * h)));
 		wordListScroll.setOpaque(false);
+		wordListScroll.getViewport().setOpaque(false);
+		wordListScroll.setBorder(createEmptyBorder());
 		content.add(wordListScroll, c);
 
 		wordList = new WordList(mainFrame, wordListBg, wordListScroll);
