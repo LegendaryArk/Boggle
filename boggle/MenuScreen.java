@@ -6,6 +6,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 public class MenuScreen extends JPanel implements MouseListener {
+	private JLayeredPane pane = new JLayeredPane();
 	private JLabel background = new JLabel();
 	private Boggle mainFrame;
 	// Dimensions.
@@ -23,16 +24,15 @@ public class MenuScreen extends JPanel implements MouseListener {
 		h = mainFrame.getScreenHeight();
 
 		this.setBackground(Color.yellow);
+		this.setLayout(null);
 		this.setBounds(0, 0, w, h);
 
-		JLayeredPane pane = new JLayeredPane();
 		pane.setBounds(0, 0, w, h);
 
-		background.setIcon(new ImageIcon (backgroundImage.getImage().getScaledInstance(w,h,Image.SCALE_SMOOTH)));
+		background.setIcon(new ImageIcon(backgroundImage.getImage().getScaledInstance(w,h,Image.SCALE_SMOOTH)));
 		background.setBounds(0,0,w,h);
 		background.setBackground(Color.black);
 		background.setVisible(true);
-
 
 		pane.add(background, 0);
 		pane.setVisible(true);

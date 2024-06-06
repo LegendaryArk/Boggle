@@ -18,8 +18,8 @@ public class Boggle extends JFrame {
 			screenWidth = (int) (screenHeight * aspectRatio);
 		}
 
-		//gameScreen = new GameScreen(this);
-		MenuScreen menuScreen = new MenuScreen(this);
+		gameScreen = new GameScreen(this);
+//		MenuScreen menuScreen = new MenuScreen(this);
 
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH);

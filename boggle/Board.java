@@ -12,6 +12,14 @@ public class Board implements MouseListener {
 	private Trie dictionary;
 	private Trie wordsEntered;
 
+	private final String[][] combinations = {
+			{"AAAFRS", "AEEGMU", "CEIILT", "DHHNOT", "FIPRSY"},
+			{"AAEEEE", "AEGMNN", "CEILPT", "DHLNOR", "GORRVW"},
+			{"AAFIRS", "AFIRSY", "CEIPST", "EIIITT", "HIPRRY"},
+			{"ADENNN", "BJKQXZ", "DDLNOR", "EMOTTT", "NOOTUW"},
+			{"AEEEEM", "CCNSTW", "DHHLOR", "ENSSSU", "OOOTTU"}
+	};
+
 	private String wordSelected = "";
 
 	private boolean f = false;
@@ -25,15 +33,19 @@ public class Board implements MouseListener {
 	private ImageIcon wordDisplayOld = new ImageIcon(getClass().getResource("assets/WordDisplayFound.png"));
 	private WordList wordList;
 
-	String[][] combinations = {
-			{"AAAFRS", "AEEGMU", "CEIILT", "DHHNOT", "FIPRSY"},
-			{"AAEEEE", "AEGMNN", "CEILPT", "DHLNOR", "GORRVW"},
-			{"AAFIRS", "AFIRSY", "CEIPST", "EIIITT", "HIPRRY"},
-			{"ADENNN", "BJKQXZ", "DDLNOR", "EMOTTT", "NOOTUW"},
-			{"AEEEEM", "CCNSTW", "DHHLOR", "ENSSSU", "OOOTTU"}
-	};
+	private Player plr1;
+	private Player plr2 = null;
+	int plrTurn = 0;
 
-	public Board(Boggle mainFrame, JPanel bg, JLabel wordDisplay, WordList wordList) {
+	public Board(Boggle mainFrame, JPanel bg, JLabel wordDisplay, WordList wordList, Player plr1, Player plr2) {
+		this.plr1 = plr1;
+		this.plr2 = plr2;
+		setup(mainFrame, bg, wordDisplay, wordList);
+
+		plr1.startTurn();
+	}
+
+	private void setup(Boggle mainFrame, JPanel bg, JLabel wordDisplay, WordList wordList) {
 		this.mainFrame = mainFrame;
 		this.bg = bg;
 		this.wordDisplay = wordDisplay;
@@ -66,6 +78,22 @@ public class Board implements MouseListener {
 	}
 	public boolean isNewWord(String s) {
 		return !wordsEntered.query(s);
+	}
+
+	public void switchTurn() {
+		switch (plrTurn) {
+			case 0:
+				plr1.endTurn();
+				plr1.getTimer().increment(2000);
+				plr2.startTurn();
+				break;
+			case 1:
+				plr2.endTurn();
+				plr2.getTimer().increment(2000);
+				plr1.startTurn();
+				break;
+		}
+		plrTurn = ++plrTurn % 2;
 	}
 
 	public int getPoints(String s) {
@@ -128,8 +156,16 @@ public class Board implements MouseListener {
 			if (isNewWord(wordSelected)) {
 				System.out.println("Valid word");
 				state = 1;
+
 				wordsEntered.insert(wordSelected);
-				wordList.addWord(wordSelected, getPoints(wordSelected));
+				int pts = getPoints(wordSelected);
+				wordList.addWord(wordSelected, pts);
+				switch (plrTurn) {
+					case 0 -> plr1.addPoints(pts);
+					case 1 -> plr2.addPoints(pts);
+				}
+
+				switchTurn();
 			} else {
 				System.out.println("Already entered");
 				state = 2;
