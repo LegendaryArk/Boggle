@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class Clock {
-	int timeRemaining = 0;
+	int timeRemaining = 0; // In ms
 	int seconds = 0;
 	int minutes = 0;
 	boolean started = false;
@@ -25,13 +25,11 @@ public class Clock {
 			minStr = String.format("%02d", minutes);
 			timeLabel.setText(minStr + ":" + secStr);
 
-			if (timeRemaining <= 0) {
+			if (timeRemaining <= 10000) {
 				timeLabel.setForeground(Color.RED);
-				timer.stop();
-				if (board.isOvertime()) {
-					return; // Draw
-				}
-				board.overtime();
+			}
+			if (timeRemaining <= 0) {
+				board.switchTurn();
 			}
 		}
 	});

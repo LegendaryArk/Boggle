@@ -4,7 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Boggle extends JFrame {
+	private MenuScreen menuScreen;
 	private GameScreen gameScreen;
+	private EndGameScreen endgameScreen;
 
 	private int screenWidth, screenHeight;
 	private final double aspectRatio = 16 / 9.0;
@@ -18,8 +20,10 @@ public class Boggle extends JFrame {
 			screenWidth = (int) (screenHeight * aspectRatio);
 		}
 
+//		menuScreen = new MenuScreen(this);
+//		menuScreen.setVisible(false);
 		gameScreen = new GameScreen(this);
-//		MenuScreen menuScreen = new MenuScreen(this);
+//		endgameScreen = new EndGameScreen(this, 1);
 
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -28,6 +32,15 @@ public class Boggle extends JFrame {
 		this.setResizable(false);
 		this.setTitle("Boggle");
 		this.setVisible(true);
+	}
+
+	public void menuScreen() {
+//		menuScreen.setVisible(true);
+		gameScreen.setVisible(false);
+	}
+	public void gameScreen() {
+//		menuScreen.setVisible(false);
+		gameScreen.setVisible(true);
 	}
 
 	public int getScreenWidth() {

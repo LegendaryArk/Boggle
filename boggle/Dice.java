@@ -4,22 +4,42 @@ import java.awt.*;
 import java.util.Random;
 import javax.swing.*;
 
-public class Dice extends JButton {
+public class Dice extends JLabel {
+	private JLabel center = new JLabel();
 	private char[] faces;
 	private int top;
 	private Random rand = new Random();
 	private boolean selected = false;
 
-	public Dice(char[] faces) {
+	private ImageIcon defaultBg = new ImageIcon(getClass().getResource("assets/DieDefault.png"));
+	private ImageIcon holdBg = new ImageIcon(getClass().getResource("assets/DieHold.png"));
+	private ImageIcon newBg = new ImageIcon(getClass().getResource("assets/DieNew.png"));
+	private ImageIcon oldBg = new ImageIcon(getClass().getResource("assets/DieFound.png"));
+
+	private int width, height;
+
+	public Dice(char[] faces, int width, int height) {
 		this.faces = faces;
 		roll();
 
+		this.width = width;
+		this.height = height;
+
+		// - 1 on the size to make sure it stays within the cell (can be larger due to rounding errors)
+		defaultBg = new ImageIcon(defaultBg.getImage().getScaledInstance(width - 1, height - 1, Image.SCALE_SMOOTH));
+		holdBg = new ImageIcon(holdBg.getImage().getScaledInstance(width - 1, height - 1, Image.SCALE_SMOOTH));
+		newBg = new ImageIcon(newBg.getImage().getScaledInstance(width - 1, height - 1, Image.SCALE_SMOOTH));
+		oldBg = new ImageIcon(oldBg.getImage().getScaledInstance(width - 1, height - 1, Image.SCALE_SMOOTH));
+
 		setOpaque(false);
-		setBorderPainted(false);
-		setContentAreaFilled(false);
-		setFocusPainted(false);
 		setFocusable(false);
-		setIcon(new ImageIcon(getClass().getResource("assets/DieDefault.png")));
+		setIcon(defaultBg);
+		setLayout(new GridBagLayout());
+
+		center.setOpaque(false);
+		center.setFocusable(false);
+		center.setPreferredSize(new Dimension((int) (0.8 * getPreferredSize().width), (int) (0.8 * getPreferredSize().height)));
+		add(center, new GridBagConstraints());
 
 		setFont(new Font("Arial", Font.PLAIN, 75)); // May need to make font size dynamic as well
 		setText(String.valueOf(faces[top]));
@@ -36,11 +56,11 @@ public class Dice extends JButton {
 	}
 
 	public void select() {
-		setIcon(new ImageIcon(this.getClass().getResource("assets/DieHold.png")));
+		setIcon(holdBg);
 		selected = true;
 	}
 	public void deselect() {
-		setIcon(new ImageIcon(this.getClass().getResource("assets/DieDefault.png")));
+		setIcon(defaultBg);
 		selected = false;
 	}
 	public boolean isSelected() {
@@ -48,9 +68,13 @@ public class Dice extends JButton {
 	}
 
 	public void valid() {
-		setIcon(new ImageIcon(this.getClass().getResource("assets/DieNew.png")));
+		setIcon(newBg);
 	}
 	public void old() {
-		setIcon(new ImageIcon(this.getClass().getResource("assets/DieFound.png")));
+		setIcon(oldBg);
+	}
+
+	public JLabel getCenter() {
+		return center;
 	}
 }

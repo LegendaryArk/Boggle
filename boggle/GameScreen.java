@@ -1,7 +1,10 @@
 package boggle;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import static javax.swing.BorderFactory.createEmptyBorder;
 
@@ -26,8 +29,25 @@ public class GameScreen extends JPanel {
 	private JLabel wordDisplay = new JLabel();
 	private JPanel boardBg = new JPanel();
 
-	private JButton homeBtn = new JButton();
-	private JButton settingsBtn = new JButton();
+	private JLabel pauseBtn = new JLabel();
+	private ImageIcon pauseDefault = new ImageIcon(getClass().getResource("assets/PauseBtnDefault.png"));
+	private ImageIcon pauseHover = new ImageIcon(getClass().getResource("assets/PauseBtnHover.png"));
+	private ImageIcon pausePress = new ImageIcon(getClass().getResource("assets/PauseBtnPress.png"));
+
+	private JLabel passBtn = new JLabel();
+	private ImageIcon passDefault = new ImageIcon(getClass().getResource("assets/PassBtnDefault.png"));
+	private ImageIcon passHover = new ImageIcon(getClass().getResource("assets/PassBtnHover.png"));
+	private ImageIcon passPress = new ImageIcon(getClass().getResource("assets/PassBtnPress.png"));
+
+	private JLabel shakeBtn = new JLabel();
+	private ImageIcon shakeDefault = new ImageIcon(getClass().getResource("assets/ShakeBtnDefault.png"));
+	private ImageIcon shakeHover = new ImageIcon(getClass().getResource("assets/ShakeBtnHover.png"));
+	private ImageIcon shakePress = new ImageIcon(getClass().getResource("assets/ShakeBtnPress.png"));
+
+	private JLabel settingsBtn = new JLabel();
+	private ImageIcon settingsDefault = new ImageIcon(getClass().getResource("assets/SettingsBtnDefault.png"));
+	private ImageIcon settingsHover = new ImageIcon(getClass().getResource("assets/SettingsBtnHover.png"));
+	private ImageIcon settingsPress = new ImageIcon(getClass().getResource("assets/SettingsBtnPress.png"));
 
 	private Boggle mainFrame;
 
@@ -39,7 +59,6 @@ public class GameScreen extends JPanel {
 
 		this.setBackground(Color.black);
 		this.setLayout(new GridBagLayout());
-		this.setBounds(0, 0, w, h);
 		this.setPreferredSize(new Dimension(w, h));
 
 		layers.setBackground(Color.black);
@@ -48,11 +67,12 @@ public class GameScreen extends JPanel {
 
 		ImageIcon bg = new ImageIcon(getClass().getResource("assets/GameScreenBg.png"));
 		background.setIcon(new ImageIcon(bg.getImage().getScaledInstance(w, h, Image.SCALE_SMOOTH)));
-		background.setBounds(0, 0, w, h);
 		background.setBackground(Color.black);
 		c = new GridBagConstraints();
 		c.gridx = 0;
 		c.gridy = 0;
+		c.gridwidth = 4;
+		c.gridheight = 6;
 		layers.add(background, c);
 		layers.setLayer(background, 0);
 
@@ -83,7 +103,7 @@ public class GameScreen extends JPanel {
 		c = new GridBagConstraints();
 		c.anchor = GridBagConstraints.FIRST_LINE_START;
 		c.gridwidth = 1;
-		c.gridheight = 5;
+		c.gridheight = 6;
 		c.gridx = 0;
 		c.gridy = 0;
 		c.insets = new Insets((int) (0.17 * h), (int) (0.023 * w), 0, (int) (0.00625 * w));
@@ -115,7 +135,7 @@ public class GameScreen extends JPanel {
 		c.gridy = 0;
 		c.weightx = 1;
 		c.weighty = 1;
-		c.insets = new Insets((int) (0.0875 * h), 0, 0, (int) (0.01 * w));
+		c.insets = new Insets((int) (0.08 * h), 0, 0, (int) (0.01 * w));
 		content.add(plr1Label, c);
 
 		plr1TimeDisplay.setMinimumSize(new Dimension((int) (0.109375 * w), (int) (0.111 * h)));
@@ -130,7 +150,7 @@ public class GameScreen extends JPanel {
 		c.gridy = 1;
 		c.weightx = 1;
 		c.weighty = 0;
-		c.insets = new Insets((int) (0.088 * h), (int) (0.016 * w), 0, (int) (0.007 * w));
+		c.insets = new Insets((int) (0.083 * h), (int) (0.016 * w), 0, (int) (0.007 * w));
 		content.add(plr1TimeDisplay, c);
 
 		plr1PtsDisplay.setMinimumSize(new Dimension((int) (0.109375 * w), (int) (0.111 * h)));
@@ -145,7 +165,7 @@ public class GameScreen extends JPanel {
 		c.gridy = 1;
 		c.weightx = 1;
 		c.weighty = 0;
-		c.insets = new Insets((int) (0.088 * h), 0, 0, (int) (0.024 * w));
+		c.insets = new Insets((int) (0.083 * h), 0, 0, (int) (0.024 * w));
 		content.add(plr1PtsDisplay, c);
 
 		plr2Label.setMinimumSize(new Dimension((int) (0.22 * w), (int) (0.09 * h)));
@@ -162,8 +182,8 @@ public class GameScreen extends JPanel {
 		c.gridx = 3;
 		c.gridy = 2;
 		c.weightx = 1;
-		c.weighty = 0.5;
-		c.insets = new Insets((int) (0.056 * h), 0, 0, (int) (0.01 * w));
+		c.weighty = 0;
+		c.insets = new Insets((int) (0.05 * h), 0, 0, (int) (0.01 * w));
 		content.add(plr2Label, c);
 
 		plr2TimeDisplay.setMinimumSize(new Dimension((int) (0.109375 * w), (int) (0.111 * h)));
@@ -177,8 +197,8 @@ public class GameScreen extends JPanel {
 		c.gridx = 3;
 		c.gridy = 3;
 		c.weightx = 1;
-		c.weighty = 1;
-		c.insets = new Insets((int) (0.026 * h), (int) (0.016 * w), 0, (int) (0.007 * w));
+		c.weighty = 0;
+		c.insets = new Insets((int) (0.086 * h), (int) (0.016 * w), 0, (int) (0.007 * w));
 		content.add(plr2TimeDisplay, c);
 
 		plr2PtsDisplay.setMinimumSize(new Dimension((int) (0.109375 * w), (int) (0.111 * h)));
@@ -192,9 +212,277 @@ public class GameScreen extends JPanel {
 		c.gridx = 4;
 		c.gridy = 3;
 		c.weightx = 1;
-		c.weighty = 1;
-		c.insets = new Insets((int) (0.026 * h), 0, 0, (int) (0.024 * w));
+		c.weighty = 0;
+		c.insets = new Insets((int) (0.086 * h), 0, 0, (int) (0.024 * w));
 		content.add(plr2PtsDisplay, c);
+
+		passBtn.setMinimumSize(new Dimension((int) (0.05 * w), (int) (0.05 * w)));
+		passBtn.setPreferredSize(new Dimension((int) (0.05 * w), (int) (0.05 * w)));
+		passDefault = new ImageIcon(passDefault.getImage().getScaledInstance(passBtn.getMinimumSize().width, passBtn.getMinimumSize().height, Image.SCALE_SMOOTH));
+		passHover = new ImageIcon(passHover.getImage().getScaledInstance(passBtn.getMinimumSize().width, passBtn.getMinimumSize().height, Image.SCALE_SMOOTH));
+		passPress = new ImageIcon(passPress.getImage().getScaledInstance(passBtn.getMinimumSize().width, passBtn.getMinimumSize().height, Image.SCALE_SMOOTH));
+		passBtn.setIcon(passDefault);
+		passBtn.addMouseListener(new MouseListener() {
+			/**
+			 * Invoked when the mouse button has been clicked (pressed
+			 * and released) on a component.
+			 *
+			 * @param e the event to be processed
+			 */
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				board.switchTurn();
+			}
+
+			/**
+			 * Invoked when a mouse button has been pressed on a component.
+			 *
+			 * @param e the event to be processed
+			 */
+			@Override
+			public void mousePressed(MouseEvent e) {
+				((JLabel) e.getSource()).setIcon(passPress);
+			}
+
+			/**
+			 * Invoked when a mouse button has been released on a component.
+			 *
+			 * @param e the event to be processed
+			 */
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				((JLabel) e.getSource()).setIcon(passDefault);
+			}
+
+			/**
+			 * Invoked when the mouse enters a component.
+			 *
+			 * @param e the event to be processed
+			 */
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				((JLabel) e.getSource()).setIcon(passHover);
+			}
+
+			/**
+			 * Invoked when the mouse exits a component.
+			 *
+			 * @param e the event to be processed
+			 */
+			@Override
+			public void mouseExited(MouseEvent e) {
+				((JLabel) e.getSource()).setIcon(passDefault);
+			}
+		});
+		c = new GridBagConstraints();
+		c.anchor = GridBagConstraints.LINE_END;
+		c.gridx = 3;
+		c.gridy = 4;
+		c.insets = new Insets((int) (0.055 * h), 0, 0, (int) (0.025 * w));
+		c.weightx = 1;
+		c.weighty = 0;
+		content.add(passBtn, c);
+
+		pauseBtn.setMinimumSize(new Dimension((int) (0.05 * w), (int) (0.05 * w)));
+		pauseBtn.setPreferredSize(new Dimension((int) (0.05 * w), (int) (0.05 * w)));
+		pauseDefault = new ImageIcon(pauseDefault.getImage().getScaledInstance(pauseBtn.getMinimumSize().width, pauseBtn.getMinimumSize().height, Image.SCALE_SMOOTH));
+		pauseHover = new ImageIcon(pauseHover.getImage().getScaledInstance(pauseBtn.getMinimumSize().width, pauseBtn.getMinimumSize().height, Image.SCALE_SMOOTH));
+		pausePress = new ImageIcon(pausePress.getImage().getScaledInstance(pauseBtn.getMinimumSize().width, pauseBtn.getMinimumSize().height, Image.SCALE_SMOOTH));
+		pauseBtn.setIcon(pauseDefault);
+		pauseBtn.addMouseListener(new MouseListener() {
+			/**
+			 * Invoked when the mouse button has been clicked (pressed
+			 * and released) on a component.
+			 *
+			 * @param e the event to be processed
+			 */
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				board.pause();
+			}
+
+			/**
+			 * Invoked when a mouse button has been pressed on a component.
+			 *
+			 * @param e the event to be processed
+			 */
+			@Override
+			public void mousePressed(MouseEvent e) {
+				((JLabel) e.getSource()).setIcon(pausePress);
+			}
+
+			/**
+			 * Invoked when a mouse button has been released on a component.
+			 *
+			 * @param e the event to be processed
+			 */
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				((JLabel) e.getSource()).setIcon(pauseDefault);
+			}
+
+			/**
+			 * Invoked when the mouse enters a component.
+			 *
+			 * @param e the event to be processed
+			 */
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				((JLabel) e.getSource()).setIcon(pauseHover);
+			}
+
+			/**
+			 * Invoked when the mouse exits a component.
+			 *
+			 * @param e the event to be processed
+			 */
+			@Override
+			public void mouseExited(MouseEvent e) {
+				((JLabel) e.getSource()).setIcon(pauseDefault);
+			}
+		});
+		c = new GridBagConstraints();
+		c.anchor = GridBagConstraints.LINE_END;
+		c.gridx = 3;
+		c.gridy = 5;
+		c.insets = new Insets(0, 0, (int) (0.04 * h), (int) (0.025 * w));
+		c.weightx = 1;
+		c.weighty = 0;
+		content.add(pauseBtn, c);
+
+		shakeBtn.setMinimumSize(new Dimension((int) (0.05 * w), (int) (0.05 * w)));
+		shakeBtn.setPreferredSize(new Dimension((int) (0.05 * w), (int) (0.05 * w)));
+		shakeDefault = new ImageIcon(shakeDefault.getImage().getScaledInstance(shakeBtn.getMinimumSize().width, shakeBtn.getMinimumSize().height, Image.SCALE_SMOOTH));
+		shakeHover = new ImageIcon(shakeHover.getImage().getScaledInstance(shakeBtn.getMinimumSize().width, shakeBtn.getMinimumSize().height, Image.SCALE_SMOOTH));
+		shakePress = new ImageIcon(shakePress.getImage().getScaledInstance(shakeBtn.getMinimumSize().width, shakeBtn.getMinimumSize().height, Image.SCALE_SMOOTH));
+		shakeBtn.setIcon(shakeDefault);
+		shakeBtn.addMouseListener(new MouseListener() {
+			/**
+			 * Invoked when the mouse button has been clicked (pressed
+			 * and released) on a component.
+			 *
+			 * @param e the event to be processed
+			 */
+			@Override
+			public void mouseClicked(MouseEvent e) {
+//				mainFrame.menuScreen();
+			}
+
+			/**
+			 * Invoked when a mouse button has been pressed on a component.
+			 *
+			 * @param e the event to be processed
+			 */
+			@Override
+			public void mousePressed(MouseEvent e) {
+				((JLabel) e.getSource()).setIcon(shakePress);
+			}
+
+			/**
+			 * Invoked when a mouse button has been released on a component.
+			 *
+			 * @param e the event to be processed
+			 */
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				((JLabel) e.getSource()).setIcon(shakeDefault);
+			}
+
+			/**
+			 * Invoked when the mouse enters a component.
+			 *
+			 * @param e the event to be processed
+			 */
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				((JLabel) e.getSource()).setIcon(shakeHover);
+			}
+
+			/**
+			 * Invoked when the mouse exits a component.
+			 *
+			 * @param e the event to be processed
+			 */
+			@Override
+			public void mouseExited(MouseEvent e) {
+				((JLabel) e.getSource()).setIcon(shakeDefault);
+			}
+		});
+		c = new GridBagConstraints();
+		c.anchor = GridBagConstraints.LINE_START;
+		c.gridx = 4;
+		c.gridy = 4;
+		c.insets = new Insets((int) (0.055 * h), (int) (0.016 * w), 0, 0);
+		c.weightx = 1;
+		c.weighty = 0;
+		content.add(shakeBtn, c);
+
+		settingsBtn.setMinimumSize(new Dimension((int) (0.05 * w), (int) (0.05 * w)));
+		settingsBtn.setPreferredSize(new Dimension((int) (0.05 * w), (int) (0.05 * w)));
+		settingsDefault = new ImageIcon(settingsDefault.getImage().getScaledInstance(settingsBtn.getMinimumSize().width, settingsBtn.getMinimumSize().height, Image.SCALE_SMOOTH));
+		settingsHover = new ImageIcon(settingsHover.getImage().getScaledInstance(settingsBtn.getMinimumSize().width, settingsBtn.getMinimumSize().height, Image.SCALE_SMOOTH));
+		settingsPress = new ImageIcon(settingsPress.getImage().getScaledInstance(settingsBtn.getMinimumSize().width, settingsBtn.getMinimumSize().height, Image.SCALE_SMOOTH));
+		settingsBtn.setIcon(settingsDefault);
+		settingsBtn.addMouseListener(new MouseListener() {
+			/**
+			 * Invoked when the mouse button has been clicked (pressed
+			 * and released) on a component.
+			 *
+			 * @param e the event to be processed
+			 */
+			@Override
+			public void mouseClicked(MouseEvent e) {
+//				mainFrame.menuScreen();
+			}
+
+			/**
+			 * Invoked when a mouse button has been pressed on a component.
+			 *
+			 * @param e the event to be processed
+			 */
+			@Override
+			public void mousePressed(MouseEvent e) {
+				((JLabel) e.getSource()).setIcon(settingsPress);
+			}
+
+			/**
+			 * Invoked when a mouse button has been released on a component.
+			 *
+			 * @param e the event to be processed
+			 */
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				((JLabel) e.getSource()).setIcon(settingsDefault);
+			}
+
+			/**
+			 * Invoked when the mouse enters a component.
+			 *
+			 * @param e the event to be processed
+			 */
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				((JLabel) e.getSource()).setIcon(settingsHover);
+			}
+
+			/**
+			 * Invoked when the mouse exits a component.
+			 *
+			 * @param e the event to be processed
+			 */
+			@Override
+			public void mouseExited(MouseEvent e) {
+				((JLabel) e.getSource()).setIcon(settingsDefault);
+			}
+		});
+		c = new GridBagConstraints();
+		c.anchor = GridBagConstraints.LINE_START;
+		c.gridx = 4;
+		c.gridy = 5;
+		c.insets = new Insets(0, (int) (0.016 * w), (int) (0.04 * h), 0);
+		c.weightx = 1;
+		c.weighty = 0;
+		content.add(settingsBtn, c);
 
 		boardBg.setMinimumSize(new Dimension((int) (0.44 * w), (int) (0.44 * w)));
 		boardBg.setPreferredSize(new Dimension((int) (0.44 * w), (int) (0.44 * w)));
@@ -203,7 +491,7 @@ public class GameScreen extends JPanel {
 		c.anchor = GridBagConstraints.ABOVE_BASELINE;
 		c.gridx = 1;
 		c.gridy = 1;
-		c.gridheight = 4;
+		c.gridheight = 5;
 		c.insets = new Insets(0, (int) (0.01 * w), (int) (0.06 * h), 0);
 		c.weightx = 1;
 		c.weighty = 1;

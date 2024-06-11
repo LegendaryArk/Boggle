@@ -22,8 +22,7 @@ public class Board implements MouseListener {
 
 	private String wordSelected = "";
 
-	private boolean f = false;
-	private int cnt = 0;
+	private boolean startedSelection = false;
 	private int lx = -2, ly = -2;
 
 	private Boggle mainFrame;
@@ -34,10 +33,8 @@ public class Board implements MouseListener {
 	private WordList wordList;
 
 	private Player plr1;
-	private Player plr2 = null;
+	private Player plr2;
 	private int plrTurn = 0;
-
-	private boolean inOvertime = false;
 
 	public Board(Boggle mainFrame, JPanel bg, JLabel wordDisplay, WordList wordList, JLabel plr1Label, JLabel plr1PtsDisplay, JLabel plr1TimeDisplay, JLabel plr2Label, JLabel plr2PtsDisplay, JLabel plr2TimeDisplay) {
 		this.plr1 = new Player(plr1Label, plr1PtsDisplay, new Clock(plr1TimeDisplay, 1 * 60 * 1000, this));
@@ -63,9 +60,9 @@ public class Board implements MouseListener {
 
 		for (int i = 0; i < 5; i++) {
 			for (int j = 0; j < 5; j++) {
-				dice[i][j] = new Dice(combinations[i][j].toCharArray());
+				dice[i][j] = new Dice(combinations[i][j].toCharArray(), (bg.getPreferredSize().width - 40) / 5, (bg.getPreferredSize().height - 40) / 5);
 				bg.add(dice[i][j]);
-				dice[i][j].addMouseListener(this);
+				dice[i][j].getCenter().addMouseListener(this);
 			}
 		}
 
@@ -98,6 +95,11 @@ public class Board implements MouseListener {
 		plrTurn = ++plrTurn % 2; // Switch between 0 and 1
 	}
 
+	public void pause() {
+		plr1.getTimer().pause();
+		plr2.getTimer().pause();
+	}
+
 	public int getPoints(String s) {
 		return switch (s.length()) {
 			case 0, 1, 2 -> 0;
@@ -107,24 +109,6 @@ public class Board implements MouseListener {
 			case 7 -> 5;
 			default -> 11;
 		};
-	}
-
-	public void overtime() {
-		inOvertime = true;
-		switch (plrTurn) {
-			case 0:
-				plr1.endTurn();
-				plr2.startTurn();
-				break;
-			case 1:
-				plr2.endTurn();
-				plr1.startTurn();
-				break;
-		}
-		plrTurn = ++plrTurn % 2;
-	}
-	public boolean isOvertime() {
-		return inOvertime;
 	}
 
 	/**
@@ -147,8 +131,8 @@ public class Board implements MouseListener {
 
 		for (int i = 0; i < 5; i++) {
 			for (int j = 0; j < 5; j++) {
-				if (e.getSource() == dice[i][j]) {
-					f = true;
+				if (e.getSource() == dice[i][j].getCenter()) {
+					startedSelection = true;
 					lx = i; ly = j;
 					dice[i][j].select();
 					wordSelected = String.valueOf(dice[i][j].getTopFace());
@@ -167,7 +151,7 @@ public class Board implements MouseListener {
 	public void mouseReleased(MouseEvent e) {
 		if (wordSelected.isEmpty()) return;
 
-		f = false;
+		startedSelection = false;
 
 		System.out.println(wordSelected);
 
@@ -248,11 +232,11 @@ public class Board implements MouseListener {
 	 */
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		if (!f) return;
+		if (!startedSelection) return;
 
 		for (int i = 0; i < 5; i++) {
 			for (int j = 0; j < 5; j++) {
-				if (e.getSource() == dice[i][j] && Math.abs(i - lx) <= 1 && Math.abs(j - ly) <= 1) {
+				if (e.getSource() == dice[i][j].getCenter() && Math.abs(i - lx) <= 1 && Math.abs(j - ly) <= 1) {
 					if (dice[i][j].isSelected()) return;
 
 					lx = i; ly = j;
