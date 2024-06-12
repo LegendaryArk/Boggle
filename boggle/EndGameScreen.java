@@ -9,10 +9,10 @@ public class EndGameScreen extends JPanel {
 	private JLayeredPane layers = new JLayeredPane();
 	private JLabel background = new JLabel();
 
-	private ImageIcon draw;
-	private ImageIcon plr1;
-	private ImageIcon plr2;
-	private ImageIcon lambdaBoggle;
+	private ImageIcon draw = new ImageIcon(getClass().getResource("assets/DrawBg.gif"));
+	private ImageIcon plr1 = new ImageIcon(getClass().getResource("assets/Plr1WinBg.gif"));
+	private ImageIcon plr2 = new ImageIcon(getClass().getResource("assets/Plr2WinBg.gif"));
+	private ImageIcon lambdaBoggle = new ImageIcon(getClass().getResource("assets/Plr2WinBg.gif"));
 
 	private JButton homeBtn = new JButton();
 	private JButton replayBtn = new JButton();
@@ -31,34 +31,29 @@ public class EndGameScreen extends JPanel {
 
 		this.setBackground(Color.black);
 		this.setLayout(new GridBagLayout());
-		this.setBounds(0, 0, w, h);
 		this.setPreferredSize(new Dimension(w, h));
 
 		layers.setBackground(Color.black);
 		layers.setLayout(new GridBagLayout());
 		layers.setPreferredSize(new Dimension(w, h));
 
-		draw = new ImageIcon(draw.getImage().getScaledInstance(w, h, Image.SCALE_SMOOTH));
-		plr1 = new ImageIcon(plr1.getImage().getScaledInstance(w, h, Image.SCALE_SMOOTH));
-		plr2 = new ImageIcon(plr2.getImage().getScaledInstance(w, h, Image.SCALE_SMOOTH));
-		lambdaBoggle = new ImageIcon(lambdaBoggle.getImage().getScaledInstance(w, h, Image.SCALE_SMOOTH));
+		draw = new ImageIcon(draw.getImage().getScaledInstance(w, h, Image.SCALE_DEFAULT));
+		plr1 = new ImageIcon(plr1.getImage().getScaledInstance(w, h, Image.SCALE_DEFAULT));
+		plr2 = new ImageIcon(plr2.getImage().getScaledInstance(w, h, Image.SCALE_DEFAULT));
+		lambdaBoggle = new ImageIcon(lambdaBoggle.getImage().getScaledInstance(w, h, Image.SCALE_DEFAULT));
 		switch (winner) {
-			case 0:
-				background.setIcon(draw);
-			case 1:
-				background.setIcon(plr1);
-			case 2:
-				background.setIcon(plr2);
-			case 3:
-				background.setIcon(lambdaBoggle);
+			case 0 -> background.setIcon(draw);
+			case 1 -> background.setIcon(plr1);
+			case 2 -> background.setIcon(plr2);
+			case 3 -> background.setIcon(lambdaBoggle);
 		}
-		background.setPreferredSize(new Dimension(w, h));
+		background.setBackground(Color.black);
 		c = new GridBagConstraints();
 		c.gridx = 0;
 		c.gridy = 0;
 		layers.add(background, c);
 		layers.setLayer(background, 0);
 
-
+		this.add(layers, new GridBagConstraints());
 	}
 }

@@ -31,7 +31,7 @@ public class MenuScreen extends JPanel implements MouseListener {
 	private ImageIcon creditsButtonHl = new ImageIcon(getClass().getResource("assets/CreditsButtonHover.png"));
 
 	private ImageIcon exitButton = new ImageIcon(getClass().getResource("assets/ExitButton.png"));
-	private ImageIcon exitplayButtonHl = new ImageIcon(getClass().getResource("assets/ExitButtonHover.png"));
+	private ImageIcon exitButtonHl = new ImageIcon(getClass().getResource("assets/ExitButtonHover.png"));
 
 	// Button
 	private JLabel playBtn;
@@ -77,26 +77,26 @@ public class MenuScreen extends JPanel implements MouseListener {
 		c = new GridBagConstraints();
 		c.gridx = 0;
 		c.gridy = 0;
-		c.insets = new Insets(0,(int) (0.45 * w),(int)(0.55 *h),0);
+		c.insets = new Insets(0,(int) (0.45 * w),(int)(0.5 *h),0);
 		c.weightx = 1;
 		c.weighty = 1;
 		pane.add(title, c);
 		pane.setLayer(title, 1); // Add title to layer 1
 
-		playBtn = createButton(playButton, 0,(int) (0.45 * w),(int)(0.2 *h),0);
-		guideBtn = createButton(guideButton, 0,(int) (0.45 * w),0,0);
-		settingsBtn = createButton(settingsButton, (int) (0.2 * h),(int) (0.45 * w),0,0);
-		creditsBtn = createButton(creditsButton, (int) (0.4 * h),(int) (0.45 * w),0,0);
-		exitBtn = createButton(exitButton, (int) (0.6 * h),(int) (0.45 * w),0,0);
+		playBtn = createButton(playButton, 0,(int) (0.45 * w),(int)(0.2 *h),0 ,(int)(0.12 * w), (int)(0.08 * h));
+		guideBtn = createButton(guideButton, 0,(int) (0.45 * w),0,0 ,(int)(0.15 * w), (int)(0.08 * h));
+		settingsBtn = createButton(settingsButton, (int) (0.2 * h),(int) (0.45 * w),0,0,(int)(0.24 * w), (int)(0.08 * h));
+		creditsBtn = createButton(creditsButton, (int) (0.4 * h),(int) (0.45 * w),0,0,(int)(0.21 * w), (int)(0.08 * h));
+		exitBtn = createButton(exitButton, (int) (0.6 * h),(int) (0.45 * w),0,0,(int)(0.12 * w), (int)(0.08 * h));
 
 		this.add(pane, new GridBagConstraints());
 		mainFrame.setContentPane(this);
 	}
 
 
-	private JLabel createButton (ImageIcon image, int top, int left, int bottom, int right){
+	private JLabel createButton (ImageIcon image, int top, int left, int bottom, int right, int sizex, int sizey){
 		JLabel btn = new JLabel();
-		btn.setIcon(new ImageIcon(image.getImage().getScaledInstance((int)(0.1 * w), (int)(0.05 * h), Image.SCALE_SMOOTH)));
+		btn.setIcon(new ImageIcon(image.getImage().getScaledInstance(sizex, sizey, Image.SCALE_SMOOTH)));
 		btn.setBounds((int)(0.667 * w), (int) (0.333*h) , (int)(0.1*w), (int)(0.05 * h));
 		btn.addMouseListener(this);
 		c = new GridBagConstraints();
@@ -109,7 +109,6 @@ public class MenuScreen extends JPanel implements MouseListener {
 		pane.setLayer(btn, 2);// Add play button to layer 2
 		return btn;
 	}
-
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// Handle mouse click
@@ -128,14 +127,40 @@ public class MenuScreen extends JPanel implements MouseListener {
 	@Override
 	public void mouseEntered(MouseEvent e) {
 		if (e.getSource() == playBtn) {
-			playBtn.setIcon(new ImageIcon(playButtonHl.getImage().getScaledInstance((int)(w *0.1), (int)(h * 0.05), Image.SCALE_SMOOTH)));
+			playBtn.setIcon(new ImageIcon(playButtonHl.getImage().getScaledInstance((int)(w *0.12), (int)(h * 0.08), Image.SCALE_SMOOTH)));
 		}
+		if (e.getSource() == guideBtn) {
+			guideBtn.setIcon(new ImageIcon(guideButtonHl.getImage().getScaledInstance((int)(w *0.15), (int)(h * 0.08), Image.SCALE_SMOOTH)));
+		}
+		if (e.getSource() == settingsBtn) {
+			settingsBtn.setIcon(new ImageIcon(settingsButtonHl.getImage().getScaledInstance((int)(w *0.24), (int)(h * 0.08), Image.SCALE_SMOOTH)));
+		}
+		if (e.getSource() == creditsBtn) {
+			creditsBtn.setIcon(new ImageIcon(creditsButtonHl.getImage().getScaledInstance((int)(w *0.21), (int)(h * 0.08), Image.SCALE_SMOOTH)));
+		}
+		if (e.getSource() == exitBtn) {
+			exitBtn.setIcon(new ImageIcon(exitButtonHl.getImage().getScaledInstance((int)(w *0.12), (int)(h * 0.08), Image.SCALE_SMOOTH)));
+		}
+
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
 		if (e.getSource() == playBtn) {
-			playBtn.setIcon(new ImageIcon(playButton.getImage().getScaledInstance((int)(w * 0.1), (int)(h * 0.05), Image.SCALE_SMOOTH)));
+			playBtn.setIcon(new ImageIcon(playButton.getImage().getScaledInstance((int)(w *0.12), (int)(h * 0.08), Image.SCALE_SMOOTH)));
 		}
+		if (e.getSource() == guideBtn) {
+			guideBtn.setIcon(new ImageIcon(guideButton.getImage().getScaledInstance((int)(w *0.15), (int)(h * 0.08), Image.SCALE_SMOOTH)));
+		}
+		if (e.getSource() == settingsBtn) {
+			settingsBtn.setIcon(new ImageIcon(settingsButton.getImage().getScaledInstance((int)(w *0.24), (int)(h * 0.08), Image.SCALE_SMOOTH)));
+		}
+		if (e.getSource() == creditsBtn) {
+			creditsBtn.setIcon(new ImageIcon(creditsButton.getImage().getScaledInstance((int)(w *0.21), (int)(h * 0.08), Image.SCALE_SMOOTH)));
+		}
+		if (e.getSource() == exitBtn) {
+			exitBtn.setIcon(new ImageIcon(exitButton.getImage().getScaledInstance((int)(w *0.12), (int)(h * 0.08), Image.SCALE_SMOOTH)));
+		}
+
 	}
 }

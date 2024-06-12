@@ -1,10 +1,7 @@
 package boggle;
 
 import javax.swing.*;
-import javax.swing.border.LineBorder;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 import static javax.swing.BorderFactory.createEmptyBorder;
 
@@ -29,29 +26,29 @@ public class GameScreen extends JPanel {
 	private JLabel wordDisplay = new JLabel();
 	private JPanel boardBg = new JPanel();
 
-	private JLabel pauseBtn = new JLabel();
+	private OptionButton pauseBtn;
 	private ImageIcon pauseDefault = new ImageIcon(getClass().getResource("assets/PauseBtnDefault.png"));
 	private ImageIcon pauseHover = new ImageIcon(getClass().getResource("assets/PauseBtnHover.png"));
 	private ImageIcon pausePress = new ImageIcon(getClass().getResource("assets/PauseBtnPress.png"));
 
-	private JLabel passBtn = new JLabel();
+	private OptionButton passBtn;
 	private ImageIcon passDefault = new ImageIcon(getClass().getResource("assets/PassBtnDefault.png"));
 	private ImageIcon passHover = new ImageIcon(getClass().getResource("assets/PassBtnHover.png"));
 	private ImageIcon passPress = new ImageIcon(getClass().getResource("assets/PassBtnPress.png"));
 
-	private JLabel shakeBtn = new JLabel();
+	private OptionButton shakeBtn;
 	private ImageIcon shakeDefault = new ImageIcon(getClass().getResource("assets/ShakeBtnDefault.png"));
 	private ImageIcon shakeHover = new ImageIcon(getClass().getResource("assets/ShakeBtnHover.png"));
 	private ImageIcon shakePress = new ImageIcon(getClass().getResource("assets/ShakeBtnPress.png"));
 
-	private JLabel settingsBtn = new JLabel();
+	private OptionButton settingsBtn;
 	private ImageIcon settingsDefault = new ImageIcon(getClass().getResource("assets/SettingsBtnDefault.png"));
 	private ImageIcon settingsHover = new ImageIcon(getClass().getResource("assets/SettingsBtnHover.png"));
 	private ImageIcon settingsPress = new ImageIcon(getClass().getResource("assets/SettingsBtnPress.png"));
 
 	private Boggle mainFrame;
 
-	public GameScreen(Boggle mainFrame) {
+	public GameScreen(Boggle mainFrame, boolean ai) {
 		this.mainFrame = mainFrame;
 		int w = mainFrame.getScreenWidth(), h = mainFrame.getScreenHeight();
 
@@ -216,64 +213,7 @@ public class GameScreen extends JPanel {
 		c.insets = new Insets((int) (0.086 * h), 0, 0, (int) (0.024 * w));
 		content.add(plr2PtsDisplay, c);
 
-		passBtn.setMinimumSize(new Dimension((int) (0.05 * w), (int) (0.05 * w)));
-		passBtn.setPreferredSize(new Dimension((int) (0.05 * w), (int) (0.05 * w)));
-		passDefault = new ImageIcon(passDefault.getImage().getScaledInstance(passBtn.getMinimumSize().width, passBtn.getMinimumSize().height, Image.SCALE_SMOOTH));
-		passHover = new ImageIcon(passHover.getImage().getScaledInstance(passBtn.getMinimumSize().width, passBtn.getMinimumSize().height, Image.SCALE_SMOOTH));
-		passPress = new ImageIcon(passPress.getImage().getScaledInstance(passBtn.getMinimumSize().width, passBtn.getMinimumSize().height, Image.SCALE_SMOOTH));
-		passBtn.setIcon(passDefault);
-		passBtn.addMouseListener(new MouseListener() {
-			/**
-			 * Invoked when the mouse button has been clicked (pressed
-			 * and released) on a component.
-			 *
-			 * @param e the event to be processed
-			 */
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				board.switchTurn();
-			}
-
-			/**
-			 * Invoked when a mouse button has been pressed on a component.
-			 *
-			 * @param e the event to be processed
-			 */
-			@Override
-			public void mousePressed(MouseEvent e) {
-				((JLabel) e.getSource()).setIcon(passPress);
-			}
-
-			/**
-			 * Invoked when a mouse button has been released on a component.
-			 *
-			 * @param e the event to be processed
-			 */
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				((JLabel) e.getSource()).setIcon(passDefault);
-			}
-
-			/**
-			 * Invoked when the mouse enters a component.
-			 *
-			 * @param e the event to be processed
-			 */
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				((JLabel) e.getSource()).setIcon(passHover);
-			}
-
-			/**
-			 * Invoked when the mouse exits a component.
-			 *
-			 * @param e the event to be processed
-			 */
-			@Override
-			public void mouseExited(MouseEvent e) {
-				((JLabel) e.getSource()).setIcon(passDefault);
-			}
-		});
+		passBtn = new OptionButton(0.05 * w, 0.05 * w, passDefault, passHover, passPress, e -> board.switchTurn());
 		c = new GridBagConstraints();
 		c.anchor = GridBagConstraints.LINE_END;
 		c.gridx = 3;
@@ -283,63 +223,9 @@ public class GameScreen extends JPanel {
 		c.weighty = 0;
 		content.add(passBtn, c);
 
-		pauseBtn.setMinimumSize(new Dimension((int) (0.05 * w), (int) (0.05 * w)));
-		pauseBtn.setPreferredSize(new Dimension((int) (0.05 * w), (int) (0.05 * w)));
-		pauseDefault = new ImageIcon(pauseDefault.getImage().getScaledInstance(pauseBtn.getMinimumSize().width, pauseBtn.getMinimumSize().height, Image.SCALE_SMOOTH));
-		pauseHover = new ImageIcon(pauseHover.getImage().getScaledInstance(pauseBtn.getMinimumSize().width, pauseBtn.getMinimumSize().height, Image.SCALE_SMOOTH));
-		pausePress = new ImageIcon(pausePress.getImage().getScaledInstance(pauseBtn.getMinimumSize().width, pauseBtn.getMinimumSize().height, Image.SCALE_SMOOTH));
-		pauseBtn.setIcon(pauseDefault);
-		pauseBtn.addMouseListener(new MouseListener() {
-			/**
-			 * Invoked when the mouse button has been clicked (pressed
-			 * and released) on a component.
-			 *
-			 * @param e the event to be processed
-			 */
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				board.pause();
-			}
-
-			/**
-			 * Invoked when a mouse button has been pressed on a component.
-			 *
-			 * @param e the event to be processed
-			 */
-			@Override
-			public void mousePressed(MouseEvent e) {
-				((JLabel) e.getSource()).setIcon(pausePress);
-			}
-
-			/**
-			 * Invoked when a mouse button has been released on a component.
-			 *
-			 * @param e the event to be processed
-			 */
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				((JLabel) e.getSource()).setIcon(pauseDefault);
-			}
-
-			/**
-			 * Invoked when the mouse enters a component.
-			 *
-			 * @param e the event to be processed
-			 */
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				((JLabel) e.getSource()).setIcon(pauseHover);
-			}
-
-			/**
-			 * Invoked when the mouse exits a component.
-			 *
-			 * @param e the event to be processed
-			 */
-			@Override
-			public void mouseExited(MouseEvent e) {
-				((JLabel) e.getSource()).setIcon(pauseDefault);
-			}
+		pauseBtn = new OptionButton(0.05 * w, 0.05 * w, pauseDefault, pauseHover, pausePress, e -> {
+			board.pause();
+			mainFrame.pauseOverlay();
 		});
 		c = new GridBagConstraints();
 		c.anchor = GridBagConstraints.LINE_END;
@@ -350,64 +236,7 @@ public class GameScreen extends JPanel {
 		c.weighty = 0;
 		content.add(pauseBtn, c);
 
-		shakeBtn.setMinimumSize(new Dimension((int) (0.05 * w), (int) (0.05 * w)));
-		shakeBtn.setPreferredSize(new Dimension((int) (0.05 * w), (int) (0.05 * w)));
-		shakeDefault = new ImageIcon(shakeDefault.getImage().getScaledInstance(shakeBtn.getMinimumSize().width, shakeBtn.getMinimumSize().height, Image.SCALE_SMOOTH));
-		shakeHover = new ImageIcon(shakeHover.getImage().getScaledInstance(shakeBtn.getMinimumSize().width, shakeBtn.getMinimumSize().height, Image.SCALE_SMOOTH));
-		shakePress = new ImageIcon(shakePress.getImage().getScaledInstance(shakeBtn.getMinimumSize().width, shakeBtn.getMinimumSize().height, Image.SCALE_SMOOTH));
-		shakeBtn.setIcon(shakeDefault);
-		shakeBtn.addMouseListener(new MouseListener() {
-			/**
-			 * Invoked when the mouse button has been clicked (pressed
-			 * and released) on a component.
-			 *
-			 * @param e the event to be processed
-			 */
-			@Override
-			public void mouseClicked(MouseEvent e) {
-//				mainFrame.menuScreen();
-			}
-
-			/**
-			 * Invoked when a mouse button has been pressed on a component.
-			 *
-			 * @param e the event to be processed
-			 */
-			@Override
-			public void mousePressed(MouseEvent e) {
-				((JLabel) e.getSource()).setIcon(shakePress);
-			}
-
-			/**
-			 * Invoked when a mouse button has been released on a component.
-			 *
-			 * @param e the event to be processed
-			 */
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				((JLabel) e.getSource()).setIcon(shakeDefault);
-			}
-
-			/**
-			 * Invoked when the mouse enters a component.
-			 *
-			 * @param e the event to be processed
-			 */
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				((JLabel) e.getSource()).setIcon(shakeHover);
-			}
-
-			/**
-			 * Invoked when the mouse exits a component.
-			 *
-			 * @param e the event to be processed
-			 */
-			@Override
-			public void mouseExited(MouseEvent e) {
-				((JLabel) e.getSource()).setIcon(shakeDefault);
-			}
-		});
+		shakeBtn = new OptionButton(0.05 * w, 0.05 * w, shakeDefault, shakeHover, shakePress, e -> board.shuffle());
 		c = new GridBagConstraints();
 		c.anchor = GridBagConstraints.LINE_START;
 		c.gridx = 4;
@@ -417,64 +246,7 @@ public class GameScreen extends JPanel {
 		c.weighty = 0;
 		content.add(shakeBtn, c);
 
-		settingsBtn.setMinimumSize(new Dimension((int) (0.05 * w), (int) (0.05 * w)));
-		settingsBtn.setPreferredSize(new Dimension((int) (0.05 * w), (int) (0.05 * w)));
-		settingsDefault = new ImageIcon(settingsDefault.getImage().getScaledInstance(settingsBtn.getMinimumSize().width, settingsBtn.getMinimumSize().height, Image.SCALE_SMOOTH));
-		settingsHover = new ImageIcon(settingsHover.getImage().getScaledInstance(settingsBtn.getMinimumSize().width, settingsBtn.getMinimumSize().height, Image.SCALE_SMOOTH));
-		settingsPress = new ImageIcon(settingsPress.getImage().getScaledInstance(settingsBtn.getMinimumSize().width, settingsBtn.getMinimumSize().height, Image.SCALE_SMOOTH));
-		settingsBtn.setIcon(settingsDefault);
-		settingsBtn.addMouseListener(new MouseListener() {
-			/**
-			 * Invoked when the mouse button has been clicked (pressed
-			 * and released) on a component.
-			 *
-			 * @param e the event to be processed
-			 */
-			@Override
-			public void mouseClicked(MouseEvent e) {
-//				mainFrame.menuScreen();
-			}
-
-			/**
-			 * Invoked when a mouse button has been pressed on a component.
-			 *
-			 * @param e the event to be processed
-			 */
-			@Override
-			public void mousePressed(MouseEvent e) {
-				((JLabel) e.getSource()).setIcon(settingsPress);
-			}
-
-			/**
-			 * Invoked when a mouse button has been released on a component.
-			 *
-			 * @param e the event to be processed
-			 */
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				((JLabel) e.getSource()).setIcon(settingsDefault);
-			}
-
-			/**
-			 * Invoked when the mouse enters a component.
-			 *
-			 * @param e the event to be processed
-			 */
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				((JLabel) e.getSource()).setIcon(settingsHover);
-			}
-
-			/**
-			 * Invoked when the mouse exits a component.
-			 *
-			 * @param e the event to be processed
-			 */
-			@Override
-			public void mouseExited(MouseEvent e) {
-				((JLabel) e.getSource()).setIcon(settingsDefault);
-			}
-		});
+		settingsBtn = new OptionButton(0.05 * w, 0.05 * w, settingsDefault, settingsHover, settingsPress, e -> mainFrame.menuScreen());
 		c = new GridBagConstraints();
 		c.anchor = GridBagConstraints.LINE_START;
 		c.gridx = 4;
@@ -497,13 +269,20 @@ public class GameScreen extends JPanel {
 		c.weighty = 1;
 		content.add(boardBg, c);
 
-		board = new Board(mainFrame, boardBg, wordDisplay, wordList, plr1Label, plr1PtsDisplay, plr1TimeDisplay, plr2Label, plr2PtsDisplay, plr2TimeDisplay);
+		board = new Board(mainFrame, boardBg, wordDisplay, wordList, plr1Label, plr1PtsDisplay, plr1TimeDisplay, ai, plr2Label, plr2PtsDisplay, plr2TimeDisplay);
 
 		layers.add(content, new GridBagConstraints());
 		layers.setLayer(content, 1);
 
 		this.add(layers, new GridBagConstraints());
 
-		mainFrame.setContentPane(this);
+		resumeGame();
+	}
+
+	public void pauseGame() {
+		board.pause();
+	}
+	public void resumeGame() {
+		board.resume();
 	}
 }

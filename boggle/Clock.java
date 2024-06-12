@@ -29,6 +29,7 @@ public class Clock {
 				timeLabel.setForeground(Color.RED);
 			}
 			if (timeRemaining <= 0) {
+				board.clearBoard(0);
 				board.switchTurn();
 			}
 		}

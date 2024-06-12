@@ -4,12 +4,12 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Player {
-	private int points;
-	private Clock timer;
+	protected int points;
+	protected Clock timer;
 
-	private ImageIcon plrTurnInd = new ImageIcon(getClass().getResource("assets/PlrTurnIndicator.png"));
-	private JLabel plrDisplay;
-	private JLabel ptsDisplay;
+	protected ImageIcon plrTurnInd = new ImageIcon(getClass().getResource("assets/PlrTurnIndicator.png"));
+	protected JLabel plrDisplay;
+	protected JLabel ptsDisplay;
 
 	public Player(JLabel plrDisplay, JLabel ptsDisplay, Clock timer) {
 		this.plrDisplay = plrDisplay;

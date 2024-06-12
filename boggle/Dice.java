@@ -1,6 +1,7 @@
 package boggle;
 
 import java.awt.*;
+import java.util.Arrays;
 import java.util.Random;
 import javax.swing.*;
 
@@ -25,7 +26,7 @@ public class Dice extends JLabel {
 		this.width = width;
 		this.height = height;
 
-		// - 1 on the size to make sure it stays within the cell (can be larger due to rounding errors)
+		// 1 smaller pixel on the size to make sure it stays within the cell (can be larger due to rounding errors)
 		defaultBg = new ImageIcon(defaultBg.getImage().getScaledInstance(width - 1, height - 1, Image.SCALE_SMOOTH));
 		holdBg = new ImageIcon(holdBg.getImage().getScaledInstance(width - 1, height - 1, Image.SCALE_SMOOTH));
 		newBg = new ImageIcon(newBg.getImage().getScaledInstance(width - 1, height - 1, Image.SCALE_SMOOTH));
@@ -53,6 +54,14 @@ public class Dice extends JLabel {
 
 	public void roll() {
 		top = rand.nextInt(6);
+		setText(String.valueOf(faces[top]));
+	}
+
+	public void setFaces(char[] faces) {
+		this.faces = faces;
+	}
+	public char[] getFaces() {
+		return faces;
 	}
 
 	public void select() {

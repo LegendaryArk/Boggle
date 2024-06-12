@@ -33,12 +33,20 @@ public class Board implements MouseListener {
 	private WordList wordList;
 
 	private Player plr1;
-	private Player plr2;
+	private Player plr2 = null;
+	private AI ai = null;
 	private int plrTurn = 0;
+	private boolean isAI;
 
-	public Board(Boggle mainFrame, JPanel bg, JLabel wordDisplay, WordList wordList, JLabel plr1Label, JLabel plr1PtsDisplay, JLabel plr1TimeDisplay, JLabel plr2Label, JLabel plr2PtsDisplay, JLabel plr2TimeDisplay) {
+	public Board(Boggle mainFrame, JPanel bg, JLabel wordDisplay, WordList wordList, JLabel plr1Label, JLabel plr1PtsDisplay, JLabel plr1TimeDisplay, boolean ai, JLabel plr2Label, JLabel plr2PtsDisplay, JLabel plr2TimeDisplay) {
+		this.isAI = ai;
+
 		this.plr1 = new Player(plr1Label, plr1PtsDisplay, new Clock(plr1TimeDisplay, 1 * 60 * 1000, this));
-		this.plr2 = new Player(plr2Label, plr2PtsDisplay, new Clock(plr2TimeDisplay, 1 * 60 * 1000, this));
+		if (!ai) {
+			this.plr2 = new Player(plr2Label, plr2PtsDisplay, new Clock(plr2TimeDisplay, 1 * 60 * 1000, this));
+		} else {
+			this.ai = new AI(this, plr2Label, plr2PtsDisplay, new Clock(plr2TimeDisplay, 1 * 60 * 1000, this));
+		}
 		setup(mainFrame, bg, wordDisplay, wordList);
 
 		plr1.startTurn();
@@ -66,6 +74,7 @@ public class Board implements MouseListener {
 			}
 		}
 
+		// 1.1e6 is scientific notation: 1.1 * 10^6
 		dictionary = new Trie((int) 1.1e6, 26);
 		dictionary.initDict();
 
@@ -84,11 +93,23 @@ public class Board implements MouseListener {
 			case 0:
 				plr1.endTurn();
 				plr1.getTimer().increment(2000);
-				plr2.startTurn();
+				if (!isAI) {
+					plr2.startTurn();
+				} else {
+					plrTurn = ++plrTurn % 2;
+					ai.startTurn();
+					switchTurn();
+					return;
+				}
 				break;
 			case 1:
-				plr2.endTurn();
-				plr2.getTimer().increment(2000);
+				if (!isAI) {
+					plr2.endTurn();
+					plr2.getTimer().increment(2000);
+				} else {
+					ai.endTurn();
+					ai.getTimer().increment(2000);
+				}
 				plr1.startTurn();
 				break;
 		}
@@ -98,6 +119,42 @@ public class Board implements MouseListener {
 	public void pause() {
 		plr1.getTimer().pause();
 		plr2.getTimer().pause();
+	}
+	public void resume() {
+		switch (plrTurn) {
+			case 0 -> plr1.getTimer().start();
+			case 1 -> plr2.getTimer().start();
+		}
+	}
+
+	public void shuffle() {
+		for (int i = 0; i < 5; i++) {
+			for (int j = 0; j < 5; j++) {
+				int x = (int) Math.floor(Math.random() * 5);
+				int y = (int) Math.floor(Math.random() * 5);
+				char[] tmp = dice[x][y].getFaces();
+				dice[x][y].setFaces(dice[i][j].getFaces());
+				dice[i][j].setFaces(tmp);
+				dice[i][j].roll();
+				dice[x][y].roll();
+			}
+		}
+	}
+
+	public Player getPlr1() {
+		return plr1;
+	}
+	public Player getPlr2() {
+		return plr2;
+	}
+	public Dice[][] getDiceGrid() {
+		return dice;
+	}
+	public Trie getWordsEntered() {
+		return wordsEntered;
+	}
+	public WordList getWordList() {
+		return wordList;
 	}
 
 	public int getPoints(String s) {
@@ -109,6 +166,80 @@ public class Board implements MouseListener {
 			case 7 -> 5;
 			default -> 11;
 		};
+	}
+
+	public void validWord(String s) {
+		int pts = getPoints(s);
+		wordsEntered.insert(s);
+		wordList.addWord(s, pts);
+		System.out.println(pts);
+		switch (plrTurn) {
+			case 0:
+				plr1.addPoints(pts);
+				break;
+			case 1:
+				if (!isAI) {
+					plr2.addPoints(pts);
+				} else {
+					ai.addPoints(pts);
+				}
+				break;
+		}
+	}
+
+	public void clearBoard(int state) {
+		switch (state) {
+			case 1:
+				wordDisplay.setIcon(wordDisplayNew);
+				for (int i = 0; i < 5; i++) {
+					for (int j = 0; j < 5; j++) {
+						if (dice[i][j].isSelected()) {
+							dice[i][j].valid();
+						}
+					}
+				}
+				break;
+			case 2:
+				wordDisplay.setIcon(wordDisplayOld);
+				for (int i = 0; i < 5; i++) {
+					for (int j = 0; j < 5; j++) {
+						if (dice[i][j].isSelected()) {
+							dice[i][j].old();
+						}
+					}
+				}
+				break;
+		}
+
+		lx = -2; ly = -2;
+		Timer clearSelected = new Timer(0, event -> {
+			for (int i = 0; i < 5; i++) {
+				for (int j = 0; j < 5; j++) {
+					if (dice[i][j].isSelected()) {
+						dice[i][j].deselect();
+					}
+				}
+			}
+
+			wordDisplay.setIcon(wordDisplayDefault);
+			wordSelected = "";
+			wordDisplay.setText(wordSelected);
+			((Timer) event.getSource()).stop();
+		});
+		if (state != 0) { // Valid or old word -> Show player for 500 ms before clearing
+			clearSelected.setInitialDelay(500);
+		} else { // Not a word -> Clear immediately
+			clearSelected.setInitialDelay(0);
+		}
+		clearSelected.start();
+
+//		if (plr1.getPoints() > 15) {
+//			mainFrame.endgameScreen(1);
+//		} else if (!isAI && plr2.getPoints() > 15) {
+//			mainFrame.endgameScreen(2);
+//		} else if (isAI && ai.getPoints() > 15) {
+//			mainFrame.endgameScreen(3);
+//		}
 	}
 
 	/**
@@ -161,13 +292,7 @@ public class Board implements MouseListener {
 				System.out.println("Valid word");
 				state = 1;
 
-				wordsEntered.insert(wordSelected);
-				int pts = getPoints(wordSelected);
-				wordList.addWord(wordSelected, pts);
-				switch (plrTurn) {
-					case 0 -> plr1.addPoints(pts);
-					case 1 -> plr2.addPoints(pts);
-				}
+				validWord(wordSelected);
 
 				switchTurn();
 			} else {
@@ -179,50 +304,7 @@ public class Board implements MouseListener {
 			state = 0;
 		}
 
-		switch (state) {
-			case 1:
-				wordDisplay.setIcon(wordDisplayNew);
-				for (int i = 0; i < 5; i++) {
-					for (int j = 0; j < 5; j++) {
-						if (dice[i][j].isSelected()) {
-							dice[i][j].valid();
-						}
-					}
-				}
-				break;
-			case 2:
-				wordDisplay.setIcon(wordDisplayOld);
-				for (int i = 0; i < 5; i++) {
-					for (int j = 0; j < 5; j++) {
-						if (dice[i][j].isSelected()) {
-							dice[i][j].old();
-						}
-					}
-				}
-				break;
-		}
-
-		lx = -2; ly = -2;
-		Timer clearSelected = new Timer(0, event -> {
-			for (int i = 0; i < 5; i++) {
-				for (int j = 0; j < 5; j++) {
-					if (dice[i][j].isSelected()) {
-						dice[i][j].deselect();
-					}
-				}
-			}
-
-			wordDisplay.setIcon(wordDisplayDefault);
-			wordSelected = "";
-			wordDisplay.setText(wordSelected);
-			((Timer) event.getSource()).stop();
-		});
-		if (state != 0) { // Valid or old word -> Show player for 500 ms before clearing
-			clearSelected.setInitialDelay(500);
-		} else { // Not a word -> Clear immediately
-			clearSelected.setInitialDelay(0);
-		}
-		clearSelected.start();
+		clearBoard(state);
 	}
 
 	/**

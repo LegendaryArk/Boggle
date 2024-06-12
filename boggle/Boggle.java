@@ -4,9 +4,12 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Boggle extends JFrame {
+	private IntroScreen introScreen;
 	private MenuScreen menuScreen;
 	private GameScreen gameScreen;
+	private PauseOverlay pauseOverlay;
 	private EndGameScreen endgameScreen;
+	private CreditsScreen creditsScreen;
 
 	private int screenWidth, screenHeight;
 	private final double aspectRatio = 16 / 9.0;
@@ -20,10 +23,12 @@ public class Boggle extends JFrame {
 			screenWidth = (int) (screenHeight * aspectRatio);
 		}
 
+//		introScreen = new IntroScreen(this);
 //		menuScreen = new MenuScreen(this);
-//		menuScreen.setVisible(false);
-		gameScreen = new GameScreen(this);
-//		endgameScreen = new EndGameScreen(this, 1);
+		gameScreen = new GameScreen(this, true);
+		pauseOverlay = new PauseOverlay(this);
+//		creditsScreen = new CreditsScreen(this);
+		this.setContentPane(gameScreen);
 
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -35,12 +40,29 @@ public class Boggle extends JFrame {
 	}
 
 	public void menuScreen() {
-//		menuScreen.setVisible(true);
-		gameScreen.setVisible(false);
+
 	}
 	public void gameScreen() {
-//		menuScreen.setVisible(false);
-		gameScreen.setVisible(true);
+		this.setContentPane(gameScreen);
+		repaint();
+	}
+	public void pauseOverlay() {
+		this.setContentPane(pauseOverlay);
+		repaint();
+	}
+	public void endgameScreen(int winner) {
+		endgameScreen = new EndGameScreen(this, winner);
+		this.setContentPane(endgameScreen);
+		repaint();
+	}
+	public void creditsScreen() {
+		this.setContentPane(creditsScreen);
+		repaint();
+	}
+
+	public void repaint() {
+		super.revalidate();
+		super.repaint();
 	}
 
 	public int getScreenWidth() {
