@@ -147,7 +147,7 @@ public class GameScreen extends JPanel {
 		c.gridy = 1;
 		c.weightx = 1;
 		c.weighty = 0;
-		c.insets = new Insets((int) (0.083 * h), (int) (0.016 * w), 0, (int) (0.007 * w));
+		c.insets = new Insets((int) (0.075 * h), (int) (0.016 * w), 0, (int) (0.007 * w));
 		content.add(plr1TimeDisplay, c);
 
 		plr1PtsDisplay.setMinimumSize(new Dimension((int) (0.109375 * w), (int) (0.111 * h)));
@@ -162,7 +162,7 @@ public class GameScreen extends JPanel {
 		c.gridy = 1;
 		c.weightx = 1;
 		c.weighty = 0;
-		c.insets = new Insets((int) (0.083 * h), 0, 0, (int) (0.024 * w));
+		c.insets = new Insets((int) (0.075 * h), 0, 0, (int) (0.024 * w));
 		content.add(plr1PtsDisplay, c);
 
 		plr2Label.setMinimumSize(new Dimension((int) (0.22 * w), (int) (0.09 * h)));
@@ -256,15 +256,15 @@ public class GameScreen extends JPanel {
 		c.weighty = 0;
 		content.add(settingsBtn, c);
 
-		boardBg.setMinimumSize(new Dimension((int) (0.44 * w), (int) (0.44 * w)));
-		boardBg.setPreferredSize(new Dimension((int) (0.44 * w), (int) (0.4 * w)));
+		boardBg.setMinimumSize(new Dimension((int) (0.43 * w), (int) (0.43 * w)));
+		boardBg.setPreferredSize(new Dimension((int) (0.43 * w), (int) (0.43 * w)));
 		boardBg.setOpaque(false);
 		c = new GridBagConstraints();
 		c.anchor = GridBagConstraints.ABOVE_BASELINE;
 		c.gridx = 1;
 		c.gridy = 1;
 		c.gridheight = 5;
-		c.insets = new Insets(0, (int) (0.01 * w), (int) (0.06 * h), 0);
+		c.insets = new Insets(0, (int) (0.017 * w), (int) (0.06 * h), 0);
 		c.weightx = 1;
 		c.weighty = 1;
 		content.add(boardBg, c);

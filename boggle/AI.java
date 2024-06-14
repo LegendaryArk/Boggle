@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 
 public class AI extends Player {
@@ -17,8 +18,16 @@ public class AI extends Player {
 
 	private Board board;
 
-	public AI(Board board, JLabel plrDisplay, JLabel ptsDisplay, Clock timer) {
+	private int difficulty;
+	private ArrayList<Integer> lengths = new ArrayList<>();
+	private ArrayList<String> options = new ArrayList<>();
+	private Random rand = new Random();
+
+	public AI(Board board, int difficulty, JLabel plrDisplay, JLabel ptsDisplay, Clock timer) {
 		super(plrDisplay, ptsDisplay, timer);
+
+		this.board = board;
+		this.difficulty = difficulty;
 
 		try {
 			Scanner sc = new Scanner(new File("src/Boggle/boggle/resources/dictionary.txt"));
@@ -37,14 +46,19 @@ public class AI extends Player {
 			System.err.println("Fatal error: Unable to find and load dictionary");
 			System.exit(0);
 		}
-
-		this.board = board;
 	}
 
 	private void search(int r, int c, String s, int p, boolean found) {
 		if (p == s.length() - 1) {
 			if (!found) {
-				if (s.length() > currWord.length()) currWord = s;
+				if (board.getWordsEntered().query(s)) {
+					return;
+				}
+
+				options.add(s);
+				if (!lengths.contains(s.length())) {
+					lengths.add(s.length());
+				}
 			} else {
 				for (int i = 0; i < coord.size(); i++) {
 					int x = coord.get(i).x(), y = coord.get(i).y();
@@ -53,7 +67,6 @@ public class AI extends Player {
 
 						if (i == 0) continue;
 						int lx = coord.get(i - 1).x(), ly = coord.get(i - 1).y();
-						System.out.println(x + " " + y + " " + (ly - y) + " " + (lx - x));
 						board.connect(y, x, ly - y, lx - x, 1);
 					}
 				}
@@ -77,11 +90,11 @@ public class AI extends Player {
 	}
 
 	public void get() {
-		int lx = 0, ly = 0;
-
 		for (int i = 0; i < 5; i++) {
 			for (int j = 0; j < 5; j++) {
-				if (currWord.isEmpty()) continue;
+				if (currWord.isEmpty()) {
+					continue;
+				}
 
 				if (currWord.toUpperCase().charAt(0) == board.getDiceGrid()[i][j].getTopFace()) {
 					coord.add(new Pair(i, j));
@@ -91,7 +104,9 @@ public class AI extends Player {
 					coord.remove(coord.size() - 1);
 				}
 
-				if (wordHighlighted) return;
+				if (wordHighlighted) {
+					return;
+				}
 			}
 		}
 	}
@@ -119,6 +134,30 @@ public class AI extends Player {
 					}
 				}
 			}
+
+			Boggle.sort(lengths);
+			for (int i = options.size(); i > 1; i--) {
+				int randInd = rand.nextInt(i);
+				String tmp = options.get(i - 1);
+				options.set(i - 1, options.get(randInd));
+				options.set(randInd, tmp);
+			}
+
+			while (lengths.get(0) < 3) lengths.remove(0);
+
+			int l = 0;
+			switch (difficulty) {
+				case 0 -> l = lengths.get(0);
+				case 1 -> l = lengths.get(rand.nextInt(lengths.size() / 2));
+				case 2 -> l = lengths.get(lengths.size() / 2 + rand.nextInt(lengths.size() / 2));
+				case 3 -> l = lengths.get(lengths.size() - 1);
+			}
+			for (String s : options) {
+				if (s.length() == l) {
+					currWord = s;
+				}
+			}
+
 			get();
 			board.getWordDisplay().setText(currWord.toUpperCase());
 			board.validWord(currWord.toUpperCase());
@@ -126,7 +165,12 @@ public class AI extends Player {
 			System.out.println(currWord);
 			wordFound = true;
 		});
-		delay.setInitialDelay(600); // Must be greater than 500
+		switch (difficulty) {
+			case 0 -> delay.setInitialDelay((int) (10000 * rand.nextDouble(0.6, 1.4)));
+			case 1 -> delay.setInitialDelay((int) (6000 * rand.nextDouble(0.6, 1.4)));
+			case 2 -> delay.setInitialDelay((int) (3000 * rand.nextDouble(0.6, 1.4)));
+			case 3 -> delay.setInitialDelay(600); // Must be greater than 500
+		}
 		delay.setRepeats(false);
 		delay.start();
 	}

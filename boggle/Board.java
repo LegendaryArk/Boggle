@@ -76,7 +76,7 @@ public class Board implements MouseListener {
 		if (!ai) {
 			this.plr2 = new Player(plr2Label, plr2PtsDisplay, new Clock(plr2TimeDisplay, 1 * 60 * 1000, this));
 		} else {
-			this.ai = new AI(this, plr2Label, plr2PtsDisplay, new Clock(plr2TimeDisplay, 1 * 60 * 1000, this));
+			this.ai = new AI(this, 2, plr2Label, plr2PtsDisplay, new Clock(plr2TimeDisplay, 1 * 60 * 1000, this));
 		}
 		setup(mainFrame, bg, wordDisplay, wordList);
 
