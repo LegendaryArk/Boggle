@@ -63,7 +63,7 @@ public class PauseOverlay extends JPanel implements MouseListener {
 		c.weighty = 1;
 		options.add(homeBtn, c);
 
-		restartBtn = new OptionButton(0.2 * w, 0.15 * h, restartDefault, restartHover, restartPress, e -> mainFrame.gameScreen());
+		restartBtn = new OptionButton(0.2 * w, 0.15 * h, restartDefault, restartHover, restartPress, e -> mainFrame.restartGame());
 		c = new GridBagConstraints();
 		c.anchor = GridBagConstraints.LAST_LINE_START;
 		c.gridx = 1;

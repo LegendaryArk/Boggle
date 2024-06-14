@@ -8,7 +8,11 @@ public class CreditsScreen extends JPanel {
 	private JPanel content = new JPanel();
 	private JLayeredPane layers = new JLayeredPane();
 
+	private Boggle mainFrame;
+
 	public CreditsScreen(Boggle mainFrame) {
+		this.mainFrame = mainFrame;
+
 		GridBagConstraints c;
 
 		int w = mainFrame.getScreenWidth(), h = mainFrame.getScreenHeight();
@@ -40,10 +44,11 @@ public class CreditsScreen extends JPanel {
 		layers.add(content, new GridBagConstraints());
 		layers.setLayer(content, 1);
 		this.add(layers, new GridBagConstraints());
+	}
 
-		mainFrame.setContentPane(this);
-
-		Timer timer = new Timer(10000, actionEvent -> creditsGif.setVisible(false));
+	public void ret() {
+		Timer timer = new Timer(0, e -> mainFrame.menuScreen());
+		timer.setInitialDelay(10000);
 		timer.setRepeats(false);
 		timer.start();
 	}

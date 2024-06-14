@@ -169,7 +169,7 @@ public class GameScreen extends JPanel {
 		plr2Label.setPreferredSize(new Dimension((int) (0.22 * w), (int) (0.09 * h)));
 		plr2Label.setHorizontalTextPosition(JLabel.CENTER);
 		plr2Label.setHorizontalAlignment(JLabel.CENTER);
-		plr2Label.setText("Player 2");
+		plr2Label.setText(ai ? "λBoggle" : "Player 2");
 		plr2Label.setFont(new Font("Verdana", Font.BOLD, 50));
 		plr2Label.setForeground(Color.WHITE);
 		c = new GridBagConstraints();
@@ -257,7 +257,7 @@ public class GameScreen extends JPanel {
 		content.add(settingsBtn, c);
 
 		boardBg.setMinimumSize(new Dimension((int) (0.44 * w), (int) (0.44 * w)));
-		boardBg.setPreferredSize(new Dimension((int) (0.44 * w), (int) (0.44 * w)));
+		boardBg.setPreferredSize(new Dimension((int) (0.44 * w), (int) (0.4 * w)));
 		boardBg.setOpaque(false);
 		c = new GridBagConstraints();
 		c.anchor = GridBagConstraints.ABOVE_BASELINE;
@@ -276,7 +276,7 @@ public class GameScreen extends JPanel {
 
 		this.add(layers, new GridBagConstraints());
 
-		resumeGame();
+		pauseGame();
 	}
 
 	public void pauseGame() {

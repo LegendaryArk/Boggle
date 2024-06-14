@@ -24,10 +24,10 @@ public class Boggle extends JFrame {
 		}
 
 //		introScreen = new IntroScreen(this);
-//		menuScreen = new MenuScreen(this);
+		menuScreen = new MenuScreen(this);
 		gameScreen = new GameScreen(this, true);
 		pauseOverlay = new PauseOverlay(this);
-//		creditsScreen = new CreditsScreen(this);
+		creditsScreen = new CreditsScreen(this);
 		this.setContentPane(gameScreen);
 
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -37,13 +37,17 @@ public class Boggle extends JFrame {
 		this.setResizable(false);
 		this.setTitle("Boggle");
 		this.setVisible(true);
+
+//		introScreen.start();
 	}
 
 	public void menuScreen() {
-
+		this.setContentPane(menuScreen);
+		repaint();
 	}
 	public void gameScreen() {
 		this.setContentPane(gameScreen);
+		gameScreen.resumeGame();
 		repaint();
 	}
 	public void pauseOverlay() {
@@ -58,11 +62,17 @@ public class Boggle extends JFrame {
 	public void creditsScreen() {
 		this.setContentPane(creditsScreen);
 		repaint();
+		creditsScreen.ret();
 	}
 
 	public void repaint() {
 		super.revalidate();
 		super.repaint();
+	}
+
+	public void restartGame() {
+		gameScreen = new GameScreen(this, true);
+		gameScreen();
 	}
 
 	public int getScreenWidth() {

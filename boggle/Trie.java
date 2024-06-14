@@ -14,20 +14,6 @@ public class Trie {
 		vis = new boolean[N];
 	}
 
-	public void initDict() {
-		try {
-			Scanner sc = new Scanner(new File("src/Boggle/boggle/resources/dictionary.txt"));
-			while (sc.hasNextLine()) {
-				insert(sc.nextLine());
-			}
-			sc.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-			System.err.println("Fatal error: Unable to find and load dictionary");
-			System.exit(0);
-		}
-	}
-
 	public void insert(String s) {
 		s = s.toLowerCase();
 

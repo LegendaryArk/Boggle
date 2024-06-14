@@ -1,0 +1,10 @@
+Boggle was published in 1972!
+Made by Jack, Noah, Brian and Nathan!
+This game is the ISP for ICS4U!
+There are 109583 words in the dictionary!
+Boggle was invented by Alan Turoff!
+The average word length of the words in the dictionary is 8.53 letters long!
+The least common letter in the dictionary is 'Q'!
+The most common letter in the dictionary is 'E'!
+The longest word in the dictionary is "Antidisestablishmentarianism"!
+The longest word in the dictionary has 28 letters!
