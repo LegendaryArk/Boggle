@@ -1,9 +1,5 @@
 package boggle;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
-
 public class Trie {
 	private int[][] ch;
 	private boolean[] vis;

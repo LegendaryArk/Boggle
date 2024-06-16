@@ -1,8 +1,12 @@
 package boggle;
 
-import javax.sound.sampled.*;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.*;
-import javax.swing.text.*;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
 import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -16,7 +20,6 @@ public class IntroScreen extends JPanel {
 	private AudioInputStream introSound;
 	private Clip introClip;
 	private JLayeredPane layers = new JLayeredPane();
-	private JPanel content = new JPanel();
 
 	private ArrayList<String> funFacts = new ArrayList<>();
 
@@ -84,18 +87,16 @@ public class IntroScreen extends JPanel {
 		layers.add(fact, c);
 		layers.setLayer(fact, 1);
 
+		this.add(layers, new GridBagConstraints());
+
 		try {
 			introSound = AudioSystem.getAudioInputStream(getClass().getResource("assets/Opening.wav"));
 			introClip = AudioSystem.getClip();
 			introClip.open(introSound);
 		} catch (Exception e) {
 			e.printStackTrace();
+			System.err.println("Error: Unable to play opening sound");
 		}
-
-		this.add(layers, new GridBagConstraints());
-
-//		mainFrame.setContentPane(this);
-
 	}
 
 	public void start() {
@@ -104,10 +105,9 @@ public class IntroScreen extends JPanel {
 		Timer timer = new Timer(0, e -> {
 			introClip.stop();
 			introClip.close();
-			introGif.setVisible(false);
-			fact.setVisible(false);
+			mainFrame.menuScreen();
 		});
-		timer.setInitialDelay(6500);
+		timer.setInitialDelay(4800);
 		timer.setRepeats(false);
 		timer.start();
 
@@ -115,10 +115,5 @@ public class IntroScreen extends JPanel {
 		timer2.setInitialDelay(2500);
 		timer2.setRepeats(false);
 		timer2.start();
-
-		Timer timer3 = new Timer(0, e -> mainFrame.menuScreen());
-		timer3.setInitialDelay(6000);
-		timer3.setRepeats(false);
-		timer3.start();
 	}
 }

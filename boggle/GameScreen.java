@@ -1,5 +1,8 @@
 package boggle;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.*;
 
@@ -45,6 +48,10 @@ public class GameScreen extends JPanel {
 	private ImageIcon settingsDefault = new ImageIcon(getClass().getResource("assets/SettingsBtnDefault.png"));
 	private ImageIcon settingsHover = new ImageIcon(getClass().getResource("assets/SettingsBtnHover.png"));
 	private ImageIcon settingsPress = new ImageIcon(getClass().getResource("assets/SettingsBtnPress.png"));
+
+	private AudioInputStream calmBgm;
+	private AudioInputStream intenseBgm;
+	private Clip bgmClip;
 
 	private Boggle mainFrame;
 
@@ -246,7 +253,10 @@ public class GameScreen extends JPanel {
 		c.weighty = 0;
 		content.add(shakeBtn, c);
 
-		settingsBtn = new OptionButton(0.05 * w, 0.05 * w, settingsDefault, settingsHover, settingsPress, e -> mainFrame.menuScreen());
+		settingsBtn = new OptionButton(0.05 * w, 0.05 * w, settingsDefault, settingsHover, settingsPress, e -> {
+			pauseGame();
+			mainFrame.settingsScreen(1);
+		});
 		c = new GridBagConstraints();
 		c.anchor = GridBagConstraints.LINE_START;
 		c.gridx = 4;
@@ -269,14 +279,26 @@ public class GameScreen extends JPanel {
 		c.weighty = 1;
 		content.add(boardBg, c);
 
-		board = new Board(mainFrame, boardBg, wordDisplay, wordList, plr1Label, plr1PtsDisplay, plr1TimeDisplay, ai, plr2Label, plr2PtsDisplay, plr2TimeDisplay);
+		board = new Board(mainFrame, boardBg, wordDisplay, wordList, plr1Label, plr1PtsDisplay, plr1TimeDisplay, ai, plr2Label, plr2PtsDisplay, plr2TimeDisplay, passBtn);
 
 		layers.add(content, new GridBagConstraints());
 		layers.setLayer(content, 1);
 
 		this.add(layers, new GridBagConstraints());
 
+		try {
+			calmBgm = AudioSystem.getAudioInputStream(getClass().getResource("assets/CalmBGM.wav"));
+			intenseBgm = AudioSystem.getAudioInputStream(getClass().getResource("assets/IntenseBGM.wav"));
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.err.println("Error: Unable to load BGM");
+		}
+
 		pauseGame();
+	}
+
+	public Board getBoard() {
+		return board;
 	}
 
 	public void pauseGame() {
@@ -284,5 +306,43 @@ public class GameScreen extends JPanel {
 	}
 	public void resumeGame() {
 		board.resume();
+	}
+
+	public void startBgm() {
+		try {
+			bgmClip = AudioSystem.getClip();
+			switch (mainFrame.getBgmType()) {
+				case 0:
+					if (isAgainstAI()) {
+						if (mainFrame.getAIDifficulty() <= 1) {
+							bgmClip.open(calmBgm);
+						} else {
+							bgmClip.open(intenseBgm);
+						}
+					} else {
+						bgmClip.open(intenseBgm);
+					}
+					break;
+				case 1:
+					bgmClip.open(calmBgm);
+					break;
+				case 2:
+					bgmClip.open(intenseBgm);
+					break;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.err.println("Error: Unable to start BGM");
+		}
+
+		bgmClip.loop(Clip.LOOP_CONTINUOUSLY);
+	}
+	public void stopBgm() {
+		bgmClip.stop();
+		bgmClip.close();
+	}
+
+	public boolean isAgainstAI() {
+		return board.isAgainstAI();
 	}
 }

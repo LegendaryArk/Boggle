@@ -1,7 +1,6 @@
 package boggle;
 
 import javax.swing.*;
-import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -62,6 +61,7 @@ public class Board implements MouseListener {
 	private ImageIcon wordDisplayNew = new ImageIcon(getClass().getResource("assets/WordDisplayNew.png"));
 	private ImageIcon wordDisplayOld = new ImageIcon(getClass().getResource("assets/WordDisplayFound.png"));
 	private WordList wordList;
+	private OptionButton passBtn;
 
 	private Player plr1;
 	private Player plr2 = null;
@@ -69,14 +69,16 @@ public class Board implements MouseListener {
 	private int plrTurn = 0;
 	private boolean isAI;
 
-	public Board(Boggle mainFrame, JPanel bg, JLabel wordDisplay, WordList wordList, JLabel plr1Label, JLabel plr1PtsDisplay, JLabel plr1TimeDisplay, boolean ai, JLabel plr2Label, JLabel plr2PtsDisplay, JLabel plr2TimeDisplay) {
+	public Board(Boggle mainFrame, JPanel bg, JLabel wordDisplay, WordList wordList, JLabel plr1Label, JLabel plr1PtsDisplay, JLabel plr1TimeDisplay, boolean ai, JLabel plr2Label, JLabel plr2PtsDisplay, JLabel plr2TimeDisplay, OptionButton passBtn) {
 		this.isAI = ai;
 
-		this.plr1 = new Player(plr1Label, plr1PtsDisplay, new Clock(plr1TimeDisplay, 1 * 60 * 1000, this));
+		this.passBtn = passBtn;
+
+		this.plr1 = new Player(plr1Label, plr1PtsDisplay, new Clock(plr1TimeDisplay, mainFrame.getInitTime(), this));
 		if (!ai) {
-			this.plr2 = new Player(plr2Label, plr2PtsDisplay, new Clock(plr2TimeDisplay, 1 * 60 * 1000, this));
+			this.plr2 = new Player(plr2Label, plr2PtsDisplay, new Clock(plr2TimeDisplay, mainFrame.getInitTime(), this));
 		} else {
-			this.ai = new AI(this, 2, plr2Label, plr2PtsDisplay, new Clock(plr2TimeDisplay, 1 * 60 * 1000, this));
+			this.ai = new AI(this, mainFrame.getAIDifficulty(), plr2Label, plr2PtsDisplay, new Clock(plr2TimeDisplay, mainFrame.getInitTime(), this));
 		}
 		setup(mainFrame, bg, wordDisplay, wordList);
 
@@ -230,9 +232,12 @@ public class Board implements MouseListener {
 	public JLabel getWordDisplay() {
 		return wordDisplay;
 	}
+	public boolean isAgainstAI() {
+		return isAI;
+	}
 
 	public boolean isValidWord(String s) {
-		return dictionary.query(s) && s.length() > 2;
+		return dictionary.query(s) && s.length() >= mainFrame.getMinWordLen();
 	}
 	public boolean isNewWord(String s) {
 		return !wordsEntered.query(s);
@@ -245,19 +250,21 @@ public class Board implements MouseListener {
 			case 0:
 				if (!isAI) {
 					plr2.endTurn();
-					plr2.getTimer().increment(5000);
+					plr2.getTimer().increment(mainFrame.getTimeIncrement());
 				} else {
 					ai.endTurn();
-					ai.getTimer().increment(5000);
+					ai.getTimer().increment(mainFrame.getTimeIncrement());
+					passBtn.setVisible(true);
 				}
 				plr1.startTurn();
 				break;
 			case 1:
 				plr1.endTurn();
-				plr1.getTimer().increment(5000);
+				plr1.getTimer().increment(mainFrame.getTimeIncrement());
 				if (!isAI) {
 					plr2.startTurn();
 				} else {
+					passBtn.setVisible(false);
 					ai.startTurn();
 					Timer waitUntil = new Timer(100, e -> {
 						if (!ai.isWordFound()) return;
@@ -494,13 +501,13 @@ public class Board implements MouseListener {
 		}
 		clearSelected.start();
 
-		/*if (plr1.getPoints() > 15) {
+		if (plr1.getPoints() > mainFrame.getTargetPts()) {
 			mainFrame.endgameScreen(1);
-		} else if (!isAI && plr2.getPoints() > 15) {
+		} else if (!isAI && plr2.getPoints() > mainFrame.getTargetPts()) {
 			mainFrame.endgameScreen(2);
-		} else if (isAI && ai.getPoints() > 15) {
+		} else if (isAI && ai.getPoints() > mainFrame.getTargetPts()) {
 			mainFrame.endgameScreen(3);
-		}*/
+		}
 	}
 
 	/**

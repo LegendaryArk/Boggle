@@ -1,12 +1,10 @@
 package boggle;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.basic.BasicScrollBarUI;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.util.ArrayList;
 
 public class WordList {
 	JPanel bg;
@@ -26,7 +24,12 @@ public class WordList {
 		w = mainFrame.getScreenWidth();
 		h = mainFrame.getScreenHeight();
 
-		data = new DefaultTableModel();
+		data = new DefaultTableModel() {
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
 		data.addColumn("Words");
 		data.addColumn("Points");
 
@@ -43,6 +46,8 @@ public class WordList {
 		words.setMinimumSize(bg.getMinimumSize());
 		words.setPreferredSize(bg.getPreferredSize());
 		words.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		words.setColumnSelectionAllowed(false);
+		words.setRowSelectionAllowed(false);
 		words.getColumnModel().getColumn(0).setMinWidth((int) (0.7 * bg.getMinimumSize().width));
 		words.getColumnModel().getColumn(0).setPreferredWidth((int) (0.7 * bg.getPreferredSize().width));
 		words.setShowGrid(false);

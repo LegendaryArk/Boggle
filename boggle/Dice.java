@@ -1,9 +1,8 @@
 package boggle;
 
-import java.awt.*;
-import java.util.Arrays;
-import java.util.Random;
 import javax.swing.*;
+import java.awt.*;
+import java.util.Random;
 
 public class Dice extends JLabel {
 	private JLabel center = new JLabel();

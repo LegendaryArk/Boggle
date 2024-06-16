@@ -33,6 +33,16 @@ public class OptionButton extends JLabel implements MouseListener {
 		addMouseListener(this);
 	}
 
+	public ImageIcon getDefaultIcon() {
+		return defaultIcon;
+	}
+	public ImageIcon getHoverIcon() {
+		return hoverIcon;
+	}
+	public ImageIcon getPressIcon() {
+		return pressIcon;
+	}
+
 	/**
 	 * Invoked when the mouse button has been clicked (pressed
 	 * and released) on a component.
@@ -51,7 +61,7 @@ public class OptionButton extends JLabel implements MouseListener {
 	 */
 	@Override
 	public void mousePressed(MouseEvent e) {
-		((JLabel) e.getSource()).setIcon(pressIcon);
+		setIcon(pressIcon);
 	}
 
 	/**
@@ -61,7 +71,7 @@ public class OptionButton extends JLabel implements MouseListener {
 	 */
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		((JLabel) e.getSource()).setIcon(defaultIcon);
+		setIcon(defaultIcon);
 	}
 
 	/**
@@ -71,7 +81,11 @@ public class OptionButton extends JLabel implements MouseListener {
 	 */
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		((JLabel) e.getSource()).setIcon(hoverIcon);
+		if (getIcon() == pressIcon) {
+			return;
+		}
+
+		setIcon(hoverIcon);
 	}
 
 	/**
@@ -81,6 +95,10 @@ public class OptionButton extends JLabel implements MouseListener {
 	 */
 	@Override
 	public void mouseExited(MouseEvent e) {
-		((JLabel) e.getSource()).setIcon(defaultIcon);
+		if (getIcon() == pressIcon) {
+			return;
+		}
+
+		setIcon(defaultIcon);
 	}
 }

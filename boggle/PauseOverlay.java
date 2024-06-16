@@ -53,7 +53,10 @@ public class PauseOverlay extends JPanel implements MouseListener {
 		options.setOpaque(false);
 		options.setPreferredSize(new Dimension(w, h));
 
-		homeBtn = new OptionButton(0.2 * w, 0.15 * h, homeDefault, homeHover, homePress, e -> mainFrame.menuScreen());
+		homeBtn = new OptionButton(0.2 * w, 0.15 * h, homeDefault, homeHover, homePress, e -> {
+			mainFrame.getGameScreen().stopBgm();
+			mainFrame.menuScreen();
+		});
 		c = new GridBagConstraints();
 		c.anchor = GridBagConstraints.LAST_LINE_END;
 		c.gridx = 0;
@@ -87,7 +90,7 @@ public class PauseOverlay extends JPanel implements MouseListener {
 	 */
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		mainFrame.gameScreen();
+		mainFrame.gameScreen(mainFrame.isAgainstAI());
 	}
 
 	/**
