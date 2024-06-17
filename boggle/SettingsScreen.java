@@ -79,14 +79,14 @@ public class SettingsScreen extends JPanel {
 	private OptionButton generalReturnButton;
 
 	private int minimumWordLength;
-	private JLabel minimumWordLengthDisplay = new JLabel();
+	private JLabel minimumWordLengthDisplay;
 	private OptionButton minimumWordLengthIncrementButton;
 	private OptionButton minimumWordLengthDecrementButton;
 
-	private int targetPts;
-	private JLabel targetPtsDisplay = new JLabel();
-	private OptionButton targetPtsInc;
-	private OptionButton targetPtsDec;
+	private int targetPoints;
+	private JLabel targetPointsDisplay;
+	private OptionButton targetPointsIncrementButton;
+	private OptionButton targetPointsDecrementButton;
 
 	private JPanel time = new JPanel();
 	private ImageIcon timeBgImg = new ImageIcon(getClass().getResource("assets/TimeSettingsScreenBg.png"));
@@ -256,7 +256,7 @@ public class SettingsScreen extends JPanel {
 		menuContent.add(difficultyButton, c);
 
 		// Music Settings Menu Button.
-		musicButtonDefault = new ImageIcon(getClass().getResource("assets/DifficultyBtnPress.png"));
+		musicButtonDefault = new ImageIcon(getClass().getResource("assets/MusicBtnDefault.png"));
 		musicButtonHover = new ImageIcon(getClass().getResource("assets/MusicBtnHover.png"));
 		musicButtonPress = new ImageIcon(getClass().getResource("assets/MusicBtnPress.png"));
 		musicButton = new OptionButton(0.3 * w, 0.14 * h, musicButtonDefault, musicButtonHover, musicButtonPress, e -> cardLayout.show(this, MUSIC_PAGE));
@@ -326,8 +326,9 @@ public class SettingsScreen extends JPanel {
 		generalContent.add(generalReturnButton, c);
 
 		// General Settings: Minimum Word Length.
-		minimumWordLength = 3;
+		minimumWordLength = 3; // Default minimum word length.
 		// Minimum Word Length Display Label.
+		minimumWordLengthDisplay = new JLabel();
 		minimumWordLengthDisplay.setMinimumSize(
 				new Dimension((int) (0.18 * w), (int) (0.16 * h)));
 		minimumWordLengthDisplay.setPreferredSize(
@@ -364,7 +365,9 @@ public class SettingsScreen extends JPanel {
 		generalContent.add(minimumWordLengthIncrementButton, c);
 
 		// Minimum Word Length Decrement Button.
-		minimumWordLengthDecrementButton = new OptionButton(0.06 * w, 0.06 * w, decrementButtonDefault, decrementButtonHover, decrementButtonHover, e -> {
+		minimumWordLengthDecrementButton = new OptionButton(0.06 * w, 0.06 * w,
+				decrementButtonDefault, decrementButtonHover,
+				decrementButtonHover, e -> {
 			minimumWordLength--;
 			if (minimumWordLength < 1) {
 				minimumWordLength = 1;
@@ -380,13 +383,18 @@ public class SettingsScreen extends JPanel {
 		c.weighty = 1;
 		generalContent.add(minimumWordLengthDecrementButton, c);
 
-		targetPts = 15;
-		targetPtsDisplay.setMinimumSize(new Dimension((int) (0.18 * w), (int) (0.16 * h)));
-		targetPtsDisplay.setPreferredSize(new Dimension((int) (0.18 * w), (int) (0.16 * h)));
-		targetPtsDisplay.setHorizontalAlignment(SwingConstants.CENTER);
-		targetPtsDisplay.setVerticalAlignment(SwingConstants.CENTER);
-		targetPtsDisplay.setText(String.valueOf(targetPts));
-		targetPtsDisplay.setFont(new Font("Verdana", Font.PLAIN, 70));
+		// General Settings: Target Points.
+		targetPoints = 15; // Default target points
+		// Target Points Display Label.
+		targetPointsDisplay = new JLabel();
+		targetPointsDisplay.setMinimumSize(
+				new Dimension((int) (0.18 * w), (int) (0.16 * h)));
+		targetPointsDisplay.setPreferredSize(
+				new Dimension((int) (0.18 * w), (int) (0.16 * h)));
+		targetPointsDisplay.setHorizontalAlignment(SwingConstants.CENTER);
+		targetPointsDisplay.setVerticalAlignment(SwingConstants.CENTER);
+		targetPointsDisplay.setText(String.valueOf(targetPoints));
+		targetPointsDisplay.setFont(new Font("Verdana", Font.PLAIN, 70));
 		c = new GridBagConstraints();
 		c.anchor = GridBagConstraints.LAST_LINE_START;
 		c.gridx = 2;
@@ -396,11 +404,14 @@ public class SettingsScreen extends JPanel {
 		c.insets = new Insets((int) (0.497 * h), (int) (0.06 * w), 0, 0);
 		c.weightx = 1;
 		c.weighty = 0;
-		generalContent.add(targetPtsDisplay, c);
+		generalContent.add(targetPointsDisplay, c);
 
-		targetPtsInc = new OptionButton(0.06 * w, 0.06 * w, incrementButtonDefault, incrementButtonHover, incrementButtonHover, e -> {
-			targetPts++;
-			targetPtsDisplay.setText(String.valueOf(targetPts));
+		// Target Points Increment Button
+		targetPointsIncrementButton = new OptionButton(0.06 * w, 0.06 * w,
+				incrementButtonDefault, incrementButtonHover,
+				incrementButtonHover, e -> {
+			targetPoints++;
+			targetPointsDisplay.setText(String.valueOf(targetPoints));
 		});
 		c = new GridBagConstraints();
 		c.anchor = GridBagConstraints.FIRST_LINE_END;
@@ -409,23 +420,27 @@ public class SettingsScreen extends JPanel {
 		c.insets = new Insets((int) (0.03 * h), 0, 0, (int) (0.02 * w));
 		c.weightx = 1;
 		c.weighty = 1;
-		generalContent.add(targetPtsInc, c);
+		generalContent.add(targetPointsIncrementButton, c);
 
-		targetPtsDec = new OptionButton(0.06 * w, 0.06 * w, decrementButtonDefault, decrementButtonHover, decrementButtonHover, e -> {
-			targetPts--;
-			if (targetPts < 1) {
-				targetPts = 1;
+		// Target Points Decrement Button
+		targetPointsDecrementButton = new OptionButton(0.06 * w, 0.06 * w,
+				decrementButtonDefault, decrementButtonHover,
+				decrementButtonHover, e -> {
+			targetPoints--;
+			if (targetPoints < 1) {
+				targetPoints = 1;
 			}
-			targetPtsDisplay.setText(String.valueOf(targetPts));
+			targetPointsDisplay.setText(String.valueOf(targetPoints));
 		});
 		c = new GridBagConstraints();
 		c.anchor = GridBagConstraints.FIRST_LINE_START;
 		c.gridx = 3;
 		c.gridy = 1;
-		c.insets = new Insets((int) (0.03 * h), (int) (0.02 * w), 0, (int) (0.2 * w));
+		c.insets = new Insets(
+				(int) (0.03 * h), (int) (0.02 * w), 0, (int) (0.2 * w));
 		c.weightx = 1;
 		c.weighty = 1;
-		generalContent.add(targetPtsDec, c);
+		generalContent.add(targetPointsDecrementButton, c);
 
 		generalLayer.add(generalContent, new GridBagConstraints());
 		generalLayer.setLayer(generalContent, 1);
@@ -434,6 +449,7 @@ public class SettingsScreen extends JPanel {
 		add(general, GENERAL_PAGE);
 
 		/* Time Settings Page */
+		time = new JPanel();
 		time.setBackground(Color.black);
 		time.setLayout(new GridBagLayout());
 		time.setPreferredSize(new Dimension(w, h));
@@ -763,8 +779,8 @@ public class SettingsScreen extends JPanel {
 		return minimumWordLength;
 	}
 
-	public int getTargetPts() {
-		return targetPts;
+	public int getTargetPoints() {
+		return targetPoints;
 	}
 
 	public int getInitTime() {

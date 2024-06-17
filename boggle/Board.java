@@ -431,52 +431,75 @@ public class Board implements MouseListener {
 		}
 		// Reset words found.
 		wordsFound = new WordList();
-		// Shake the board
+		// Shake the board.
 		shuffle();
 	}
 
 	/**
-	 * Checks if the w
-	 * @param s
-	 * @return
+	 * This method checks if the word is valid.
+	 * @param s the current word.
+	 * @return the word in the dictionary.
 	 */
 	public boolean isValidWord(String s) {
 		return dictionary.contains(s) && s.length() >= mainFrame.getMinimumWordLength();
 	}
 
+	/**
+	 * This method checks if the word is new.
+	 * @param s the current word.
+	 * @return the word.
+	 */
 	public boolean isNewWord(String s) {
 		return !wordsFound.contains(s);
 	}
 
+	/**
+	 * This method switches the turn
+	 */
 	public void switchTurn() {
-		plrTurn = ++plrTurn % 2; // Switch between 0 and 1
-
+		// Add turn counter and % value by 2.
+		plrTurn = ++plrTurn % 2; // Switch between 0 and 1.
 		switch (plrTurn) {
 			case 0:
 				if (!isAI) {
+					// End player 2 turn.
 					plr2.endTurn();
+					// Increment player 2 timer.
 					plr2.getTimer().increment(mainFrame.getTimeIncrement());
 				} else {
+					// End AI turn.
 					ai.endTurn();
+					// Increment AI time.
 					ai.getTimer().increment(mainFrame.getTimeIncrement());
+					// Set pass button visible.
 					passBtn.setVisible(true);
 				}
+				// Start player 1's turn.
 				plr1.startTurn();
 				break;
 			case 1:
+				// End player 1 turn.
 				plr1.endTurn();
+				// Increment player 1 timer.
 				plr1.getTimer().increment(mainFrame.getTimeIncrement());
 				if (!isAI) {
+					// Start Player 2's turn.
 					plr2.startTurn();
 				} else {
+					// Remove pass button from game screen.
 					passBtn.setVisible(false);
+					// Start AI's turn.
 					ai.startTurn();
+					// Set a timer for AI's turn.
 					Timer waitUntil = new Timer(100, e -> {
+						// Return AI's word
 						if (!ai.isWordFound()) return;
-
+						// Switch the turn to player 1.
 						switchTurn();
+						// Stop AI timer.
 						((Timer) e.getSource()).stop();
 					});
+					// Exit the method.
 					waitUntil.start();
 					return;
 				}
@@ -484,35 +507,54 @@ public class Board implements MouseListener {
 		}
 	}
 
+	/**
+	 * This method will pause the game
+	 */
 	public void pause() {
+		// Pause player 1 timer.
 		plr1.getTimer().pause();
 		if (!isAI) {
+			// Pause player 2 timer.
 			plr2.getTimer().pause();
 		} else {
+			// Pause AI timer.
 			ai.getTimer().pause();
 		}
 	}
 
+	/**
+	 * This method will resume the game after pausing
+	 */
 	public void resume() {
 		switch (plrTurn) {
+			// Start player 1 timer.
 			case 0 -> plr1.getTimer().start();
 			case 1 -> {
 				if (!isAI) {
+					// Start Player 2 timer.
 					plr2.getTimer().start();
 				} else {
+					// Start AI timer.
 					ai.getTimer().start();
 				}
 			}
 		}
 	}
 
+	/**
+	 * This method shuffles the board.
+	 */
 	public void shuffle() {
 		for (int i = 0; i < 5; i++) {
 			for (int j = 0; j < 5; j++) {
 				Random rand = new Random();
+				// Set a random x coordinate.
 				int x = rand.nextInt(5);
+				// Set a random y coordinate.
 				int y = rand.nextInt(5);
+				// Set the new character at the x and y coordinate.
 				char[] tmp = dice[x][y].getFaces();
+				// Swap the character with the previous location.
 				dice[x][y].setFaces(dice[i][j].getFaces());
 				dice[i][j].setFaces(tmp);
 				dice[i][j].roll();
@@ -521,6 +563,17 @@ public class Board implements MouseListener {
 		}
 	}
 
+	/**
+	 * This method draws the connection between two dice
+	 * @param x The x-coordinate of the first dice.
+	 * @param y The y-coordinate of the first dice.
+	 * @param dx The x-coordinate of the second dice relative to the first dice.
+	 *           Either -1, 0, or 1.
+	 * @param dy The y-coordinate of the second dice relative to the first dice.
+	 *           Either -1, 0, or 1.
+	 * @param state The state of the connection
+	 *                 0 for default, 1 for hold, 2 for new, 3 for old
+	 */
 	public void connect(int x, int y, int dx, int dy, int state) {
 		if (lines[x][y][dx + 1][dy + 1] == null) return;
 
@@ -578,6 +631,11 @@ public class Board implements MouseListener {
 		}
 	}
 
+	/**
+	 * This method gets the points based of the word.
+	 * @param s the current word
+	 * @return the points
+	 */
 	public int getPoints(String s) {
 		return switch (s.length()) {
 			case 0, 1, 2 -> 0;
@@ -589,40 +647,59 @@ public class Board implements MouseListener {
 		};
 	}
 
+	/**
+	 * This method processes a valid word.
+	 * @param s the current word.
+	 */
 	public void processValidWord(String s) {
 		try {
+			// Set audio file for the valid word sound effect
 			validWordSfx = AudioSystem.getAudioInputStream(getClass().getResourceAsStream("assets/ValidWord.wav"));
 			validWordClip = AudioSystem.getClip();
+			// Open and play sound effect clip.
 			validWordClip.open(validWordSfx);
 		} catch (UnsupportedAudioFileException ex) {
+			// Handle if file is invalid file type.
 			System.err.println("Error: Invalid file type, unable to play sound effect");
 			ex.printStackTrace();
 		} catch (IOException ex) {
+			// Handle if unable to read sound file.
 			System.err.println("Error: Unable to read sound file");
 			ex.printStackTrace();
 		} catch (LineUnavailableException ex) {
+			// Handle if there is no line to read.
 			System.err.println("Error: No line to read");
 			ex.printStackTrace();
 		}
+		// Play the valid sound effect.
 		validWordClip.start();
 
+		// Set points based on the points for the word.
 		int pts = getPoints(s);
+		// Add points to the game screen table.
 		wordsFound.add(s);
 		wordList.addWord(s, pts);
 		switch (plrTurn) {
 			case 0:
+				// Add player 1 points.
 				plr1.addPoints(pts);
 				break;
 			case 1:
 				if (!isAI) {
+					// Add player 2 points.
 					plr2.addPoints(pts);
 				} else {
+					// Add ai points.
 					ai.addPoints(pts);
 				}
 				break;
 		}
 	}
 
+	/**
+	 * This method will clear the board.
+	 * @param state
+	 */
 	public void clearBoard(int state) {
 		switch (state) {
 			case 1:

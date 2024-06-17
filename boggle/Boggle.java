@@ -313,7 +313,7 @@ public class Boggle extends JFrame {
 	 */
 	public void updateSettings() {
 		minimumWordLength = settingsScreen.getMinimumWordLength();
-		targetPoints = settingsScreen.getTargetPts();
+		targetPoints = settingsScreen.getTargetPoints();
 		initialTime = settingsScreen.getInitTime();
 		timeIncrement = settingsScreen.getTimeIncrement();
 		AIDifficulty = settingsScreen.getAIDifficulty();
