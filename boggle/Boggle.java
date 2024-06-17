@@ -65,12 +65,9 @@ public class Boggle extends JFrame {
 		this.setContentPane(modeSelectionScreen);
 		repaint();
 	}
-	public void gameScreen(boolean isAgainstAI) {
-		if (isAgainstAI != gameScreen.isAgainstAI()) {
-			gameScreen = new GameScreen(this, isAgainstAI);
-		}
+	public void gameScreen(boolean isAI) {
 		this.setContentPane(gameScreen);
-		gameScreen.getBoard().shuffle();
+		gameScreen.resetGame(isAI);
 		gameScreen.resumeGame();
 		gameScreen.startBgm();
 		repaint();
@@ -125,7 +122,7 @@ public class Boggle extends JFrame {
 	}
 
 	public boolean isAgainstAI() {
-		return gameScreen.isAgainstAI();
+		return gameScreen.isAI();
 	}
 
 	public int getMinWordLen() {
@@ -160,11 +157,6 @@ public class Boggle extends JFrame {
 	public void repaint() {
 		super.revalidate();
 		super.repaint();
-	}
-
-	public void restartGame() {
-		gameScreen = new GameScreen(this, isAgainstAI());
-		gameScreen(isAgainstAI());
 	}
 
 	public int getScreenWidth() {

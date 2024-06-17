@@ -1,9 +1,11 @@
 package boggle;
 
+import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
 
 public class OptionButton extends JLabel implements MouseListener {
 	private Dimension size;
@@ -11,6 +13,9 @@ public class OptionButton extends JLabel implements MouseListener {
 	private ImageIcon defaultIcon;
 	private ImageIcon hoverIcon;
 	private ImageIcon pressIcon;
+
+	private AudioInputStream clickSfx;
+	private Clip clickClip;
 
 	ButtonClicked action;
 
@@ -31,6 +36,21 @@ public class OptionButton extends JLabel implements MouseListener {
 		setIcon(this.defaultIcon);
 
 		addMouseListener(this);
+
+		try {
+			clickSfx = AudioSystem.getAudioInputStream(getClass().getResourceAsStream("assets/ClickSound.wav"));
+			clickClip = AudioSystem.getClip();
+			clickClip.open(clickSfx);
+		} catch (UnsupportedAudioFileException e) {
+			System.err.println("Error: Invalid file type, unable to play sound effect");
+			e.printStackTrace();
+		} catch (IOException e) {
+			System.err.println("Error: Unable to read sound file");
+			e.printStackTrace();
+		} catch (LineUnavailableException e) {
+			System.err.println("Error: No line to read");
+			e.printStackTrace();
+		}
 	}
 
 	public ImageIcon getDefaultIcon() {
@@ -51,6 +71,8 @@ public class OptionButton extends JLabel implements MouseListener {
 	 */
 	@Override
 	public void mouseClicked(MouseEvent e) {
+		clickClip.start();
+
 		action.clicked(e);
 	}
 

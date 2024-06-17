@@ -59,19 +59,11 @@ public class WordList {
 	}
 
 	public void addWord(String word, int pt) {
-		GridBagConstraints c = new GridBagConstraints();
-
-		JLabel wordLabel = new JLabel(word);
-		wordLabel.setMinimumSize(new Dimension((int) (0.18 * w), (int) (0.02 * h)));
-		wordLabel.setPreferredSize(new Dimension((int) (0.18 * w), (int) (0.02 * h)));
-		c.gridx = 0;
-		c.gridy = 1;
-
-		JLabel ptLabel = new JLabel(String.valueOf(pt));
-		wordLabel.setMinimumSize(new Dimension((int) (0.05475 * w), (int) (0.02 * h)));
-		wordLabel.setPreferredSize(new Dimension((int) (0.05475 * w), (int) (0.02 * h)));
-
 		data.addRow(new Object[] { word, pt });
+	}
+
+	public void clear() {
+		data.setRowCount(0);
 	}
 
 	private static class ScrollBarUI extends BasicScrollBarUI {

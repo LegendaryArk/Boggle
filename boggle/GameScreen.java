@@ -1,10 +1,9 @@
 package boggle;
 
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
+import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 
 import static javax.swing.BorderFactory.createEmptyBorder;
 
@@ -54,10 +53,13 @@ public class GameScreen extends JPanel {
 	private Clip bgmClip;
 
 	private Boggle mainFrame;
+	private boolean isAI;
 
 	public GameScreen(Boggle mainFrame, boolean ai) {
 		this.mainFrame = mainFrame;
 		int w = mainFrame.getScreenWidth(), h = mainFrame.getScreenHeight();
+
+		this.isAI = ai;
 
 		GridBagConstraints c;
 
@@ -286,14 +288,6 @@ public class GameScreen extends JPanel {
 
 		this.add(layers, new GridBagConstraints());
 
-		try {
-			calmBgm = AudioSystem.getAudioInputStream(getClass().getResource("assets/CalmBGM.wav"));
-			intenseBgm = AudioSystem.getAudioInputStream(getClass().getResource("assets/IntenseBGM.wav"));
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.err.println("Error: Unable to load BGM");
-		}
-
 		pauseGame();
 	}
 
@@ -307,13 +301,25 @@ public class GameScreen extends JPanel {
 	public void resumeGame() {
 		board.resume();
 	}
+	public void resetGame(boolean isAI) {
+		this.isAI = isAI;
+		plr2Label.setText(isAI ? "λBoggle" : "Player 2");
+		wordList.clear();
+		board.setAI(isAI);
+	}
 
 	public void startBgm() {
+		if (bgmClip != null && bgmClip.isRunning()) {
+			return;
+		}
+
 		try {
+			calmBgm = AudioSystem.getAudioInputStream(getClass().getResource("assets/CalmBGM.wav"));
+			intenseBgm = AudioSystem.getAudioInputStream(getClass().getResource("assets/IntenseBGM.wav"));
 			bgmClip = AudioSystem.getClip();
 			switch (mainFrame.getBgmType()) {
 				case 0:
-					if (isAgainstAI()) {
+					if (isAI()) {
 						if (mainFrame.getAIDifficulty() <= 1) {
 							bgmClip.open(calmBgm);
 						} else {
@@ -331,8 +337,8 @@ public class GameScreen extends JPanel {
 					break;
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
 			System.err.println("Error: Unable to start BGM");
+			e.printStackTrace();
 		}
 
 		bgmClip.loop(Clip.LOOP_CONTINUOUSLY);
@@ -340,9 +346,16 @@ public class GameScreen extends JPanel {
 	public void stopBgm() {
 		bgmClip.stop();
 		bgmClip.close();
+		try {
+			calmBgm.close();
+			intenseBgm.close();
+		} catch (IOException e) {
+			System.err.println("Error: Unable to reset BGM");
+			e.printStackTrace();
+		}
 	}
 
-	public boolean isAgainstAI() {
-		return board.isAgainstAI();
+	public boolean isAI() {
+		return board.isAI();
 	}
 }

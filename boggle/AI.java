@@ -51,7 +51,7 @@ public class AI extends Player {
 	private void search(int r, int c, String s, int p, boolean found) {
 		if (p == s.length() - 1) {
 			if (!found) {
-				if (board.getWordsEntered().query(s)) {
+				if (board.getWordsEntered().query(s.toUpperCase())) {
 					return;
 				}
 

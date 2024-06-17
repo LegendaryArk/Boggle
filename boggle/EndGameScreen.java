@@ -12,7 +12,7 @@ public class EndGameScreen extends JPanel {
 	private ImageIcon draw = new ImageIcon(getClass().getResource("assets/DrawBg.gif"));
 	private ImageIcon plr1 = new ImageIcon(getClass().getResource("assets/Plr1WinBg.gif"));
 	private ImageIcon plr2 = new ImageIcon(getClass().getResource("assets/Plr2WinBg.gif"));
-	private ImageIcon lambdaBoggle = new ImageIcon(getClass().getResource("assets/Plr2WinBg.gif"));
+	private ImageIcon lambdaBoggle = new ImageIcon(getClass().getResource("assets/AIWinBg.gif"));
 
 	private JButton homeBtn = new JButton();
 	private JButton replayBtn = new JButton();

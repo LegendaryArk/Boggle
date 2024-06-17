@@ -9,6 +9,7 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 
 /**
  * This class contains the panel for the menu screen.
@@ -158,22 +159,31 @@ public class MenuScreen extends JPanel {
 		layers.setLayer(content, 1);
 
 		this.add(layers, new GridBagConstraints());
+	}
+
+	public void startBgm() {
+		if (bgmClip != null && bgmClip.isRunning()) {
+			return;
+		}
 
 		try {
 			menuBgm = AudioSystem.getAudioInputStream(getClass().getResource("assets/MenuBGM.wav"));
 			bgmClip = AudioSystem.getClip();
 			bgmClip.open(menuBgm);
 		} catch (Exception e) {
-			e.printStackTrace();
 			System.err.println("Error: Unable to start Menu BGM");
+			e.printStackTrace();
 		}
-	}
-
-	public void startBgm() {
 		bgmClip.loop(Clip.LOOP_CONTINUOUSLY);
 	}
 	public void stopBgm() {
 		bgmClip.stop();
 		bgmClip.close();
+		try {
+			menuBgm.close();
+		} catch (IOException e) {
+			System.err.println("Error: Unable to reset Menu BGM");
+			e.printStackTrace();
+		}
 	}
 }

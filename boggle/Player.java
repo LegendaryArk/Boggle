@@ -26,6 +26,10 @@ public class Player {
 		points += increment;
 		ptsDisplay.setText(String.valueOf(points));
 	}
+	public void resetPoints() {
+		points = 0;
+		ptsDisplay.setText(String.valueOf(points));
+	}
 	public int getPoints() {
 		return points;
 	}

@@ -596,7 +596,7 @@ public class GuideScreen extends JPanel {
 		c.insets = new Insets((int) (0.04 * h), (int) (0.04 * h), 0, 0);
 		settingsInfo4Content.add(settingsInfo4ReturnBtn, c);
 
-		settingsInfo4PrevBtn = new OptionButton(0.05 * w, 0.05 * w, prevDefault, prevHover, prevPress, e -> cl.show(this, SETTINGS_INFO_PAGE_2));
+		settingsInfo4PrevBtn = new OptionButton(0.05 * w, 0.05 * w, prevDefault, prevHover, prevPress, e -> cl.show(this, SETTINGS_INFO_PAGE_3));
 		c = new GridBagConstraints();
 		c.anchor = GridBagConstraints.FIRST_LINE_START;
 		c.gridx = 0;

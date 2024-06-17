@@ -1,11 +1,13 @@
 package boggle;
 
+import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -63,16 +65,27 @@ public class Board implements MouseListener {
 	private WordList wordList;
 	private OptionButton passBtn;
 
+	private JLabel plr2Label;
+	private JLabel plr2PtsDisplay;
+	private JLabel plr2TimeDisplay;
+
 	private Player plr1;
 	private Player plr2 = null;
 	private AI ai = null;
 	private int plrTurn = 0;
 	private boolean isAI;
 
+	private AudioInputStream selectDiceSfx;
+	private Clip selectDiceClip;
+	private AudioInputStream validWordSfx;
+	private Clip validWordClip;
+
 	public Board(Boggle mainFrame, JPanel bg, JLabel wordDisplay, WordList wordList, JLabel plr1Label, JLabel plr1PtsDisplay, JLabel plr1TimeDisplay, boolean ai, JLabel plr2Label, JLabel plr2PtsDisplay, JLabel plr2TimeDisplay, OptionButton passBtn) {
 		this.isAI = ai;
-
 		this.passBtn = passBtn;
+		this.plr2Label = plr2Label;
+		this.plr2PtsDisplay = plr2PtsDisplay;
+		this.plr2TimeDisplay = plr2TimeDisplay;
 
 		this.plr1 = new Player(plr1Label, plr1PtsDisplay, new Clock(plr1TimeDisplay, mainFrame.getInitTime(), this));
 		if (!ai) {
@@ -204,6 +217,7 @@ public class Board implements MouseListener {
 		initDict();
 
 		wordsEntered = new Trie((int) 1.1e6, 26);
+
 	}
 
 	public void initDict() {
@@ -232,8 +246,34 @@ public class Board implements MouseListener {
 	public JLabel getWordDisplay() {
 		return wordDisplay;
 	}
-	public boolean isAgainstAI() {
+	public boolean isAI() {
 		return isAI;
+	}
+
+	public void setAI(boolean isAI) {
+		resetBoard();
+		this.isAI = isAI;
+		if (!isAI) {
+			this.plr2 = new Player(plr2Label, plr2PtsDisplay, new Clock(plr2TimeDisplay, mainFrame.getInitTime(), this));
+			this.ai = null;
+		} else {
+			this.ai = new AI(this, mainFrame.getAIDifficulty(), plr2Label, plr2PtsDisplay, new Clock(plr2TimeDisplay, mainFrame.getInitTime(), this));
+			this.plr2 = null;
+		}
+	}
+
+	public void resetBoard() {
+		plr1.getTimer().reset(mainFrame.getInitTime());
+		plr1.resetPoints();
+		if (!isAI) {
+			plr2.getTimer().reset(mainFrame.getInitTime());
+			plr2.resetPoints();
+		} else {
+			ai.getTimer().reset(mainFrame.getInitTime());
+			ai.resetPoints();
+		}
+		wordsEntered = new Trie((int) 1.1e6, 26);
+		shuffle();
 	}
 
 	public boolean isValidWord(String s) {
@@ -384,6 +424,22 @@ public class Board implements MouseListener {
 	}
 
 	public void validWord(String s) {
+		try {
+			validWordSfx = AudioSystem.getAudioInputStream(getClass().getResourceAsStream("assets/ValidWord.wav"));
+			validWordClip = AudioSystem.getClip();
+			validWordClip.open(validWordSfx);
+		} catch (UnsupportedAudioFileException ex) {
+			System.err.println("Error: Invalid file type, unable to play sound effect");
+			ex.printStackTrace();
+		} catch (IOException ex) {
+			System.err.println("Error: Unable to read sound file");
+			ex.printStackTrace();
+		} catch (LineUnavailableException ex) {
+			System.err.println("Error: No line to read");
+			ex.printStackTrace();
+		}
+		validWordClip.start();
+
 		int pts = getPoints(s);
 		wordsEntered.insert(s);
 		wordList.addWord(s, pts);
@@ -529,6 +585,22 @@ public class Board implements MouseListener {
 		if (!wordSelected.isEmpty()) return;
 		if (isAI && plrTurn == 1) return;
 
+		try {
+			selectDiceSfx = AudioSystem.getAudioInputStream(getClass().getResourceAsStream("assets/SelectDice.wav"));
+			selectDiceClip = AudioSystem.getClip();
+			selectDiceClip.open(selectDiceSfx);
+		} catch (UnsupportedAudioFileException ex) {
+			System.err.println("Error: Invalid file type, unable to play sound effect");
+			ex.printStackTrace();
+		} catch (IOException ex) {
+			System.err.println("Error: Unable to read sound file");
+			ex.printStackTrace();
+		} catch (LineUnavailableException ex) {
+			System.err.println("Error: No line to read");
+			ex.printStackTrace();
+		}
+		selectDiceClip.start();
+
 		for (int i = 0; i < 5; i++) {
 			for (int j = 0; j < 5; j++) {
 				if (e.getSource() == dice[i][j].getCenter()) {
@@ -584,6 +656,22 @@ public class Board implements MouseListener {
 	@Override
 	public void mouseEntered(MouseEvent e) {
 		if (!startedSelection) return;
+
+		try {
+			selectDiceSfx = AudioSystem.getAudioInputStream(getClass().getResourceAsStream("assets/SelectDice.wav"));
+			selectDiceClip = AudioSystem.getClip();
+			selectDiceClip.open(selectDiceSfx);
+		} catch (UnsupportedAudioFileException ex) {
+			System.err.println("Error: Invalid file type, unable to play sound effect");
+			ex.printStackTrace();
+		} catch (IOException ex) {
+			System.err.println("Error: Unable to read sound file");
+			ex.printStackTrace();
+		} catch (LineUnavailableException ex) {
+			System.err.println("Error: No line to read");
+			ex.printStackTrace();
+		}
+		selectDiceClip.start();
 
 		for (int i = 0; i < 5; i++) {
 			for (int j = 0; j < 5; j++) {
