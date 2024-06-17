@@ -69,26 +69,19 @@ public class AI extends Player {
 		random = new Random();
 
 		// Read dictionary into ArrayList.
-		try {
-			Scanner sc = new Scanner(new File(
-					"src/Boggle/boggle/resources/dictionary.txt"));
-			while (sc.hasNextLine()) {
-				String s = sc.nextLine();
-				// Remove non letter characters.
-				for (int i = 0; i < s.length(); i++) {
-					if (s.charAt(i) - 'a' < 0 || s.charAt(i) - 'a' > 26) {
-						s = s.substring(0, i) + s.substring(i + 1);
-					}
+		Scanner sc = new Scanner(getClass()
+				.getResourceAsStream("resources/dictionary.txt"));
+		while (sc.hasNextLine()) {
+			String s = sc.nextLine();
+			// Remove non letter characters.
+			for (int i = 0; i < s.length(); i++) {
+				if (s.charAt(i) - 'a' < 0 || s.charAt(i) - 'a' > 26) {
+					s = s.substring(0, i) + s.substring(i + 1);
 				}
-				dictionary.add(s.toUpperCase());
 			}
-			sc.close();
-		} catch (FileNotFoundException e) {
-			System.err.println(
-					"Fatal error: Unable to find and load dictionary");
-			e.printStackTrace();
-			System.exit(0);
+			dictionary.add(s.toUpperCase());
 		}
+		sc.close();
 	}
 
 	/**
