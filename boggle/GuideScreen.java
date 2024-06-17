@@ -14,959 +14,955 @@ import java.awt.*;
  */
 public class GuideScreen extends JPanel {
 	// Card Layout to switch between different pages.
-	private CardLayout cl;
+	private CardLayout cardLayout;
 
 	// Default icon for return button.
-	private ImageIcon returnDefault;
+	private ImageIcon returnButtonDefault;
 	// Hover icon for return button.
-	private ImageIcon returnHover;
+	private ImageIcon returnButtonHover;
 	// Press icon for return button.
-	private ImageIcon returnPress;
+	private ImageIcon returnButtonPress;
 
 	// Default button for previous button.
-	private ImageIcon prevDefault;
+	private ImageIcon previousButtonDefault;
 	// Hover button for previous button.
-	private ImageIcon prevHover;
+	private ImageIcon previousButtonHover;
 	// Press button for previous button.
-	private ImageIcon prevPress;
+	private ImageIcon previousButtonPress;
 
 	// Default button for next button.
-	private ImageIcon nextDefault;
+	private ImageIcon nextButtonDefault;
 	// Hover button for next button.
-	private ImageIcon nextHover;
+	private ImageIcon nextButtonHover;
 	// Press button for next button.
-	private ImageIcon nextPress;
+	private ImageIcon nextButtonPress;
 
 	// Panel for the main menu.
 	private JPanel menu;
 	// ID for menu page
 	private final String MENU_PAGE = "Menu Page";
 	// Layered pane for the main menu.
-	private JLayeredPane menuLayer;
+	private JLayeredPane menuLayeredPane;
 	// Menu background image.
-	private ImageIcon menuBgImg;
+	private ImageIcon menuBackgroundImage;
 	// Music background image.
-	private JLabel menuBg;
+	private JLabel menuBackground;
 	// Holds menu buttons.
 	private JPanel menuContent;
 	// Button to return to menu.
-	private OptionButton menuReturnBtn;
+	private OptionButton menuReturnButton;
 
 	// Button to game Information screen
-	private OptionButton gameInformationBtn;
+	private OptionButton gameInformationButton;
 	// Default button for gameInformation button.
-	private ImageIcon gameInformationDefault;
+	private ImageIcon gameInformationButtonDefault;
 	// Hover button for gameInformation button.
-	private ImageIcon gameInformationHover;
+	private ImageIcon gameInformationButtonHover;
 	// Press button for gameInformation button.
-	private ImageIcon gameInformationPress;
+	private ImageIcon gameInformationButtonPress;
 
 	// Button to points breakdown screen
-	private OptionButton pointsBreakdownBtn;
+	private OptionButton pointsBreakdownButton;
 	// Default button for points breakdown button.
-	private ImageIcon pointsBreakdownDefault;
+	private ImageIcon pointsBreakdownButtonDefault;
 	// Hover button for points breakdown button.
-	private ImageIcon pointsBreakdownHover;
+	private ImageIcon pointsBreakdownButtonHover;
 	// Press button for points breakdown button.
-	private ImageIcon pointsBreakdownPress;
+	private ImageIcon pointsBreakdownButtonPress;
 
 	// Button to settings info screen
-	private OptionButton settingsInformationBtn;
+	private OptionButton settingsInformationButton;
 	// Default button for settings Information button.
-	private ImageIcon settingsInformationDefault;
+	private ImageIcon settingsInformationButtonDefault;
 	// Hover button for settings Information button.
-	private ImageIcon settingsInformationHover;
+	private ImageIcon settingsInformationButtonHover;
 	// Press button for settings Information button.
-	private ImageIcon settingsInformationPress;
+	private ImageIcon settingsInformationButtonPress;
 
 	// Panel for the first page of game info
-	private JPanel gameInformation1;
+	private JPanel gameInformationOne;
 	// ID for game info page 1.
 	private final String GAME_Information_PAGE_1 = "Game Info Page 1";
 	// Layered pane for game info page 1.
-	private JLayeredPane gameInformation1Layer;
+	private JLayeredPane gameInformationOneLayeredPane;
 	// Image for the game info page 1.
-	private ImageIcon gameInformation1Img;
+	private ImageIcon gameInformationOneImage;
 	// Label to hold the game info page 1 display.
-	private JLabel gameInformation1Pg;
+	private JLabel gameInformationOneLabel;
 	// Holds game info page 1 buttons.
-	private JPanel gameInformation1Content;
+	private JPanel gameInformationOneContent;
 	// Button for game info page 1 return.
-	private OptionButton gameInformation1ReturnBtn;
+	private OptionButton gameInformationOneReturnButton;
 	// Button for game info page 1 next.
-	private OptionButton gameInformation1NextBtn;
+	private OptionButton gameInformationOneNextButton;
 
 	// Panel for the second page of game info
-	private JPanel gameInformation2;
+	private JPanel gameInformationTwo;
 	// ID for game info page 2
 	private String GAME_Information_PAGE_2 = "Game Information Page 2";
 	// Layered pane for game info page 2
-	private JLayeredPane gameInformation2Layer;
+	private JLayeredPane gameInformationTwoLayeredPane;
 	// Image for game info page 2
-	private ImageIcon gameInformation2Img;
+	private ImageIcon gameInformationTwoImage;
 	// Label to hold the game info page 2 display
-	private JLabel gameInformation2Pg;
+	private JLabel gameInformationTwoLabel;
 	// Holds game info page 2 buttons
-	private JPanel gameInformation2Content;
+	private JPanel gameInformationTwoContent;
 	// Button for game info page 2 return
-	private OptionButton gameInformation2ReturnBtn;
+	private OptionButton gameInformationTowReturnButton;
 	// Button for game info page 2 previous
-	private OptionButton gameInformation2PrevBtn;
+	private OptionButton gameInformationTwoPreviousButton;
 	// Button for game info page 2 next
-	private OptionButton gameInformation2NextBtn;
+	private OptionButton gameInformationTwoNextButton;
 
 	// Panel for the third page of game info
-	private JPanel gameInformation3;
+	private JPanel gameInformationThree;
 	// ID for game info page 3.
 	private String GAME_Information_PAGE_3 = "Game Information Page 3";
 	// Layered pane for game info page 3.
-	private JLayeredPane gameInformation3Layer;
+	private JLayeredPane gameInformationThreeLayeredPane;
 	// Image for game info page 3.
-	private ImageIcon gameInformation3Img;
+	private ImageIcon gameInformationThreeImage;
 	// Label to hold the game info page 3 display.
-	private JLabel gameInformation3Pg;
+	private JLabel gameInformationThreeLabel;
 	// Holds game info page 3 buttons.
-	private JPanel gameInformation3Content;
+	private JPanel gameInformationThreeContent;
 	// Button for game info page 3 return.
-	private OptionButton gameInformation3ReturnBtn;
+	private OptionButton gameInformationThreeReturnButton;
 	// Button for game info page 3 previous.
-	private OptionButton gameInformation3PrevBtn;
+	private OptionButton gameInformationThreePreviousButton;
 
 	// Panel for the points breakdown screen.
 	private JPanel pointsBreakdown;
 	// ID for points breakdown.
 	private String POINTS_BREAKDOWN_PAGE = "Points Breakdown Page";
 	// Layered pane points breakdown.
-	private JLayeredPane pointsBreakdownLayer;
+	private JLayeredPane pointsBreakdownLayeredPane;
 	// Image for points breakdown.
-	private ImageIcon pointsBreakdownImg;
+	private ImageIcon pointsBreakdownImage;
 	// Label to hold points breakdown display.
-	private JLabel pointsBreakdownPg;
+	private JLabel pointsBreakdownLabel;
 	// Holds points breakdown buttons.
 	private JPanel pointsBreakdownContent;
 	// Button for points breakdown return.
-	private OptionButton pointsBreakdownReturnBtn;
+	private OptionButton pointsBreakdownReturnButton;
 
 	// Panel for the settings info page 1.
-	private JPanel settingsInformation1;
+	private JPanel settingsInformationOne;
 	// ID for settings info page 1.
 	private String SETTINGS_INFORMATION_PAGE_1 = "Settings Information Page 1";
 	// Layered pane setting info page 1.
-	private JLayeredPane settingsInformation1Layer;
+	private JLayeredPane settingsInformationOneLayeredPane;
 	// Image for settings info page 1.
-	private ImageIcon settingsInformation1Img;
+	private ImageIcon settingsInformationOneImage;
 	// Label to hold settings info page 1 display.
-	private JLabel settingsInformation1Pg;
+	private JLabel settingsInformationOneLabel;
 	// Holds points settings info page 1 display.
-	private JPanel settingsInformation1Content;
+	private JPanel settingsInformationOneContent;
 	// Button for settings info page 1 return,
-	private OptionButton settingsInformation1ReturnBtn;
+	private OptionButton settingsInformationOneReturnButton;
 	// Button for settings info page 1 next.
-	private OptionButton settingsInformation1NextBtn;
+	private OptionButton settingsInformationOneNextButton;
 
 	// Panel for the settings information page 2.
-	private JPanel settingsInformation2;
+	private JPanel settingsInformationTwo;
 	// ID for settings information page 2.
 	private String SETTINGS_INFORMATION_PAGE_2 = "Settings Information Page 2";
 	// Layered pane for settings information page 2.
-	private JLayeredPane settingsInformation2Layer;
+	private JLayeredPane settingsInformationTwoLayeredPane;
 	// Image for settings information page 2.
-	private ImageIcon settingsInformation2Img;
+	private ImageIcon settingsInformationTwoImage;
 	// Label to hold settings information page 2 display.
-	private JLabel settingsInformation2Pg;
+	private JLabel settingsInformationTwoLabel;
 	// Holds settings information page 2 buttons.
-	private JPanel settingsInformation2Content;
+	private JPanel settingsInformationTwoContent;
 	// Button for settings information page 2 return.
-	private OptionButton settingsInformation2ReturnBtn;
+	private OptionButton settingsInformationTwoReturnButton;
 	// Button for settings information page 2 previous.
-	private OptionButton settingsInformation2PrevBtn;
+	private OptionButton settingsInformationTwoPreviousButton;
 	// Button for settings information page 2 next.
-	private OptionButton settingsInformation2NextBtn;
+	private OptionButton settingsInformationTwoNextButton;
 
 	// Panel for the settings information page 3.
-	private JPanel settingsInformation3;
+	private JPanel settingsInformationThree;
 	// ID for settings information page 3.
 	private String SETTINGS_INFORMATION_PAGE_3 = "Settings Information Page 3";
 	// Layered pane for settings information page 3
-	private JLayeredPane settingsInformation3Layer;
+	private JLayeredPane settingsInformationThreeLayer;
 	// Image for settings information page 3.
-	private ImageIcon settingsInformation3Img;
+	private ImageIcon settingsInformationThreeImage;
 	// Label to hold settings information page 3 display.
-	private JLabel settingsInformation3Pg;
+	private JLabel settingsInformationThreeLabel;
 	// Holds settings information page 3 buttons.
-	private JPanel settingsInformation3Content;
+	private JPanel settingsInformationThreeContent;
 	// Button for settings information page 3 return.
-	private OptionButton settingsInformation3ReturnBtn;
+	private OptionButton settingsInformationThreeReturnButton;
 	// Button for settings information page 3 previous.
-	private OptionButton settingsInformation3PrevBtn;
+	private OptionButton settingsInformationThreePreviousButton;
 	// Button for settings information page 3 next.
-	private OptionButton settingsInformation3NextBtn;
+	private OptionButton settingsInformationThreeNextButton;
 
 	// Panel for the settings information page 4.
-	private JPanel settingsInformation4 = new JPanel();
+	private JPanel settingsInformationFour;
 	// ID for settings information page 4.
 	private String SETTINGS_INFORMATION_PAGE_4 = "Settings Information Page 4";
 	// Layered pane for settings information page 4.
-	private JLayeredPane settingsInformation4Layer;
+	private JLayeredPane settingsInformationFourLayeredPane;
 	// Image for settings information page 4.
-	private ImageIcon settingsInformation4Img;
+	private ImageIcon settingsInformationFourImage;
 	// Label to hold settings information page 4 display.
-	private JLabel settingsInformation4Pg;
+	private JLabel settingsInformationFourLabel;
 	// Holds settings information page 4 buttons.
-	private JPanel settingsInformation4Content;
+	private JPanel settingsInformationFourContent;
 	// Button for settings information page 4 return.
-	private OptionButton settingsInformation4ReturnBtn;
+	private OptionButton settingsInformationFourReturnButton;
 	// Button for settings information page 4 previous.
-	private OptionButton settingsInformation4PrevBtn;
-
-	// Main frame for game.
-	private Boggle mainFrame;
+	private OptionButton settingsInformationFourPreviousBtn;
 
 	/**
 	 * Constructor
 	 * @param mainFrame main frame for game
 	 */
 	public GuideScreen(Boggle mainFrame) {
-		this.mainFrame = mainFrame;
 		// Get the width and height of the frame
-		int w = mainFrame.getScreenWidth(), h = mainFrame.getScreenHeight();
+		int width = mainFrame.getScreenWidth(), height = mainFrame.getScreenHeight();
 
-		// Set frame layout to Card Layout
-		this.cl = new CardLayout();
+		// Instantiate cardLayout.
+		cardLayout = new CardLayout();
 
 		// Return Button Icons.
-		returnDefault = new ImageIcon(
+		returnButtonDefault = new ImageIcon(
 				getClass().getResource("assets/ReturnBtnDefault.png"));
-		returnHover = new ImageIcon(
+		returnButtonHover = new ImageIcon(
 				getClass().getResource("assets/ReturnBtnHover.png"));
-		returnPress = new ImageIcon(
+		returnButtonPress = new ImageIcon(
 				getClass().getResource("assets/ReturnBtnPress.png"));
 
 		// Previous Button Icons.
-		prevDefault = new ImageIcon(
+		previousButtonDefault = new ImageIcon(
 				getClass().getResource("assets/PreviousBtnDefault.png"));
-		prevHover = new ImageIcon(
+		previousButtonHover = new ImageIcon(
 				getClass().getResource("assets/PreviousBtnHover.png"));
-		prevPress = new ImageIcon(
+		previousButtonPress = new ImageIcon(
 				getClass().getResource("assets/PreviousBtnPress.png"));
 
 		// Next Button Icons.
-		nextDefault = new ImageIcon(
+		nextButtonDefault = new ImageIcon(
 				getClass().getResource("assets/NextBtnDefault.png"));
-		nextHover = new ImageIcon(
+		nextButtonHover = new ImageIcon(
 				getClass().getResource("assets/NextBtnHover.png"));
-		nextPress = new ImageIcon(
+		nextButtonPress = new ImageIcon(
 				getClass().getResource("assets/NextBtnPress.png"));
 
 		// Set background colour to black
 		this.setBackground(Color.black);
-		this.setLayout(cl);
+		this.setLayout(cardLayout);
 		// Set dimensions of the screen
-		this.setPreferredSize(new Dimension(w, h));
+		this.setPreferredSize(new Dimension(width, height));
 
 
-		GridBagConstraints c;
+		GridBagConstraints constraints;
 
 		/* Menu Page. */
 		menu = new JPanel();
 		menu.setBackground(Color.black);
 		menu.setLayout(new GridBagLayout());
-		menu.setPreferredSize(new Dimension(w, h));
+		menu.setPreferredSize(new Dimension(width, height));
 
 		// Menu Layered.
-		menuLayer = new JLayeredPane();
-		menuLayer.setBackground(Color.black);
-		menuLayer.setLayout(new GridBagLayout());
-		menuLayer.setPreferredSize(new Dimension(w, h));
+		menuLayeredPane = new JLayeredPane();
+		menuLayeredPane.setBackground(Color.black);
+		menuLayeredPane.setLayout(new GridBagLayout());
+		menuLayeredPane.setPreferredSize(new Dimension(width, height));
 
 		// Menu Background.
-		menuBgImg = new ImageIcon(
+		menuBackgroundImage = new ImageIcon(
 				getClass().getResource("assets/GuideScreenMenuBg.png"));
-		menuBg = new JLabel();
-		menuBg.setIcon(new ImageIcon(menuBgImg.getImage()
-				.getScaledInstance(w, h, Image.SCALE_SMOOTH)));
-		menuBg.setBackground(Color.black);
-		c = new GridBagConstraints();
-		c.gridx = 0;
-		c.gridy = 0;
-		c.gridwidth = 1;
-		c.gridheight = 3;
-		menuLayer.add(menuBg, c);
-		menuLayer.setLayer(menuBg, 0);
+		menuBackground = new JLabel();
+		menuBackground.setIcon(new ImageIcon(menuBackgroundImage.getImage()
+				.getScaledInstance(width, height, Image.SCALE_SMOOTH)));
+		menuBackground.setBackground(Color.black);
+		constraints = new GridBagConstraints();
+		constraints.gridx = 0;
+		constraints.gridy = 0;
+		constraints.gridwidth = 1;
+		constraints.gridheight = 3;
+		menuLayeredPane.add(menuBackground, constraints);
+		menuLayeredPane.setLayer(menuBackground, 0);
 
 		// Menu Buttons.
 		menuContent = new JPanel();
 		menuContent.setLayout(new GridBagLayout());
 		menuContent.setBackground(Color.black);
-		menuContent.setPreferredSize(new Dimension(w, h));
+		menuContent.setPreferredSize(new Dimension(width, height));
 		menuContent.setOpaque(false);
 
 		// Menu Return Button.
-		menuReturnBtn = new OptionButton(0.06 * w, 0.06 * w,
-				returnDefault, returnHover, returnPress,
+		menuReturnButton = new OptionButton(0.06 * width, 0.06 * width,
+				returnButtonDefault, returnButtonHover, returnButtonPress,
 				e -> mainFrame.menuScreen());
-		c = new GridBagConstraints();
-		c.anchor = GridBagConstraints.FIRST_LINE_START;
-		c.gridx = 0;
-		c.gridy = 0;
-		c.insets = new Insets(
-				(int) (0.04 * h), (int) (0.04 * h), 0,0);
-		menuContent.add(menuReturnBtn, c);
+		constraints = new GridBagConstraints();
+		constraints.anchor = GridBagConstraints.FIRST_LINE_START;
+		constraints.gridx = 0;
+		constraints.gridy = 0;
+		constraints.insets = new Insets(
+				(int) (0.04 * height), (int) (0.04 * height), 0,0);
+		menuContent.add(menuReturnButton, constraints);
 
 		// Game Information Menu Button.
-		gameInformationDefault = new ImageIcon(
+		gameInformationButtonDefault = new ImageIcon(
 				getClass().getResource("assets/GameInfoBtnDefault.png"));
-		gameInformationHover = new ImageIcon(
+		gameInformationButtonHover = new ImageIcon(
 				getClass().getResource("assets/GameInfoBtnHover.png"));
-		gameInformationPress = new ImageIcon(
+		gameInformationButtonPress = new ImageIcon(
 				getClass().getResource("assets/GameInfoBtnPress.png"));
-		gameInformationBtn = new OptionButton(0.5 * w, 0.15 * h,
-				gameInformationDefault, gameInformationHover,
-				gameInformationPress,
-				e -> cl.show(this, GAME_Information_PAGE_1));
-		c = new GridBagConstraints();
-		c.gridx = 0;
-		c.gridy = 0;
-		c.insets = new Insets((int) (0.35 * h), 0, 0, 0);
-		c.weightx = 1;
-		c.weighty = 1;
-		menuContent.add(gameInformationBtn, c);
+		gameInformationButton = new OptionButton(0.5 * width, 0.15 * height,
+				gameInformationButtonDefault, gameInformationButtonHover,
+				gameInformationButtonPress,
+				e -> cardLayout.show(this, GAME_Information_PAGE_1));
+		constraints = new GridBagConstraints();
+		constraints.gridx = 0;
+		constraints.gridy = 0;
+		constraints.insets = new Insets((int) (0.35 * height), 0, 0, 0);
+		constraints.weightx = 1;
+		constraints.weighty = 1;
+		menuContent.add(gameInformationButton, constraints);
 
 		// Points Breakdown Menu Button.
-		pointsBreakdownDefault = new ImageIcon(getClass()
+		pointsBreakdownButtonDefault = new ImageIcon(getClass()
 				.getResource("assets/PointsBreakdownBtnDefault.png"));
-		pointsBreakdownHover = new ImageIcon(getClass()
+		pointsBreakdownButtonHover = new ImageIcon(getClass()
 				.getResource("assets/PointsBreakdownBtnHover.png"));
-		pointsBreakdownPress = new ImageIcon(getClass()
+		pointsBreakdownButtonPress = new ImageIcon(getClass()
 				.getResource("assets/PointsBreakdownBtnPress.png"));
-		pointsBreakdownBtn = new OptionButton(0.5 * w, 0.15 * h,
-				pointsBreakdownDefault, pointsBreakdownHover,
-				pointsBreakdownPress,
-				e -> cl.show(this, POINTS_BREAKDOWN_PAGE));
-		c = new GridBagConstraints();
-		c.gridx = 0;
-		c.gridy = 1;
-		c.weightx = 1;
-		c.weighty = 1;
-		menuContent.add(pointsBreakdownBtn, c);
+		pointsBreakdownButton = new OptionButton(0.5 * width, 0.15 * height,
+				pointsBreakdownButtonDefault, pointsBreakdownButtonHover,
+				pointsBreakdownButtonPress,
+				e -> cardLayout.show(this, POINTS_BREAKDOWN_PAGE));
+		constraints = new GridBagConstraints();
+		constraints.gridx = 0;
+		constraints.gridy = 1;
+		constraints.weightx = 1;
+		constraints.weighty = 1;
+		menuContent.add(pointsBreakdownButton, constraints);
 
 		// Settings Information Menu Button.
-		settingsInformationDefault = new ImageIcon(getClass()
+		settingsInformationButtonDefault = new ImageIcon(getClass()
 				.getResource("assets/SettingsInfoBtnDefault.png"));
-		settingsInformationHover = new ImageIcon(getClass()
+		settingsInformationButtonHover = new ImageIcon(getClass()
 				.getResource("assets/SettingsInfoBtnHover.png"));
-		settingsInformationPress = new ImageIcon(getClass()
+		settingsInformationButtonPress = new ImageIcon(getClass()
 				.getResource("assets/SettingsInfoBtnPress.png"));
-		settingsInformationBtn = new OptionButton(0.5 * w, 0.15 * h,
-				settingsInformationDefault, settingsInformationHover,
-				settingsInformationPress,
-				e -> cl.show(this, SETTINGS_INFORMATION_PAGE_1));
-		c = new GridBagConstraints();
-		c.gridx = 0;
-		c.gridy = 2;
-		c.insets = new Insets(0, 0, (int) (0.05 * h), 0);
-		c.weightx = 1;
-		c.weighty = 1;
-		menuContent.add(settingsInformationBtn, c);
+		settingsInformationButton = new OptionButton(0.5 * width, 0.15 * height,
+				settingsInformationButtonDefault, settingsInformationButtonHover,
+				settingsInformationButtonPress,
+				e -> cardLayout.show(this, SETTINGS_INFORMATION_PAGE_1));
+		constraints = new GridBagConstraints();
+		constraints.gridx = 0;
+		constraints.gridy = 2;
+		constraints.insets = new Insets(0, 0, (int) (0.05 * height), 0);
+		constraints.weightx = 1;
+		constraints.weighty = 1;
+		menuContent.add(settingsInformationButton, constraints);
 
 		// Adding buttons to the layered pane.
-		menuLayer.add(menuContent, new GridBagConstraints());
-		menuLayer.setLayer(menuContent, 1);
+		menuLayeredPane.add(menuContent, new GridBagConstraints());
+		menuLayeredPane.setLayer(menuContent, 1);
 
 		// Add the screen to the panel.
-		menu.add(menuLayer, new GridBagConstraints());
+		menu.add(menuLayeredPane, new GridBagConstraints());
 
 		// Add the page to the main panel.
 		add(menu, MENU_PAGE);
 		// Display the menu page as the initial screen.
-		cl.show(this, MENU_PAGE);
+		cardLayout.show(this, MENU_PAGE);
 
 		/* Game Information Page 1. */
-		gameInformation1 = new JPanel();
-		gameInformation1.setBackground(Color.black);
-		gameInformation1.setLayout(new GridBagLayout());
-		gameInformation1.setPreferredSize(new Dimension(w, h));
+		gameInformationOne = new JPanel();
+		gameInformationOne.setBackground(Color.black);
+		gameInformationOne.setLayout(new GridBagLayout());
+		gameInformationOne.setPreferredSize(new Dimension(width, height));
 
 		// Game Information Page 1 Layers.
-		gameInformation1Layer = new JLayeredPane();
-		gameInformation1Layer.setBackground(Color.black);
-		gameInformation1Layer.setLayout(new GridBagLayout());
-		gameInformation1Layer.setPreferredSize(new Dimension(w, h));
+		gameInformationOneLayeredPane = new JLayeredPane();
+		gameInformationOneLayeredPane.setBackground(Color.black);
+		gameInformationOneLayeredPane.setLayout(new GridBagLayout());
+		gameInformationOneLayeredPane.setPreferredSize(new Dimension(width, height));
 
 		// Game Information 1.
-		gameInformation1Img = new ImageIcon(getClass()
+		gameInformationOneImage = new ImageIcon(getClass()
 				.getResource("assets/GuideScreenGameInfo1.png"));
-		gameInformation1Pg = new JLabel();
-		gameInformation1Pg.setIcon(new ImageIcon(gameInformation1Img.getImage()
-				.getScaledInstance(w, h, Image.SCALE_SMOOTH)));
-		gameInformation1Pg.setBackground(Color.black);
-		c = new GridBagConstraints();
-		c.gridx = 0;
-		c.gridy = 0;
-		c.gridwidth = 2;
-		c.gridheight = 1;
-		gameInformation1Layer.add(gameInformation1Pg, c);
-		gameInformation1Layer.setLayer(gameInformation1Pg, 0);
+		gameInformationOneLabel = new JLabel();
+		gameInformationOneLabel.setIcon(new ImageIcon(gameInformationOneImage.getImage()
+				.getScaledInstance(width, height, Image.SCALE_SMOOTH)));
+		gameInformationOneLabel.setBackground(Color.black);
+		constraints = new GridBagConstraints();
+		constraints.gridx = 0;
+		constraints.gridy = 0;
+		constraints.gridwidth = 2;
+		constraints.gridheight = 1;
+		gameInformationOneLayeredPane.add(gameInformationOneLabel, constraints);
+		gameInformationOneLayeredPane.setLayer(gameInformationOneLabel, 0);
 
 		// Game Information 1 Buttons.
-		gameInformation1Content = new JPanel();
-		gameInformation1Content.setLayout(new GridBagLayout());
-		gameInformation1Content.setBackground(Color.black);
-		gameInformation1Content.setPreferredSize(new Dimension(w, h));
-		gameInformation1Content.setOpaque(false);
+		gameInformationOneContent = new JPanel();
+		gameInformationOneContent.setLayout(new GridBagLayout());
+		gameInformationOneContent.setBackground(Color.black);
+		gameInformationOneContent.setPreferredSize(new Dimension(width, height));
+		gameInformationOneContent.setOpaque(false);
 
 		// Game Information 1 Return Button.
-		gameInformation1ReturnBtn = new OptionButton(0.06 * w,
-				0.06 * w, returnDefault, returnHover, returnPress,
-				e -> cl.show(this, MENU_PAGE));
-		c = new GridBagConstraints();
-		c.anchor = GridBagConstraints.FIRST_LINE_START;
-		c.gridx = 0;
-		c.gridy = 0;
-		c.insets = new Insets((int) (0.04 * h), (int) (0.04 * h), 0, 0);
-		c.weightx = 1;
-		c.weighty = 1;
-		gameInformation1Content.add(gameInformation1ReturnBtn, c);
+		gameInformationOneReturnButton = new OptionButton(0.06 * width,
+				0.06 * width, returnButtonDefault, returnButtonHover, returnButtonPress,
+				e -> cardLayout.show(this, MENU_PAGE));
+		constraints = new GridBagConstraints();
+		constraints.anchor = GridBagConstraints.FIRST_LINE_START;
+		constraints.gridx = 0;
+		constraints.gridy = 0;
+		constraints.insets = new Insets((int) (0.04 * height), (int) (0.04 * height), 0, 0);
+		constraints.weightx = 1;
+		constraints.weighty = 1;
+		gameInformationOneContent.add(gameInformationOneReturnButton, constraints);
 
 		// Game Information 1 Next Button.
-		gameInformation1NextBtn = new OptionButton(0.05 * w, 0.05 * w,
-				nextDefault, nextHover, nextPress,
-				e -> cl.show(this, GAME_Information_PAGE_2));
-		c = new GridBagConstraints();
-		c.anchor = GridBagConstraints.FIRST_LINE_END;
-		c.gridx = 1;
-		c.gridy = 0;
-		c.insets = new Insets((int) (0.22 * h), 0, 0, (int) (0.05 * h));
-		c.weightx = 1;
-		c.weighty = 1;
-		gameInformation1Content.add(gameInformation1NextBtn, c);
+		gameInformationOneNextButton = new OptionButton(0.05 * width, 0.05 * width,
+				nextButtonDefault, nextButtonHover, nextButtonPress,
+				e -> cardLayout.show(this, GAME_Information_PAGE_2));
+		constraints = new GridBagConstraints();
+		constraints.anchor = GridBagConstraints.FIRST_LINE_END;
+		constraints.gridx = 1;
+		constraints.gridy = 0;
+		constraints.insets = new Insets((int) (0.22 * height), 0, 0, (int) (0.05 * height));
+		constraints.weightx = 1;
+		constraints.weighty = 1;
+		gameInformationOneContent.add(gameInformationOneNextButton, constraints);
 
 		// Add the buttons to the layered pane.
-		gameInformation1Layer.add(gameInformation1Content,
+		gameInformationOneLayeredPane.add(gameInformationOneContent,
 				new GridBagConstraints());
-		gameInformation1Layer.setLayer(gameInformation1Content, 1);
+		gameInformationOneLayeredPane.setLayer(gameInformationOneContent, 1);
 
 		// Add the screen to the panel.
-		gameInformation1.add(gameInformation1Layer, new GridBagConstraints());
+		gameInformationOne.add(gameInformationOneLayeredPane, new GridBagConstraints());
 
 		// Add the page to the main panel.
-		add(gameInformation1, GAME_Information_PAGE_1);
+		add(gameInformationOne, GAME_Information_PAGE_1);
 
 		/* Game Information Page 2. */
-		gameInformation2 = new JPanel();
-		gameInformation2.setBackground(Color.black);
-		gameInformation2.setLayout(new GridBagLayout());
-		gameInformation2.setPreferredSize(new Dimension(w, h));
+		gameInformationTwo = new JPanel();
+		gameInformationTwo.setBackground(Color.black);
+		gameInformationTwo.setLayout(new GridBagLayout());
+		gameInformationTwo.setPreferredSize(new Dimension(width, height));
 
 		// Game Information Page 2 Layers.
-		gameInformation2Layer = new JLayeredPane();
-		gameInformation2Layer.setBackground(Color.black);
-		gameInformation2Layer.setLayout(new GridBagLayout());
-		gameInformation2Layer.setPreferredSize(new Dimension(w, h));
+		gameInformationTwoLayeredPane = new JLayeredPane();
+		gameInformationTwoLayeredPane.setBackground(Color.black);
+		gameInformationTwoLayeredPane.setLayout(new GridBagLayout());
+		gameInformationTwoLayeredPane.setPreferredSize(new Dimension(width, height));
 
 		// Game Information Page 2.
-		gameInformation2Img = new ImageIcon(getClass()
+		gameInformationTwoImage = new ImageIcon(getClass()
 				.getResource("assets/GuideScreenGameInfo2.png"));
-		gameInformation2Pg = new JLabel();
-		gameInformation2Pg.setIcon(new ImageIcon(gameInformation2Img.getImage()
-				.getScaledInstance(w, h, Image.SCALE_SMOOTH)));
-		gameInformation2Pg.setBackground(Color.black);
-		c = new GridBagConstraints();
-		c.gridx = 0;
-		c.gridy = 0;
-		c.gridwidth = 2;
-		c.gridheight = 1;
-		gameInformation2Layer.add(gameInformation2Pg, c);
-		gameInformation2Layer.setLayer(gameInformation2Pg, 0);
+		gameInformationTwoLabel = new JLabel();
+		gameInformationTwoLabel.setIcon(new ImageIcon(gameInformationTwoImage.getImage()
+				.getScaledInstance(width, height, Image.SCALE_SMOOTH)));
+		gameInformationTwoLabel.setBackground(Color.black);
+		constraints = new GridBagConstraints();
+		constraints.gridx = 0;
+		constraints.gridy = 0;
+		constraints.gridwidth = 2;
+		constraints.gridheight = 1;
+		gameInformationTwoLayeredPane.add(gameInformationTwoLabel, constraints);
+		gameInformationTwoLayeredPane.setLayer(gameInformationTwoLabel, 0);
 
 		// Game Information Page 2 Buttons.
-		gameInformation2Content = new JPanel();
-		gameInformation2Content.setLayout(new GridBagLayout());
-		gameInformation2Content.setBackground(Color.black);
-		gameInformation2Content.setPreferredSize(new Dimension(w, h));
-		gameInformation2Content.setOpaque(false);
+		gameInformationTwoContent = new JPanel();
+		gameInformationTwoContent.setLayout(new GridBagLayout());
+		gameInformationTwoContent.setBackground(Color.black);
+		gameInformationTwoContent.setPreferredSize(new Dimension(width, height));
+		gameInformationTwoContent.setOpaque(false);
 
 		// Game Information Page 2 Return Button.
-		gameInformation2ReturnBtn = new OptionButton(0.06 * w, 0.06 * w,
-				returnDefault, returnHover, returnPress,
-				e -> cl.show(this, MENU_PAGE));
-		c = new GridBagConstraints();
-		c.anchor = GridBagConstraints.FIRST_LINE_START;
-		c.gridx = 0;
-		c.gridy = 0;
-		c.insets = new Insets((int) (0.04 * h), (int) (0.04 * h), 0, 0);
-		gameInformation2Content.add(gameInformation2ReturnBtn, c);
+		gameInformationTowReturnButton = new OptionButton(0.06 * width, 0.06 * width,
+				returnButtonDefault, returnButtonHover, returnButtonPress,
+				e -> cardLayout.show(this, MENU_PAGE));
+		constraints = new GridBagConstraints();
+		constraints.anchor = GridBagConstraints.FIRST_LINE_START;
+		constraints.gridx = 0;
+		constraints.gridy = 0;
+		constraints.insets = new Insets((int) (0.04 * height), (int) (0.04 * height), 0, 0);
+		gameInformationTwoContent.add(gameInformationTowReturnButton, constraints);
 
 		// Game Information Page 2 Previous Button.
-		gameInformation2PrevBtn = new OptionButton(0.05 * w, 0.05 * w,
-				prevDefault, prevHover, prevPress,
-				e -> cl.show(this, GAME_Information_PAGE_1));
-		c = new GridBagConstraints();
-		c.anchor = GridBagConstraints.FIRST_LINE_START;
-		c.gridx = 0;
-		c.gridy = 0;
-		c.insets = new Insets((int) (0.22 * h), (int) (0.05 * h), 0, 0);
-		c.weightx = 1;
-		c.weighty = 1;
-		gameInformation2Content.add(gameInformation2PrevBtn, c);
+		gameInformationTwoPreviousButton = new OptionButton(0.05 * width, 0.05 * width,
+				previousButtonDefault, previousButtonHover, previousButtonPress,
+				e -> cardLayout.show(this, GAME_Information_PAGE_1));
+		constraints = new GridBagConstraints();
+		constraints.anchor = GridBagConstraints.FIRST_LINE_START;
+		constraints.gridx = 0;
+		constraints.gridy = 0;
+		constraints.insets = new Insets((int) (0.22 * height), (int) (0.05 * height), 0, 0);
+		constraints.weightx = 1;
+		constraints.weighty = 1;
+		gameInformationTwoContent.add(gameInformationTwoPreviousButton, constraints);
 
 		// Game Information Page 2 Next Button.
-		gameInformation2NextBtn = new OptionButton(0.05 * w, 0.05 * w,
-				nextDefault, nextHover, nextPress,
-				e -> cl.show(this, GAME_Information_PAGE_3));
-		c = new GridBagConstraints();
-		c.anchor = GridBagConstraints.FIRST_LINE_END;
-		c.gridx = 1;
-		c.gridy = 0;
-		c.insets = new Insets((int) (0.22 * h), 0, 0, (int) (0.05 * h));
-		c.weightx = 1;
-		c.weighty = 1;
-		gameInformation2Content.add(gameInformation2NextBtn, c);
+		gameInformationTwoNextButton = new OptionButton(0.05 * width, 0.05 * width,
+				nextButtonDefault, nextButtonHover, nextButtonPress,
+				e -> cardLayout.show(this, GAME_Information_PAGE_3));
+		constraints = new GridBagConstraints();
+		constraints.anchor = GridBagConstraints.FIRST_LINE_END;
+		constraints.gridx = 1;
+		constraints.gridy = 0;
+		constraints.insets = new Insets((int) (0.22 * height), 0, 0, (int) (0.05 * height));
+		constraints.weightx = 1;
+		constraints.weighty = 1;
+		gameInformationTwoContent.add(gameInformationTwoNextButton, constraints);
 
 		// Add the buttons to the layered pane.
-		gameInformation2Layer.add(gameInformation2Content,
+		gameInformationTwoLayeredPane.add(gameInformationTwoContent,
 				new GridBagConstraints());
-		gameInformation2Layer.setLayer(gameInformation2Content, 1);
+		gameInformationTwoLayeredPane.setLayer(gameInformationTwoContent, 1);
 
 		// Add the screen to the panel.
-		gameInformation2.add(gameInformation2Layer, new GridBagConstraints());
+		gameInformationTwo.add(gameInformationTwoLayeredPane, new GridBagConstraints());
 
 		// Add the page to the main panel.
-		add(gameInformation2, GAME_Information_PAGE_2);
+		add(gameInformationTwo, GAME_Information_PAGE_2);
 
 		/* Game Information Page 3. */
-		gameInformation3 = new JPanel();
-		gameInformation3.setBackground(Color.black);
-		gameInformation3.setLayout(new GridBagLayout());
-		gameInformation3.setPreferredSize(new Dimension(w, h));
+		gameInformationThree = new JPanel();
+		gameInformationThree.setBackground(Color.black);
+		gameInformationThree.setLayout(new GridBagLayout());
+		gameInformationThree.setPreferredSize(new Dimension(width, height));
 
 		// Game Information Page 3 Layers.
-		gameInformation3Layer = new JLayeredPane();
-		gameInformation3Layer.setBackground(Color.black);
-		gameInformation3Layer.setLayout(new GridBagLayout());
-		gameInformation3Layer.setPreferredSize(new Dimension(w, h));
+		gameInformationThreeLayeredPane = new JLayeredPane();
+		gameInformationThreeLayeredPane.setBackground(Color.black);
+		gameInformationThreeLayeredPane.setLayout(new GridBagLayout());
+		gameInformationThreeLayeredPane.setPreferredSize(new Dimension(width, height));
 
 		// Game Information Page 3.
-		gameInformation3Img = new ImageIcon(getClass()
+		gameInformationThreeImage = new ImageIcon(getClass()
 				.getResource("assets/GuideScreenGameInfo3.png"));
-		gameInformation3Pg = new JLabel();
-		gameInformation3Pg.setIcon(new ImageIcon(gameInformation3Img.getImage()
-				.getScaledInstance(w, h, Image.SCALE_SMOOTH)));
-		gameInformation3Pg.setBackground(Color.black);
-		c = new GridBagConstraints();
-		c.gridx = 0;
-		c.gridy = 0;
-		c.gridwidth = 2;
-		c.gridheight = 1;
-		gameInformation3Layer.add(gameInformation3Pg, c);
-		gameInformation3Layer.setLayer(gameInformation3Pg, 0);
+		gameInformationThreeLabel = new JLabel();
+		gameInformationThreeLabel.setIcon(new ImageIcon(gameInformationThreeImage.getImage()
+				.getScaledInstance(width, height, Image.SCALE_SMOOTH)));
+		gameInformationThreeLabel.setBackground(Color.black);
+		constraints = new GridBagConstraints();
+		constraints.gridx = 0;
+		constraints.gridy = 0;
+		constraints.gridwidth = 2;
+		constraints.gridheight = 1;
+		gameInformationThreeLayeredPane.add(gameInformationThreeLabel, constraints);
+		gameInformationThreeLayeredPane.setLayer(gameInformationThreeLabel, 0);
 
 		// Game Information Page 3 Buttons.
-		gameInformation3Content = new JPanel();
-		gameInformation3Content.setLayout(new GridBagLayout());
-		gameInformation3Content.setBackground(Color.black);
-		gameInformation3Content.setPreferredSize(new Dimension(w, h));
-		gameInformation3Content.setOpaque(false);
+		gameInformationThreeContent = new JPanel();
+		gameInformationThreeContent.setLayout(new GridBagLayout());
+		gameInformationThreeContent.setBackground(Color.black);
+		gameInformationThreeContent.setPreferredSize(new Dimension(width, height));
+		gameInformationThreeContent.setOpaque(false);
 
 		// Game Information Page 3 Return Button.
-		gameInformation3ReturnBtn = new OptionButton(0.06 * w, 0.06 * w,
-				returnDefault, returnHover, returnPress,
-				e -> cl.show(this, MENU_PAGE));
-		c = new GridBagConstraints();
-		c.anchor = GridBagConstraints.FIRST_LINE_START;
-		c.gridx = 0;
-		c.gridy = 0;
-		c.insets = new Insets((int) (0.04 * h), (int) (0.04 * h), 0, 0);
-		gameInformation3Content.add(gameInformation3ReturnBtn, c);
+		gameInformationThreeReturnButton = new OptionButton(0.06 * width, 0.06 * width,
+				returnButtonDefault, returnButtonHover, returnButtonPress,
+				e -> cardLayout.show(this, MENU_PAGE));
+		constraints = new GridBagConstraints();
+		constraints.anchor = GridBagConstraints.FIRST_LINE_START;
+		constraints.gridx = 0;
+		constraints.gridy = 0;
+		constraints.insets = new Insets((int) (0.04 * height), (int) (0.04 * height), 0, 0);
+		gameInformationThreeContent.add(gameInformationThreeReturnButton, constraints);
 
 		// Game Information Page 3 Previous Button.
-		gameInformation3PrevBtn = new OptionButton(0.05 * w, 0.05 * w,
-				prevDefault, prevHover, prevPress,
-				e -> cl.show(this, GAME_Information_PAGE_2));
-		c = new GridBagConstraints();
-		c.anchor = GridBagConstraints.FIRST_LINE_START;
-		c.gridx = 0;
-		c.gridy = 0;
-		c.insets = new Insets((int) (0.22 * h), (int) (0.05 * h), 0, 0);
-		c.weightx = 1;
-		c.weighty = 1;
-		gameInformation3Content.add(gameInformation3PrevBtn, c);
+		gameInformationThreePreviousButton = new OptionButton(0.05 * width, 0.05 * width,
+				previousButtonDefault, previousButtonHover, previousButtonPress,
+				e -> cardLayout.show(this, GAME_Information_PAGE_2));
+		constraints = new GridBagConstraints();
+		constraints.anchor = GridBagConstraints.FIRST_LINE_START;
+		constraints.gridx = 0;
+		constraints.gridy = 0;
+		constraints.insets = new Insets((int) (0.22 * height), (int) (0.05 * height), 0, 0);
+		constraints.weightx = 1;
+		constraints.weighty = 1;
+		gameInformationThreeContent.add(gameInformationThreePreviousButton, constraints);
 
 		// Add the buttons to the layered pane.
-		gameInformation3Layer.add(gameInformation3Content,
+		gameInformationThreeLayeredPane.add(gameInformationThreeContent,
 				new GridBagConstraints());
-		gameInformation3Layer.setLayer(gameInformation3Content, 1);
+		gameInformationThreeLayeredPane.setLayer(gameInformationThreeContent, 1);
 
 		// Add the screen to the panel.
-		gameInformation3.add(gameInformation3Layer, new GridBagConstraints());
+		gameInformationThree.add(gameInformationThreeLayeredPane, new GridBagConstraints());
 
 		// Add the page to the main panel.
-		add(gameInformation3, GAME_Information_PAGE_3);
+		add(gameInformationThree, GAME_Information_PAGE_3);
 
 		/* Points Breakdown Page. */
 		pointsBreakdown = new JPanel();
 		pointsBreakdown.setBackground(Color.black);
 		pointsBreakdown.setLayout(new GridBagLayout());
-		pointsBreakdown.setPreferredSize(new Dimension(w, h));
+		pointsBreakdown.setPreferredSize(new Dimension(width, height));
 
 		// Points Breakdown Page Layers.
-		pointsBreakdownLayer = new JLayeredPane();
-		pointsBreakdownLayer.setBackground(Color.black);
-		pointsBreakdownLayer.setLayout(new GridBagLayout());
-		pointsBreakdownLayer.setPreferredSize(new Dimension(w, h));
+		pointsBreakdownLayeredPane = new JLayeredPane();
+		pointsBreakdownLayeredPane.setBackground(Color.black);
+		pointsBreakdownLayeredPane.setLayout(new GridBagLayout());
+		pointsBreakdownLayeredPane.setPreferredSize(new Dimension(width, height));
 
 		// Points Breakdown Page.
-		pointsBreakdownImg = new ImageIcon(getClass()
+		pointsBreakdownImage = new ImageIcon(getClass()
 				.getResource("assets/GuideScreenPointsBreakdown.png"));
-		pointsBreakdownPg = new JLabel();
-		pointsBreakdownPg.setIcon(new ImageIcon(pointsBreakdownImg.getImage()
-				.getScaledInstance(w, h, Image.SCALE_SMOOTH)));
-		pointsBreakdownPg.setBackground(Color.black);
-		c = new GridBagConstraints();
-		c.gridx = 0;
-		c.gridy = 0;
-		c.gridwidth = 1;
-		c.gridheight = 1;
-		pointsBreakdownLayer.add(pointsBreakdownPg, c);
-		pointsBreakdownLayer.setLayer(pointsBreakdownPg, 0);
+		pointsBreakdownLabel = new JLabel();
+		pointsBreakdownLabel.setIcon(new ImageIcon(pointsBreakdownImage.getImage()
+				.getScaledInstance(width, height, Image.SCALE_SMOOTH)));
+		pointsBreakdownLabel.setBackground(Color.black);
+		constraints = new GridBagConstraints();
+		constraints.gridx = 0;
+		constraints.gridy = 0;
+		constraints.gridwidth = 1;
+		constraints.gridheight = 1;
+		pointsBreakdownLayeredPane.add(pointsBreakdownLabel, constraints);
+		pointsBreakdownLayeredPane.setLayer(pointsBreakdownLabel, 0);
 
 		// Points Breakdown Page Buttons.
 		pointsBreakdownContent = new JPanel();
 		pointsBreakdownContent.setLayout(new GridBagLayout());
 		pointsBreakdownContent.setBackground(Color.black);
-		pointsBreakdownContent.setPreferredSize(new Dimension(w, h));
+		pointsBreakdownContent.setPreferredSize(new Dimension(width, height));
 		pointsBreakdownContent.setOpaque(false);
 
 		// Points Breakdown Page Return Button.
-		pointsBreakdownReturnBtn = new OptionButton(0.06 * w, 0.06 * w,
-				returnDefault, returnHover, returnPress,
-				e -> cl.show(this, MENU_PAGE));
-		c = new GridBagConstraints();
-		c.anchor = GridBagConstraints.FIRST_LINE_START;
-		c.gridx = 0;
-		c.gridy = 0;
-		c.insets = new Insets((int) (0.04 * h), (int) (0.04 * h), 0, 0);
-		c.weightx = 1;
-		c.weighty = 1;
-		pointsBreakdownContent.add(pointsBreakdownReturnBtn, c);
+		pointsBreakdownReturnButton = new OptionButton(0.06 * width, 0.06 * width,
+				returnButtonDefault, returnButtonHover, returnButtonPress,
+				e -> cardLayout.show(this, MENU_PAGE));
+		constraints = new GridBagConstraints();
+		constraints.anchor = GridBagConstraints.FIRST_LINE_START;
+		constraints.gridx = 0;
+		constraints.gridy = 0;
+		constraints.insets = new Insets((int) (0.04 * height), (int) (0.04 * height), 0, 0);
+		constraints.weightx = 1;
+		constraints.weighty = 1;
+		pointsBreakdownContent.add(pointsBreakdownReturnButton, constraints);
 
 		// Add buttons to the layered pane.
-		pointsBreakdownLayer.add(pointsBreakdownContent,
+		pointsBreakdownLayeredPane.add(pointsBreakdownContent,
 				new GridBagConstraints());
-		pointsBreakdownLayer.setLayer(pointsBreakdownContent, 1);
+		pointsBreakdownLayeredPane.setLayer(pointsBreakdownContent, 1);
 
 		// Add the screen to the panel.
-		pointsBreakdown.add(pointsBreakdownLayer, new GridBagConstraints());
+		pointsBreakdown.add(pointsBreakdownLayeredPane, new GridBagConstraints());
 
 		// Add the page to the main panel.
 		add(pointsBreakdown, POINTS_BREAKDOWN_PAGE);
 
 		/* Settings Information Page 1. */
-		settingsInformation1 = new JPanel();
-		settingsInformation1.setBackground(Color.black);
-		settingsInformation1.setLayout(new GridBagLayout());
-		settingsInformation1.setPreferredSize(new Dimension(w, h));
+		settingsInformationOne = new JPanel();
+		settingsInformationOne.setBackground(Color.black);
+		settingsInformationOne.setLayout(new GridBagLayout());
+		settingsInformationOne.setPreferredSize(new Dimension(width, height));
 
 		// Settings Information Page 1 Layers.
-		settingsInformation1Layer = new JLayeredPane();
-		settingsInformation1Layer.setBackground(Color.black);
-		settingsInformation1Layer.setLayout(new GridBagLayout());
-		settingsInformation1Layer.setPreferredSize(new Dimension(w, h));
+		settingsInformationOneLayeredPane = new JLayeredPane();
+		settingsInformationOneLayeredPane.setBackground(Color.black);
+		settingsInformationOneLayeredPane.setLayout(new GridBagLayout());
+		settingsInformationOneLayeredPane.setPreferredSize(new Dimension(width, height));
 
 		// Settings Information Page 1.
-		settingsInformation1Img = new ImageIcon(getClass()
+		settingsInformationOneImage = new ImageIcon(getClass()
 				.getResource("assets/GuideScreenSettingsInfo1.png"));
-		settingsInformation1Pg = new JLabel();
-		settingsInformation1Pg.setIcon(new ImageIcon(settingsInformation1Img
-				.getImage().getScaledInstance(w, h, Image.SCALE_SMOOTH)));
-		settingsInformation1Pg.setBackground(Color.black);
-		c = new GridBagConstraints();
-		c.gridx = 0;
-		c.gridy = 0;
-		c.gridwidth = 2;
-		c.gridheight = 1;
-		settingsInformation1Layer.add(settingsInformation1Pg, c);
-		settingsInformation1Layer.setLayer(settingsInformation1Pg, 0);
+		settingsInformationOneLabel = new JLabel();
+		settingsInformationOneLabel.setIcon(new ImageIcon(settingsInformationOneImage
+				.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH)));
+		settingsInformationOneLabel.setBackground(Color.black);
+		constraints = new GridBagConstraints();
+		constraints.gridx = 0;
+		constraints.gridy = 0;
+		constraints.gridwidth = 2;
+		constraints.gridheight = 1;
+		settingsInformationOneLayeredPane.add(settingsInformationOneLabel, constraints);
+		settingsInformationOneLayeredPane.setLayer(settingsInformationOneLabel, 0);
 
 		// Settings Information Page 1 Buttons.
-		settingsInformation1Content = new JPanel();
-		settingsInformation1Content.setLayout(new GridBagLayout());
-		settingsInformation1Content.setBackground(Color.black);
-		settingsInformation1Content.setPreferredSize(new Dimension(w, h));
-		settingsInformation1Content.setOpaque(false);
+		settingsInformationOneContent = new JPanel();
+		settingsInformationOneContent.setLayout(new GridBagLayout());
+		settingsInformationOneContent.setBackground(Color.black);
+		settingsInformationOneContent.setPreferredSize(new Dimension(width, height));
+		settingsInformationOneContent.setOpaque(false);
 
 		// Settings Information Page 1 Return Button.
-		settingsInformation1ReturnBtn = new OptionButton(0.06 * w, 0.06 * w,
-				returnDefault, returnHover, returnPress,
-				e -> cl.show(this, MENU_PAGE));
-		c = new GridBagConstraints();
-		c.anchor = GridBagConstraints.FIRST_LINE_START;
-		c.gridx = 0;
-		c.gridy = 0;
-		c.insets = new Insets((int) (0.04 * h), (int) (0.04 * h), 0, 0);
-		c.weightx = 1;
-		c.weighty = 1;
-		settingsInformation1Content.add(settingsInformation1ReturnBtn, c);
+		settingsInformationOneReturnButton = new OptionButton(0.06 * width, 0.06 * width,
+				returnButtonDefault, returnButtonHover, returnButtonPress,
+				e -> cardLayout.show(this, MENU_PAGE));
+		constraints = new GridBagConstraints();
+		constraints.anchor = GridBagConstraints.FIRST_LINE_START;
+		constraints.gridx = 0;
+		constraints.gridy = 0;
+		constraints.insets = new Insets((int) (0.04 * height), (int) (0.04 * height), 0, 0);
+		constraints.weightx = 1;
+		constraints.weighty = 1;
+		settingsInformationOneContent.add(settingsInformationOneReturnButton, constraints);
 
 		// Settings Information Page 1 Next Button.
-		settingsInformation1NextBtn = new OptionButton(0.05 * w, 0.05 * w,
-				nextDefault, nextHover, nextPress,
-				e -> cl.show(this, SETTINGS_INFORMATION_PAGE_2));
-		c = new GridBagConstraints();
-		c.anchor = GridBagConstraints.FIRST_LINE_END;
-		c.gridx = 1;
-		c.gridy = 0;
-		c.insets = new Insets((int) (0.22 * h), 0, 0, (int) (0.05 * h));
-		c.weightx = 1;
-		c.weighty = 1;
-		settingsInformation1Content.add(settingsInformation1NextBtn, c);
+		settingsInformationOneNextButton = new OptionButton(0.05 * width, 0.05 * width,
+				nextButtonDefault, nextButtonHover, nextButtonPress,
+				e -> cardLayout.show(this, SETTINGS_INFORMATION_PAGE_2));
+		constraints = new GridBagConstraints();
+		constraints.anchor = GridBagConstraints.FIRST_LINE_END;
+		constraints.gridx = 1;
+		constraints.gridy = 0;
+		constraints.insets = new Insets((int) (0.22 * height), 0, 0, (int) (0.05 * height));
+		constraints.weightx = 1;
+		constraints.weighty = 1;
+		settingsInformationOneContent.add(settingsInformationOneNextButton, constraints);
 
 		// Add buttons to the layered pane.
-		settingsInformation1Layer.add(settingsInformation1Content,
+		settingsInformationOneLayeredPane.add(settingsInformationOneContent,
 				new GridBagConstraints());
-		settingsInformation1Layer.setLayer(settingsInformation1Content, 1);
+		settingsInformationOneLayeredPane.setLayer(settingsInformationOneContent, 1);
 
 		// Add the screen to the panel.
-		settingsInformation1.add(settingsInformation1Layer,
+		settingsInformationOne.add(settingsInformationOneLayeredPane,
 				new GridBagConstraints());
 
 		// Add the page to the main panel.
-		add(settingsInformation1, SETTINGS_INFORMATION_PAGE_1);
+		add(settingsInformationOne, SETTINGS_INFORMATION_PAGE_1);
 
 		/* Settings Information Page 2. */
-		settingsInformation2 = new JPanel();
-		settingsInformation2.setBackground(Color.black);
-		settingsInformation2.setLayout(new GridBagLayout());
-		settingsInformation2.setPreferredSize(new Dimension(w, h));
+		settingsInformationTwo = new JPanel();
+		settingsInformationTwo.setBackground(Color.black);
+		settingsInformationTwo.setLayout(new GridBagLayout());
+		settingsInformationTwo.setPreferredSize(new Dimension(width, height));
 
 		// Settings Information Page 2 Layers.
-		settingsInformation2Layer = new JLayeredPane();
-		settingsInformation2Layer.setBackground(Color.black);
-		settingsInformation2Layer.setLayout(new GridBagLayout());
-		settingsInformation2Layer.setPreferredSize(new Dimension(w, h));
+		settingsInformationTwoLayeredPane = new JLayeredPane();
+		settingsInformationTwoLayeredPane.setBackground(Color.black);
+		settingsInformationTwoLayeredPane.setLayout(new GridBagLayout());
+		settingsInformationTwoLayeredPane.setPreferredSize(new Dimension(width, height));
 
 		// Settings Information Page 2.
-		settingsInformation2Img = new ImageIcon(getClass()
+		settingsInformationTwoImage = new ImageIcon(getClass()
 				.getResource("assets/GuideScreenSettingsInfo2.png"));
-		settingsInformation2Pg = new JLabel();
-		settingsInformation2Pg.setIcon(new ImageIcon(settingsInformation2Img
-				.getImage().getScaledInstance(w, h, Image.SCALE_SMOOTH)));
-		settingsInformation2Pg.setBackground(Color.black);
-		c = new GridBagConstraints();
-		c.gridx = 0;
-		c.gridy = 0;
-		c.gridwidth = 2;
-		c.gridheight = 1;
-		settingsInformation2Layer.add(settingsInformation2Pg, c);
-		settingsInformation2Layer.setLayer(settingsInformation2Pg, 0);
+		settingsInformationTwoLabel = new JLabel();
+		settingsInformationTwoLabel.setIcon(new ImageIcon(settingsInformationTwoImage
+				.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH)));
+		settingsInformationTwoLabel.setBackground(Color.black);
+		constraints = new GridBagConstraints();
+		constraints.gridx = 0;
+		constraints.gridy = 0;
+		constraints.gridwidth = 2;
+		constraints.gridheight = 1;
+		settingsInformationTwoLayeredPane.add(settingsInformationTwoLabel, constraints);
+		settingsInformationTwoLayeredPane.setLayer(settingsInformationTwoLabel, 0);
 
 		// Settings Information Page 2 Button.
-		settingsInformation2Content = new JPanel();
-		settingsInformation2Content.setLayout(new GridBagLayout());
-		settingsInformation2Content.setBackground(Color.black);
-		settingsInformation2Content.setPreferredSize(new Dimension(w, h));
-		settingsInformation2Content.setOpaque(false);
+		settingsInformationTwoContent = new JPanel();
+		settingsInformationTwoContent.setLayout(new GridBagLayout());
+		settingsInformationTwoContent.setBackground(Color.black);
+		settingsInformationTwoContent.setPreferredSize(new Dimension(width, height));
+		settingsInformationTwoContent.setOpaque(false);
 
 		// Settings Information Page 2 Return Button.
-		settingsInformation2ReturnBtn = new OptionButton(0.06 * w, 0.06 * w,
-				returnDefault, returnHover, returnPress, 
-				e -> cl.show(this, MENU_PAGE));
-		c = new GridBagConstraints();
-		c.anchor = GridBagConstraints.FIRST_LINE_START;
-		c.gridx = 0;
-		c.gridy = 0;
-		c.insets = new Insets((int) (0.04 * h), (int) (0.04 * h), 0, 0);
-		settingsInformation2Content.add(settingsInformation2ReturnBtn, c);
+		settingsInformationTwoReturnButton = new OptionButton(0.06 * width, 0.06 * width,
+				returnButtonDefault, returnButtonHover, returnButtonPress,
+				e -> cardLayout.show(this, MENU_PAGE));
+		constraints = new GridBagConstraints();
+		constraints.anchor = GridBagConstraints.FIRST_LINE_START;
+		constraints.gridx = 0;
+		constraints.gridy = 0;
+		constraints.insets = new Insets((int) (0.04 * height), (int) (0.04 * height), 0, 0);
+		settingsInformationTwoContent.add(settingsInformationTwoReturnButton, constraints);
 
 		// Settings Information Page 2 Previous Button.
-		settingsInformation2PrevBtn = new OptionButton(0.05 * w, 0.05 * w,
-				prevDefault, prevHover, prevPress,
-				e -> cl.show(this, SETTINGS_INFORMATION_PAGE_1));
-		c = new GridBagConstraints();
-		c.anchor = GridBagConstraints.FIRST_LINE_START;
-		c.gridx = 0;
-		c.gridy = 0;
-		c.insets = new Insets((int) (0.22 * h), (int) (0.05 * h), 0, 0);
-		c.weightx = 1;
-		c.weighty = 1;
-		settingsInformation2Content.add(settingsInformation2PrevBtn, c);
+		settingsInformationTwoPreviousButton = new OptionButton(0.05 * width, 0.05 * width,
+				previousButtonDefault, previousButtonHover, previousButtonPress,
+				e -> cardLayout.show(this, SETTINGS_INFORMATION_PAGE_1));
+		constraints = new GridBagConstraints();
+		constraints.anchor = GridBagConstraints.FIRST_LINE_START;
+		constraints.gridx = 0;
+		constraints.gridy = 0;
+		constraints.insets = new Insets((int) (0.22 * height), (int) (0.05 * height), 0, 0);
+		constraints.weightx = 1;
+		constraints.weighty = 1;
+		settingsInformationTwoContent.add(settingsInformationTwoPreviousButton, constraints);
 
 		// Settings Information Page 2 Next Button.
-		settingsInformation2NextBtn = new OptionButton(0.05 * w, 0.05 * w,
-				nextDefault, nextHover, nextPress,
-				e -> cl.show(this, SETTINGS_INFORMATION_PAGE_3));
-		c = new GridBagConstraints();
-		c.anchor = GridBagConstraints.FIRST_LINE_END;
-		c.gridx = 1;
-		c.gridy = 0;
-		c.insets = new Insets((int) (0.22 * h), 0, 0, (int) (0.05 * h));
-		c.weightx = 1;
-		c.weighty = 1;
-		settingsInformation2Content.add(settingsInformation2NextBtn, c);
+		settingsInformationTwoNextButton = new OptionButton(0.05 * width, 0.05 * width,
+				nextButtonDefault, nextButtonHover, nextButtonPress,
+				e -> cardLayout.show(this, SETTINGS_INFORMATION_PAGE_3));
+		constraints = new GridBagConstraints();
+		constraints.anchor = GridBagConstraints.FIRST_LINE_END;
+		constraints.gridx = 1;
+		constraints.gridy = 0;
+		constraints.insets = new Insets((int) (0.22 * height), 0, 0, (int) (0.05 * height));
+		constraints.weightx = 1;
+		constraints.weighty = 1;
+		settingsInformationTwoContent.add(settingsInformationTwoNextButton, constraints);
 
 		// Add the buttons to the layered pane.
-		settingsInformation2Layer.add(settingsInformation2Content,
+		settingsInformationTwoLayeredPane.add(settingsInformationTwoContent,
 				new GridBagConstraints());
-		settingsInformation2Layer.setLayer(settingsInformation2Content, 1);
+		settingsInformationTwoLayeredPane.setLayer(settingsInformationTwoContent, 1);
 
 		// Add the screen to the panel.
-		settingsInformation2.add(settingsInformation2Layer,
+		settingsInformationTwo.add(settingsInformationTwoLayeredPane,
 				new GridBagConstraints());
 
 		// Add the page to the main panel.
-		add(settingsInformation2, SETTINGS_INFORMATION_PAGE_2);
+		add(settingsInformationTwo, SETTINGS_INFORMATION_PAGE_2);
 
 		/* Settings Information Page 3 */
-		settingsInformation3 = new JPanel();
-		settingsInformation3.setBackground(Color.black);
-		settingsInformation3.setLayout(new GridBagLayout());
-		settingsInformation3.setPreferredSize(new Dimension(w, h));
+		settingsInformationThree = new JPanel();
+		settingsInformationThree.setBackground(Color.black);
+		settingsInformationThree.setLayout(new GridBagLayout());
+		settingsInformationThree.setPreferredSize(new Dimension(width, height));
 
 		// Settings Information Page 3 Layers.
-		settingsInformation3Layer = new JLayeredPane();
-		settingsInformation3Layer.setBackground(Color.black);
-		settingsInformation3Layer.setLayout(new GridBagLayout());
-		settingsInformation3Layer.setPreferredSize(new Dimension(w, h));
+		settingsInformationThreeLayer = new JLayeredPane();
+		settingsInformationThreeLayer.setBackground(Color.black);
+		settingsInformationThreeLayer.setLayout(new GridBagLayout());
+		settingsInformationThreeLayer.setPreferredSize(new Dimension(width, height));
 
 		// Settings Information Page 3.
-		settingsInformation3Img = new ImageIcon(getClass()
+		settingsInformationThreeImage = new ImageIcon(getClass()
 				.getResource("assets/GuideScreenSettingsInfo3.png"));
-		settingsInformation3Pg = new JLabel();
-		settingsInformation3Pg.setIcon(new ImageIcon(settingsInformation3Img
-				.getImage().getScaledInstance(w, h, Image.SCALE_SMOOTH)));
-		settingsInformation3Pg.setBackground(Color.black);
-		c = new GridBagConstraints();
-		c.gridx = 0;
-		c.gridy = 0;
-		c.gridwidth = 2;
-		c.gridheight = 1;
-		settingsInformation3Layer.add(settingsInformation3Pg, c);
-		settingsInformation3Layer.setLayer(settingsInformation3Pg, 0);
+		settingsInformationThreeLabel = new JLabel();
+		settingsInformationThreeLabel.setIcon(new ImageIcon(settingsInformationThreeImage
+				.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH)));
+		settingsInformationThreeLabel.setBackground(Color.black);
+		constraints = new GridBagConstraints();
+		constraints.gridx = 0;
+		constraints.gridy = 0;
+		constraints.gridwidth = 2;
+		constraints.gridheight = 1;
+		settingsInformationThreeLayer.add(settingsInformationThreeLabel, constraints);
+		settingsInformationThreeLayer.setLayer(settingsInformationThreeLabel, 0);
 
 		// Settings Information Page 3 Buttons.
-		settingsInformation3Content = new JPanel();
-		settingsInformation3Content.setLayout(new GridBagLayout());
-		settingsInformation3Content.setBackground(Color.black);
-		settingsInformation3Content.setPreferredSize(new Dimension(w, h));
-		settingsInformation3Content.setOpaque(false);
+		settingsInformationThreeContent = new JPanel();
+		settingsInformationThreeContent.setLayout(new GridBagLayout());
+		settingsInformationThreeContent.setBackground(Color.black);
+		settingsInformationThreeContent.setPreferredSize(new Dimension(width, height));
+		settingsInformationThreeContent.setOpaque(false);
 
 		// Settings Information Page 3 Return Button.
-		settingsInformation3ReturnBtn = new OptionButton(0.06 * w, 0.06 * w,
-				returnDefault, returnHover, returnPress,
-				e -> cl.show(this, MENU_PAGE));
-		c = new GridBagConstraints();
-		c.anchor = GridBagConstraints.FIRST_LINE_START;
-		c.gridx = 0;
-		c.gridy = 0;
-		c.insets = new Insets((int) (0.04 * h), (int) (0.04 * h), 0, 0);
-		settingsInformation3Content.add(settingsInformation3ReturnBtn, c);
+		settingsInformationThreeReturnButton = new OptionButton(0.06 * width, 0.06 * width,
+				returnButtonDefault, returnButtonHover, returnButtonPress,
+				e -> cardLayout.show(this, MENU_PAGE));
+		constraints = new GridBagConstraints();
+		constraints.anchor = GridBagConstraints.FIRST_LINE_START;
+		constraints.gridx = 0;
+		constraints.gridy = 0;
+		constraints.insets = new Insets((int) (0.04 * height), (int) (0.04 * height), 0, 0);
+		settingsInformationThreeContent.add(settingsInformationThreeReturnButton, constraints);
 
 		// Settings Information Page 3 Previous Button.
-		settingsInformation3PrevBtn = new OptionButton(0.05 * w, 0.05 * w,
-				prevDefault, prevHover, prevPress,
-				e -> cl.show(this, SETTINGS_INFORMATION_PAGE_2));
-		c = new GridBagConstraints();
-		c.anchor = GridBagConstraints.FIRST_LINE_START;
-		c.gridx = 0;
-		c.gridy = 0;
-		c.insets = new Insets((int) (0.22 * h), (int) (0.05 * h), 0, 0);
-		c.weightx = 1;
-		c.weighty = 1;
-		settingsInformation3Content.add(settingsInformation3PrevBtn, c);
+		settingsInformationThreePreviousButton = new OptionButton(0.05 * width, 0.05 * width,
+				previousButtonDefault, previousButtonHover, previousButtonPress,
+				e -> cardLayout.show(this, SETTINGS_INFORMATION_PAGE_2));
+		constraints = new GridBagConstraints();
+		constraints.anchor = GridBagConstraints.FIRST_LINE_START;
+		constraints.gridx = 0;
+		constraints.gridy = 0;
+		constraints.insets = new Insets((int) (0.22 * height), (int) (0.05 * height), 0, 0);
+		constraints.weightx = 1;
+		constraints.weighty = 1;
+		settingsInformationThreeContent.add(settingsInformationThreePreviousButton, constraints);
 
 		// Settings Information Page 3 Next Button.
-		settingsInformation3NextBtn = new OptionButton(0.05 * w, 0.05 * w,
-				nextDefault, nextHover, nextPress,
-				e -> cl.show(this, SETTINGS_INFORMATION_PAGE_4));
-		c = new GridBagConstraints();
-		c.anchor = GridBagConstraints.FIRST_LINE_END;
-		c.gridx = 1;
-		c.gridy = 0;
-		c.insets = new Insets((int) (0.22 * h), 0, 0, (int) (0.05 * h));
-		c.weightx = 1;
-		c.weighty = 1;
-		settingsInformation3Content.add(settingsInformation3NextBtn, c);
+		settingsInformationThreeNextButton = new OptionButton(0.05 * width, 0.05 * width,
+				nextButtonDefault, nextButtonHover, nextButtonPress,
+				e -> cardLayout.show(this, SETTINGS_INFORMATION_PAGE_4));
+		constraints = new GridBagConstraints();
+		constraints.anchor = GridBagConstraints.FIRST_LINE_END;
+		constraints.gridx = 1;
+		constraints.gridy = 0;
+		constraints.insets = new Insets((int) (0.22 * height), 0, 0, (int) (0.05 * height));
+		constraints.weightx = 1;
+		constraints.weighty = 1;
+		settingsInformationThreeContent.add(settingsInformationThreeNextButton, constraints);
 
 		// Add the buttons to the layered pane.
-		settingsInformation3Layer.add(settingsInformation3Content,
+		settingsInformationThreeLayer.add(settingsInformationThreeContent,
 				new GridBagConstraints());
-		settingsInformation3Layer.setLayer(settingsInformation3Content, 1);
+		settingsInformationThreeLayer.setLayer(settingsInformationThreeContent, 1);
 
 		// Add the screen to the panel.
-		settingsInformation3.add(settingsInformation3Layer,
+		settingsInformationThree.add(settingsInformationThreeLayer,
 				new GridBagConstraints());
 
 		// Add the buttons to the main panel.
-		add(settingsInformation3, SETTINGS_INFORMATION_PAGE_3);
+		add(settingsInformationThree, SETTINGS_INFORMATION_PAGE_3);
 
 		/* Settings Information Page 4. */
-		settingsInformation4 = new JPanel();
-		settingsInformation4.setBackground(Color.black);
-		settingsInformation4.setLayout(new GridBagLayout());
-		settingsInformation4.setPreferredSize(new Dimension(w, h));
+		settingsInformationFour = new JPanel();
+		settingsInformationFour.setBackground(Color.black);
+		settingsInformationFour.setLayout(new GridBagLayout());
+		settingsInformationFour.setPreferredSize(new Dimension(width, height));
 
 		// Settings Information Page 4 Layers.
-		settingsInformation4Layer = new JLayeredPane();
-		settingsInformation4Layer.setBackground(Color.black);
-		settingsInformation4Layer.setLayout(new GridBagLayout());
-		settingsInformation4Layer.setPreferredSize(new Dimension(w, h));
+		settingsInformationFourLayeredPane = new JLayeredPane();
+		settingsInformationFourLayeredPane.setBackground(Color.black);
+		settingsInformationFourLayeredPane.setLayout(new GridBagLayout());
+		settingsInformationFourLayeredPane.setPreferredSize(new Dimension(width, height));
 
 		// Settings Information Page 4.
-		settingsInformation4Img = new ImageIcon(getClass()
+		settingsInformationFourImage = new ImageIcon(getClass()
 				.getResource("assets/GuideScreenSettingsInfo4.png"));
-		settingsInformation4Pg = new JLabel();
-		settingsInformation4Pg.setIcon(new ImageIcon(settingsInformation4Img
-				.getImage().getScaledInstance(w, h, Image.SCALE_SMOOTH)));
-		settingsInformation4Pg.setBackground(Color.black);
-		c = new GridBagConstraints();
-		c.gridx = 0;
-		c.gridy = 0;
-		c.gridwidth = 2;
-		c.gridheight = 1;
-		settingsInformation4Layer.add(settingsInformation4Pg, c);
-		settingsInformation4Layer.setLayer(settingsInformation4Pg, 0);
+		settingsInformationFourLabel = new JLabel();
+		settingsInformationFourLabel.setIcon(new ImageIcon(settingsInformationFourImage
+				.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH)));
+		settingsInformationFourLabel.setBackground(Color.black);
+		constraints = new GridBagConstraints();
+		constraints.gridx = 0;
+		constraints.gridy = 0;
+		constraints.gridwidth = 2;
+		constraints.gridheight = 1;
+		settingsInformationFourLayeredPane.add(settingsInformationFourLabel, constraints);
+		settingsInformationFourLayeredPane.setLayer(settingsInformationFourLabel, 0);
 
 		// Settings Information Page 4 Buttons.
-		settingsInformation4Content = new JPanel();
-		settingsInformation4Content.setLayout(new GridBagLayout());
-		settingsInformation4Content.setBackground(Color.black);
-		settingsInformation4Content.setPreferredSize(new Dimension(w, h));
-		settingsInformation4Content.setOpaque(false);
+		settingsInformationFourContent = new JPanel();
+		settingsInformationFourContent.setLayout(new GridBagLayout());
+		settingsInformationFourContent.setBackground(Color.black);
+		settingsInformationFourContent.setPreferredSize(new Dimension(width, height));
+		settingsInformationFourContent.setOpaque(false);
 
 		// Settings Information Page 4 Return Button.
-		settingsInformation4ReturnBtn = new OptionButton(0.06 * w, 0.06 * w,
-				returnDefault, returnHover, returnPress,
-				e -> cl.show(this, MENU_PAGE));
-		c = new GridBagConstraints();
-		c.anchor = GridBagConstraints.FIRST_LINE_START;
-		c.gridx = 0;
-		c.gridy = 0;
-		c.insets = new Insets((int) (0.04 * h), (int) (0.04 * h), 0, 0);
-		settingsInformation4Content.add(settingsInformation4ReturnBtn, c);
+		settingsInformationFourReturnButton = new OptionButton(0.06 * width, 0.06 * width,
+				returnButtonDefault, returnButtonHover, returnButtonPress,
+				e -> cardLayout.show(this, MENU_PAGE));
+		constraints = new GridBagConstraints();
+		constraints.anchor = GridBagConstraints.FIRST_LINE_START;
+		constraints.gridx = 0;
+		constraints.gridy = 0;
+		constraints.insets = new Insets((int) (0.04 * height), (int) (0.04 * height), 0, 0);
+		settingsInformationFourContent.add(settingsInformationFourReturnButton, constraints);
 
 		// Settings Information Page 4 Previous Button.
-		settingsInformation4PrevBtn = new OptionButton(0.05 * w, 0.05 * w,
-				prevDefault, prevHover, prevPress,
-				e -> cl.show(this, SETTINGS_INFORMATION_PAGE_3));
-		c = new GridBagConstraints();
-		c.anchor = GridBagConstraints.FIRST_LINE_START;
-		c.gridx = 0;
-		c.gridy = 0;
-		c.insets = new Insets((int) (0.22 * h), (int) (0.05 * h), 0, 0);
-		c.weightx = 1;
-		c.weighty = 1;
-		settingsInformation4Content.add(settingsInformation4PrevBtn, c);
+		settingsInformationFourPreviousBtn = new OptionButton(0.05 * width, 0.05 * width,
+				previousButtonDefault, previousButtonHover, previousButtonPress,
+				e -> cardLayout.show(this, SETTINGS_INFORMATION_PAGE_3));
+		constraints = new GridBagConstraints();
+		constraints.anchor = GridBagConstraints.FIRST_LINE_START;
+		constraints.gridx = 0;
+		constraints.gridy = 0;
+		constraints.insets = new Insets((int) (0.22 * height), (int) (0.05 * height), 0, 0);
+		constraints.weightx = 1;
+		constraints.weighty = 1;
+		settingsInformationFourContent.add(settingsInformationFourPreviousBtn, constraints);
 
 		// Add the buttons to the layered pane.
-		settingsInformation4Layer.add(settingsInformation4Content,
+		settingsInformationFourLayeredPane.add(settingsInformationFourContent,
 				new GridBagConstraints());
-		settingsInformation4Layer.setLayer(settingsInformation4Content, 1);
+		settingsInformationFourLayeredPane.setLayer(settingsInformationFourContent, 1);
 
 		// Add the screen to the panel.
-		settingsInformation4.add(settingsInformation4Layer,
+		settingsInformationFour.add(settingsInformationFourLayeredPane,
 				new GridBagConstraints());
 
 		// Add the page to the main panel.
-		add(settingsInformation4, SETTINGS_INFORMATION_PAGE_4);
+		add(settingsInformationFour, SETTINGS_INFORMATION_PAGE_4);
 	}
 }

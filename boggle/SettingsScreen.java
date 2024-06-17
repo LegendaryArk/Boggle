@@ -9,95 +9,110 @@ package boggle;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * This class contains the settings screen.
+ */
 public class SettingsScreen extends JPanel {
-	private final CardLayout cl;
+	// Card Layout to switch between different pages.
+	private CardLayout cardLayout;
 
-	private final ImageIcon returnDefault = new ImageIcon(getClass().getResource("assets/ReturnBtnDefault.png"));
-	private final ImageIcon returnHover = new ImageIcon(getClass().getResource("assets/ReturnBtnHover.png"));
-	private final ImageIcon returnPress = new ImageIcon(getClass().getResource("assets/ReturnBtnPress.png"));
+	// Return button icons.
+	private ImageIcon returnButtonDefault;
+	private ImageIcon returnButtonHover;
+	private ImageIcon returnButtonPress;
 
-	private final JPanel menu = new JPanel();
+	// Increment button icons.
+	private ImageIcon incrementButtonDefault;
+	private ImageIcon incrementButtonHover;
+	private ImageIcon incrementButtonPress;
+
+	// Decrement button icons.
+	private ImageIcon decrementButtonDefault;
+	private ImageIcon decrementButtonHover;
+	private ImageIcon decrementButtonPress;
+
+	// Radio button icons.
+	private ImageIcon radioButtonDefault;
+	private ImageIcon radioButtonHover;
+	private ImageIcon radioButtonSelect;
+
+
+	// Settings menu components.
+	private JPanel menu;
 	private final String MENU_PAGE = "Menu Page";
-	private final JLayeredPane menuLayer = new JLayeredPane();
-	private final JLabel menuBg = new JLabel();
-	private final ImageIcon menuBgImg = new ImageIcon(getClass().getResource("assets/SettingsScreenMenuBg.png"));
-	private final JPanel menuContent = new JPanel();
-	private final OptionButton menuReturnBtn;
+	private JLayeredPane menuLayeredPane;
+	private ImageIcon menuBackgroundImage;
+	private JLabel menuBackground;
+	private JPanel menuContent;
+	private OptionButton menuReturnButton;
 
-	private final OptionButton generalBtn;
-	private final ImageIcon generalDefault = new ImageIcon(getClass().getResource("assets/GeneralBtnDefault.png"));
-	private final ImageIcon generalHover = new ImageIcon(getClass().getResource("assets/GeneralBtnHover.png"));
-	private final ImageIcon generalPress = new ImageIcon(getClass().getResource("assets/GeneralBtnPress.png"));
+	// General settings menu button.
+	private OptionButton generalButton;
+	private ImageIcon generalButtonDefault;
+	private ImageIcon generalButtonHover;
+	private ImageIcon generalButtonPress;
 
-	private final OptionButton timeBtn;
-	private final ImageIcon timeDefault = new ImageIcon(getClass().getResource("assets/TimeBtnDefault.png"));
-	private final ImageIcon timeHover = new ImageIcon(getClass().getResource("assets/TimeBtnHover.png"));
-	private final ImageIcon timePress = new ImageIcon(getClass().getResource("assets/TimeBtnPress.png"));
+	// Time control settings menu button.
+	private OptionButton timeButton;
+	private ImageIcon timeButtonDefault;
+	private ImageIcon timeButtonHover;
+	private ImageIcon timeButtonPress;
+	
+	// Difficulty settings menu button.
+	private OptionButton difficultyButton;
+	private ImageIcon difficultyButtonDefault;
+	private ImageIcon difficultyButtonHover;
+	private ImageIcon difficultyButtonPress;
 
-	private final OptionButton difficultyBtn;
-	private final ImageIcon difficultyDefault = new ImageIcon(getClass().getResource("assets/DifficultyBtnDefault.png"));
-	private final ImageIcon difficultyHover = new ImageIcon(getClass().getResource("assets/DifficultyBtnHover.png"));
-	private final ImageIcon difficultyPress = new ImageIcon(getClass().getResource("assets/DifficultyBtnPress.png"));
+	// Music settings menu button.
+	private OptionButton musicButton;
+	private ImageIcon musicButtonDefault;
+	private ImageIcon musicButtonHover;
+	private ImageIcon musicButtonPress;
 
-	private final OptionButton musicBtn;
-	private final ImageIcon musicDefault = new ImageIcon(getClass().getResource("assets/MusicBtnDefault.png"));
-	private final ImageIcon musicHover = new ImageIcon(getClass().getResource("assets/MusicBtnHover.png"));
-	private final ImageIcon musicPress = new ImageIcon(getClass().getResource("assets/MusicBtnPress.png"));
-
-	private final ImageIcon incDefault = new ImageIcon(getClass().getResource("assets/SettingsIncBtnDefault.png"));
-	private final ImageIcon incHover = new ImageIcon(getClass().getResource("assets/SettingsIncBtnHover.png"));
-	private final ImageIcon incPress = new ImageIcon(getClass().getResource("assets/SettingsIncBtnPress.png"));
-	private final ImageIcon decDefault = new ImageIcon(getClass().getResource("assets/SettingsDecBtnDefault.png"));
-	private final ImageIcon decHover = new ImageIcon(getClass().getResource("assets/SettingsDecBtnHover.png"));
-	private final ImageIcon decPress = new ImageIcon(getClass().getResource("assets/SettingsDecBtnPress.png"));
-
-	private final ImageIcon radioDefault = new ImageIcon(getClass().getResource("assets/RadioBtnDefault.png"));
-	private final ImageIcon radioHover = new ImageIcon(getClass().getResource("assets/RadioBtnHover.png"));
-	private final ImageIcon radioSelect = new ImageIcon(getClass().getResource("assets/RadioBtnSelected.png"));
-
-	private final JPanel general = new JPanel();
-	private final ImageIcon generalBgImg = new ImageIcon(getClass().getResource("assets/GeneralSettingsScreenBg.png"));
+	private JPanel general;
+	private ImageIcon generalBackgroundImage;
 	private final String GENERAL_PAGE = "General Page";
-	private final JLayeredPane generalLayer = new JLayeredPane();
-	private final JLabel generalBg = new JLabel();
-	private final JPanel generalContent = new JPanel();
-	private final OptionButton generalReturnBtn;
+	private JLayeredPane generalLayer;
+	private JLabel generalBackground;
+	private JPanel generalContent;
+	private OptionButton generalReturnButton;
+
+	private int minimumWordLength;
+	private JLabel minimumWordLengthDisplay = new JLabel();
+	private OptionButton minimumWordLengthIncrementButton;
+	private OptionButton minimumWordLengthDecrementButton;
 
 	private int targetPts;
-	private final JLabel targetPtsDisplay = new JLabel();
-	private final OptionButton targetPtsInc;
-	private final OptionButton targetPtsDec;
+	private JLabel targetPtsDisplay = new JLabel();
+	private OptionButton targetPtsInc;
+	private OptionButton targetPtsDec;
 
-	private int minWordLen;
-	private final JLabel minWordLenDisplay = new JLabel();
-	private final OptionButton minWordLenInc;
-	private final OptionButton minWordLenDec;
-
-	private final JPanel time = new JPanel();
-	private final ImageIcon timeBgImg = new ImageIcon(getClass().getResource("assets/TimeSettingsScreenBg.png"));
+	private JPanel time = new JPanel();
+	private ImageIcon timeBgImg = new ImageIcon(getClass().getResource("assets/TimeSettingsScreenBg.png"));
 	private final String TIME_PAGE = "Time Page";
-	private final JLayeredPane timeLayer = new JLayeredPane();
-	private final JLabel timeBg = new JLabel();
-	private final JPanel timeContent = new JPanel();
-	private final OptionButton timeReturnBtn;
+	private JLayeredPane timeLayer = new JLayeredPane();
+	private JLabel timeBg = new JLabel();
+	private JPanel timeContent = new JPanel();
+	private OptionButton timeReturnBtn;
 
 	private int initTime;
-	private final JLabel initTimeDisplay = new JLabel();
-	private final OptionButton initTimeInc;
-	private final OptionButton initTimeDec;
+	private JLabel initTimeDisplay = new JLabel();
+	private OptionButton initTimeInc;
+	private OptionButton initTimeDec;
 
 	private int timeIncrement;
-	private final JLabel timeIncrementDisplay = new JLabel();
-	private final OptionButton timeIncrementInc;
-	private final OptionButton timeIncrementDec;
+	private JLabel timeIncrementDisplay = new JLabel();
+	private OptionButton timeIncrementInc;
+	private OptionButton timeIncrementDec;
 
-	private final JPanel difficulty = new JPanel();
-	private final ImageIcon difficultyBgImg = new ImageIcon(getClass().getResource("assets/DifficultySettingsScreenBg.png"));
+	private JPanel difficulty = new JPanel();
+	private ImageIcon difficultyBgImg = new ImageIcon(getClass().getResource("assets/DifficultySettingsScreenBg.png"));
 	private final String DIFFICULTY_PAGE = "Difficulty Page";
-	private final JLayeredPane difficultyLayer = new JLayeredPane();
-	private final JLabel difficultyBg = new JLabel();
-	private final JPanel difficultyContent = new JPanel();
-	private final OptionButton difficultyReturnBtn;
+	private JLayeredPane difficultyLayer = new JLayeredPane();
+	private JLabel difficultyBg = new JLabel();
+	private JPanel difficultyContent = new JPanel();
+	private OptionButton difficultyReturnBtn;
 
 	private int aiDifficulty;
 	private OptionButton easyBtn;
@@ -105,20 +120,20 @@ public class SettingsScreen extends JPanel {
 	private OptionButton hardBtn;
 	private OptionButton impossibleBtn;
 
-	private final JPanel music = new JPanel();
-	private final ImageIcon musicBgImg = new ImageIcon(getClass().getResource("assets/MusicSettingsScreenBg.png"));
+	private JPanel music = new JPanel();
+	private ImageIcon musicBgImg = new ImageIcon(getClass().getResource("assets/MusicSettingsScreenBg.png"));
 	private final String MUSIC_PAGE = "Music Page";
-	private final JLayeredPane musicLayer = new JLayeredPane();
-	private final JLabel musicBg = new JLabel();
-	private final JPanel musicContent = new JPanel();
-	private final OptionButton musicReturnBtn;
+	private JLayeredPane musicLayer = new JLayeredPane();
+	private JLabel musicBg = new JLabel();
+	private JPanel musicContent = new JPanel();
+	private OptionButton musicReturnBtn;
 
 	private int musicType;
 	private OptionButton defaultMusicBtn;
 	private OptionButton calmMusicBtn;
 	private OptionButton intenseMusicBtn;
 
-	private final Boggle mainFrame;
+	private Boggle mainFrame;
 	private int prevScreen;
 
 	public SettingsScreen(Boggle mainFrame, int prevScreen) {
@@ -127,39 +142,69 @@ public class SettingsScreen extends JPanel {
 
 		this.prevScreen = prevScreen;
 
-		this.cl = new CardLayout();
+		this.cardLayout = new CardLayout();
+
+		// Return Button Icons.
+		returnButtonDefault = new ImageIcon(getClass().getResource("assets/ReturnBtnDefault.png"));
+		returnButtonHover = new ImageIcon(getClass().getResource("assets/ReturnBtnHover.png"));
+		returnButtonPress = new ImageIcon(getClass().getResource("assets/ReturnBtnPress.png"));
+
+		// Increment Button Icons.
+		incrementButtonDefault = new ImageIcon(getClass().getResource("assets/SettingsIncBtnDefault.png"));
+		incrementButtonHover = new ImageIcon(getClass().getResource("assets/SettingsIncBtnHover.png"));
+		incrementButtonPress = new ImageIcon(getClass().getResource("assets/SettingsIncBtnPress.png"));
+
+		// Decrement Button Icons.
+		decrementButtonDefault = new ImageIcon(getClass().getResource("assets/SettingsDecBtnDefault.png"));
+		decrementButtonHover = new ImageIcon(getClass().getResource("assets/SettingsDecBtnHover.png"));
+		decrementButtonPress = new ImageIcon(getClass().getResource("assets/SettingsDecBtnPress.png"));
+
+		// Radio Button Icons.
+		radioButtonDefault = new ImageIcon(getClass().getResource("assets/RadioBtnDefault.png"));
+		radioButtonHover = new ImageIcon(getClass().getResource("assets/RadioBtnHover.png"));
+		radioButtonSelect = new ImageIcon(getClass().getResource("assets/RadioBtnSelected.png"));
 
 		GridBagConstraints c;
 
+		// Panel setup.
 		this.setBackground(Color.black);
-		this.setLayout(cl);
+		this.setLayout(cardLayout);
 		this.setPreferredSize(new Dimension(w, h));
 
-		/* Menu Screen */
+		/* Menu Screen. */
+		menu = new JPanel();
 		menu.setBackground(Color.black);
 		menu.setLayout(new GridBagLayout());
 		menu.setPreferredSize(new Dimension(w, h));
 
-		menuLayer.setBackground(Color.black);
-		menuLayer.setLayout(new GridBagLayout());
-		menuLayer.setPreferredSize(new Dimension(w, h));
+		// Settings Menu Layer Pane.
+		menuLayeredPane = new JLayeredPane();
+		menuLayeredPane.setBackground(Color.black);
+		menuLayeredPane.setLayout(new GridBagLayout());
+		menuLayeredPane.setPreferredSize(new Dimension(w, h));
 
-		menuBg.setIcon(new ImageIcon(menuBgImg.getImage().getScaledInstance(w, h, Image.SCALE_SMOOTH)));
-		menuBg.setBackground(Color.black);
+		// Menu Background.
+		menuBackgroundImage = new ImageIcon(getClass().getResource("assets/SettingsScreenMenuBg.png"));
+		menuBackground = new JLabel();
+		menuBackground.setIcon(new ImageIcon(menuBackgroundImage.getImage().getScaledInstance(w, h, Image.SCALE_SMOOTH)));
+		menuBackground.setBackground(Color.black);
 		c = new GridBagConstraints();
 		c.gridx = 0;
 		c.gridy = 0;
 		c.gridwidth = 1;
 		c.gridheight = 4;
-		menuLayer.add(menuBg, c);
-		menuLayer.setLayer(menuBg, 0);
+		menuLayeredPane.add(menuBackground, c);
+		menuLayeredPane.setLayer(menuBackground, 0);
 
+		// Menu Buttons.
+		menuContent = new JPanel();
 		menuContent.setLayout(new GridBagLayout());
 		menuContent.setBackground(Color.black);
 		menuContent.setPreferredSize(new Dimension(w, h));
 		menuContent.setOpaque(false);
 
-		menuReturnBtn = new OptionButton(0.06 * w, 0.06 * w, returnDefault, returnHover, returnPress, e -> {
+		// Menu Return Button.
+		menuReturnButton = new OptionButton(0.06 * w, 0.06 * w, returnButtonDefault, returnButtonHover, returnButtonPress, e -> {
 			mainFrame.updateSettings();
 			switch (this.prevScreen) {
 				case 0 -> mainFrame.menuScreen();
@@ -171,89 +216,126 @@ public class SettingsScreen extends JPanel {
 		c.gridx = 0;
 		c.gridy = 0;
 		c.insets = new Insets((int) (0.04 * h), (int) (0.04 * h), 0, 0);
-		menuContent.add(menuReturnBtn, c);
+		menuContent.add(menuReturnButton, c);
 
-		generalBtn = new OptionButton(0.3 * w, 0.14 * h, generalDefault, generalHover, generalPress, e -> cl.show(this, GENERAL_PAGE));
+		// General Settings Menu Button.
+		generalButtonDefault = new ImageIcon(getClass().getResource("assets/GeneralBtnDefault.png"));
+		generalButtonHover = new ImageIcon(getClass().getResource("assets/GeneralBtnHover.png"));
+		generalButtonPress = new ImageIcon(getClass().getResource("assets/GeneralBtnPress.png"));
+		generalButton = new OptionButton(0.3 * w, 0.14 * h, generalButtonDefault, generalButtonHover, generalButtonPress, e -> cardLayout.show(this, GENERAL_PAGE));
 		c = new GridBagConstraints();
 		c.gridx = 0;
 		c.gridy = 0;
 		c.insets = new Insets((int) (0.3 * h), 0, 0, 0);
 		c.weightx = 1;
 		c.weighty = 1;
-		menuContent.add(generalBtn, c);
+		menuContent.add(generalButton, c);
 
-		timeBtn = new OptionButton(0.3 * w, 0.14 * h, timeDefault, timeHover, timePress, e -> cl.show(this, TIME_PAGE));
+		// Time Settings Menu Button.
+		timeButtonDefault = new ImageIcon(getClass().getResource("assets/TimeBtnDefault.png"));
+		timeButtonHover = new ImageIcon(getClass().getResource("assets/TimeBtnHover.png"));
+		timeButtonPress = new ImageIcon(getClass().getResource("assets/TimeBtnPress.png"));
+		timeButton = new OptionButton(0.3 * w, 0.14 * h, timeButtonDefault, timeButtonHover, timeButtonPress, e -> cardLayout.show(this, TIME_PAGE));
 		c = new GridBagConstraints();
 		c.gridx = 0;
 		c.gridy = 1;
 		c.weightx = 1;
 		c.weighty = 1;
-		menuContent.add(timeBtn, c);
+		menuContent.add(timeButton, c);
 
-		difficultyBtn = new OptionButton(0.3 * w, 0.14 * h, difficultyDefault, difficultyHover, difficultyPress, e -> cl.show(this, DIFFICULTY_PAGE));
+		// Difficulty Settings Menu Button.
+		difficultyButtonDefault = new ImageIcon(getClass().getResource("assets/DifficultyBtnDefault.png"));
+		difficultyButtonHover = new ImageIcon(getClass().getResource("assets/DifficultyBtnHover.png"));
+		difficultyButtonPress = new ImageIcon(getClass().getResource("assets/DifficultyBtnPress.png"));
+		difficultyButton = new OptionButton(0.3 * w, 0.14 * h, difficultyButtonDefault, difficultyButtonHover, difficultyButtonPress, e -> cardLayout.show(this, DIFFICULTY_PAGE));
 		c = new GridBagConstraints();
 		c.gridx = 0;
 		c.gridy = 2;
 		c.weightx = 1;
 		c.weighty = 1;
-		menuContent.add(difficultyBtn, c);
+		menuContent.add(difficultyButton, c);
 
-		musicBtn = new OptionButton(0.3 * w, 0.14 * h, musicDefault, musicHover, musicPress, e -> cl.show(this, MUSIC_PAGE));
+		// Music Settings Menu Button.
+		musicButtonDefault = new ImageIcon(getClass().getResource("assets/DifficultyBtnPress.png"));
+		musicButtonHover = new ImageIcon(getClass().getResource("assets/MusicBtnHover.png"));
+		musicButtonPress = new ImageIcon(getClass().getResource("assets/MusicBtnPress.png"));
+		musicButton = new OptionButton(0.3 * w, 0.14 * h, musicButtonDefault, musicButtonHover, musicButtonPress, e -> cardLayout.show(this, MUSIC_PAGE));
 		c = new GridBagConstraints();
 		c.gridx = 0;
 		c.gridy = 3;
 		c.insets = new Insets(0, 0, (int) (0.05 * h), 0);
 		c.weightx = 1;
 		c.weighty = 1;
-		menuContent.add(musicBtn, c);
+		menuContent.add(musicButton, c);
 
-		menuLayer.add(menuContent, new GridBagConstraints());
-		menuLayer.setLayer(menuContent, 1);
+		// Add the buttons to the layered pane
+		menuLayeredPane.add(menuContent, new GridBagConstraints());
+		menuLayeredPane.setLayer(menuContent, 1);
 
-		menu.add(menuLayer, new GridBagConstraints());
+		// Add the screen to the panel.
+		menu.add(menuLayeredPane, new GridBagConstraints());
 
+		// Add the page to the main panel.
 		add(menu, MENU_PAGE);
-		cl.show(this, MENU_PAGE);
+		// Set initial page to the menu page.
+		cardLayout.show(this, MENU_PAGE);
 
 		/* General Settings Page */
+		general = new JPanel();
 		general.setBackground(Color.black);
 		general.setLayout(new GridBagLayout());
 		general.setPreferredSize(new Dimension(w, h));
 
+		// General Settings Layered Pane.
+		generalLayer = new JLayeredPane();
 		generalLayer.setBackground(Color.black);
 		generalLayer.setLayout(new GridBagLayout());
 		generalLayer.setPreferredSize(new Dimension(w, h));
 
-		generalBg.setIcon(new ImageIcon(generalBgImg.getImage().getScaledInstance(w, h, Image.SCALE_SMOOTH)));
-		generalBg.setBackground(Color.black);
+		// General Settings Background.
+		generalBackgroundImage = new ImageIcon(getClass()
+				.getResource("assets/GeneralSettingsScreenBg.png"));
+		generalBackground = new JLabel();
+		generalBackground.setIcon(new ImageIcon(generalBackgroundImage
+				.getImage().getScaledInstance(w, h, Image.SCALE_SMOOTH)));
+		generalBackground.setBackground(Color.black);
 		c = new GridBagConstraints();
 		c.gridx = 0;
 		c.gridy = 0;
 		c.gridwidth = 4;
 		c.gridheight = 2;
-		generalLayer.add(generalBg, c);
-		generalLayer.setLayer(generalBg, 0);
+		generalLayer.add(generalBackground, c);
+		generalLayer.setLayer(generalBackground, 0);
 
+		// General Settings Displays and Buttons
+		generalContent = new JPanel();
 		generalContent.setLayout(new GridBagLayout());
 		generalContent.setBackground(Color.black);
 		generalContent.setPreferredSize(new Dimension(w, h));
 		generalContent.setOpaque(false);
 
-		generalReturnBtn = new OptionButton(0.06 * w, 0.06 * w, returnDefault, returnHover, returnPress, e -> cl.show(this, MENU_PAGE));
+		// General Settings Return Button
+		generalReturnButton = new OptionButton(0.06 * w, 0.06 * w,
+				returnButtonDefault, returnButtonHover, returnButtonPress,
+				e -> cardLayout.show(this, MENU_PAGE));
 		c = new GridBagConstraints();
 		c.anchor = GridBagConstraints.FIRST_LINE_START;
 		c.gridx = 0;
 		c.gridy = 0;
 		c.insets = new Insets((int) (0.04 * h), (int) (0.04 * h), 0, 0);
-		generalContent.add(generalReturnBtn, c);
+		generalContent.add(generalReturnButton, c);
 
-		minWordLen = 3;
-		minWordLenDisplay.setMinimumSize(new Dimension((int) (0.18 * w), (int) (0.16 * h)));
-		minWordLenDisplay.setPreferredSize(new Dimension((int) (0.18 * w), (int) (0.16 * h)));
-		minWordLenDisplay.setHorizontalAlignment(SwingConstants.CENTER);
-		minWordLenDisplay.setVerticalAlignment(SwingConstants.CENTER);
-		minWordLenDisplay.setText(String.valueOf(minWordLen));
-		minWordLenDisplay.setFont(new Font("Verdana", Font.PLAIN, 70));
+		// General Settings: Minimum Word Length.
+		minimumWordLength = 3;
+		// Minimum Word Length Display Label.
+		minimumWordLengthDisplay.setMinimumSize(
+				new Dimension((int) (0.18 * w), (int) (0.16 * h)));
+		minimumWordLengthDisplay.setPreferredSize(
+				new Dimension((int) (0.18 * w), (int) (0.16 * h)));
+		minimumWordLengthDisplay.setHorizontalAlignment(SwingConstants.CENTER);
+		minimumWordLengthDisplay.setVerticalAlignment(SwingConstants.CENTER);
+		minimumWordLengthDisplay.setText(String.valueOf(minimumWordLength));
+		minimumWordLengthDisplay.setFont(new Font("Verdana", Font.PLAIN, 70));
 		c = new GridBagConstraints();
 		c.anchor = GridBagConstraints.LAST_LINE_END;
 		c.gridx = 0;
@@ -263,11 +345,14 @@ public class SettingsScreen extends JPanel {
 		c.insets = new Insets((int) (0.497 * h), 0, 0, (int) (0.058 * w));
 		c.weightx = 1;
 		c.weighty = 0;
-		generalContent.add(minWordLenDisplay, c);
+		generalContent.add(minimumWordLengthDisplay, c);
 
-		minWordLenInc = new OptionButton(0.06 * w, 0.06 * w, incDefault, incHover, incHover, e -> {
-			minWordLen++;
-			minWordLenDisplay.setText(String.valueOf(minWordLen));
+		// Minimum Word Length Increment Button.
+		minimumWordLengthIncrementButton = new OptionButton(0.06 * w, 0.06 * w,
+				incrementButtonDefault, incrementButtonHover,
+				incrementButtonHover, e -> {
+			minimumWordLength++;
+			minimumWordLengthDisplay.setText(String.valueOf(minimumWordLength));
 		});
 		c = new GridBagConstraints();
 		c.anchor = GridBagConstraints.FIRST_LINE_END;
@@ -276,14 +361,15 @@ public class SettingsScreen extends JPanel {
 		c.insets = new Insets((int) (0.03 * h), (int) (0.2 * w), 0, (int) (0.02 * w));
 		c.weightx = 1;
 		c.weighty = 1;
-		generalContent.add(minWordLenInc, c);
+		generalContent.add(minimumWordLengthIncrementButton, c);
 
-		minWordLenDec = new OptionButton(0.06 * w, 0.06 * w, decDefault, decHover, decHover, e -> {
-			minWordLen--;
-			if (minWordLen < 1) {
-				minWordLen = 1;
+		// Minimum Word Length Decrement Button.
+		minimumWordLengthDecrementButton = new OptionButton(0.06 * w, 0.06 * w, decrementButtonDefault, decrementButtonHover, decrementButtonHover, e -> {
+			minimumWordLength--;
+			if (minimumWordLength < 1) {
+				minimumWordLength = 1;
 			}
-			minWordLenDisplay.setText(String.valueOf(minWordLen));
+			minimumWordLengthDisplay.setText(String.valueOf(minimumWordLength));
 		});
 		c = new GridBagConstraints();
 		c.anchor = GridBagConstraints.FIRST_LINE_START;
@@ -292,7 +378,7 @@ public class SettingsScreen extends JPanel {
 		c.insets = new Insets((int) (0.03 * h), (int) (0.02 * w), 0, 0);
 		c.weightx = 1;
 		c.weighty = 1;
-		generalContent.add(minWordLenDec, c);
+		generalContent.add(minimumWordLengthDecrementButton, c);
 
 		targetPts = 15;
 		targetPtsDisplay.setMinimumSize(new Dimension((int) (0.18 * w), (int) (0.16 * h)));
@@ -312,7 +398,7 @@ public class SettingsScreen extends JPanel {
 		c.weighty = 0;
 		generalContent.add(targetPtsDisplay, c);
 
-		targetPtsInc = new OptionButton(0.06 * w, 0.06 * w, incDefault, incHover, incHover, e -> {
+		targetPtsInc = new OptionButton(0.06 * w, 0.06 * w, incrementButtonDefault, incrementButtonHover, incrementButtonHover, e -> {
 			targetPts++;
 			targetPtsDisplay.setText(String.valueOf(targetPts));
 		});
@@ -325,7 +411,7 @@ public class SettingsScreen extends JPanel {
 		c.weighty = 1;
 		generalContent.add(targetPtsInc, c);
 
-		targetPtsDec = new OptionButton(0.06 * w, 0.06 * w, decDefault, decHover, decHover, e -> {
+		targetPtsDec = new OptionButton(0.06 * w, 0.06 * w, decrementButtonDefault, decrementButtonHover, decrementButtonHover, e -> {
 			targetPts--;
 			if (targetPts < 1) {
 				targetPts = 1;
@@ -371,7 +457,7 @@ public class SettingsScreen extends JPanel {
 		timeContent.setPreferredSize(new Dimension(w, h));
 		timeContent.setOpaque(false);
 
-		timeReturnBtn = new OptionButton(0.06 * w, 0.06 * w, returnDefault, returnHover, returnPress, e -> cl.show(this, MENU_PAGE));
+		timeReturnBtn = new OptionButton(0.06 * w, 0.06 * w, returnButtonDefault, returnButtonHover, returnButtonPress, e -> cardLayout.show(this, MENU_PAGE));
 		c = new GridBagConstraints();
 		c.anchor = GridBagConstraints.FIRST_LINE_START;
 		c.gridx = 0;
@@ -397,7 +483,7 @@ public class SettingsScreen extends JPanel {
 		c.weighty = 0;
 		timeContent.add(initTimeDisplay, c);
 
-		initTimeInc = new OptionButton(0.06 * w, 0.06 * w, incDefault, incHover, incPress, e -> {
+		initTimeInc = new OptionButton(0.06 * w, 0.06 * w, incrementButtonDefault, incrementButtonHover, incrementButtonPress, e -> {
 			initTime += 5000;
 			initTimeDisplay.setText(String.format("%02d:%02d", (initTime / 60000) % 60, (initTime / 1000) % 60));
 		});
@@ -410,7 +496,7 @@ public class SettingsScreen extends JPanel {
 		c.weighty = 1;
 		timeContent.add(initTimeInc, c);
 
-		initTimeDec = new OptionButton(0.06 * w, 0.06 * w, decDefault, decHover, decPress, e -> {
+		initTimeDec = new OptionButton(0.06 * w, 0.06 * w, decrementButtonDefault, decrementButtonHover, decrementButtonPress, e -> {
 			initTime -= 5000;
 			if (initTime < 5000) { // Minimum initial time of 5 seconds
 				initTime = 5000;
@@ -444,7 +530,7 @@ public class SettingsScreen extends JPanel {
 		c.weighty = 0;
 		timeContent.add(timeIncrementDisplay, c);
 
-		timeIncrementInc = new OptionButton(0.06 * w, 0.06 * w, incDefault, incHover, incHover, e -> {
+		timeIncrementInc = new OptionButton(0.06 * w, 0.06 * w, incrementButtonDefault, incrementButtonHover, incrementButtonHover, e -> {
 			timeIncrement += 1000;
 			timeIncrementDisplay.setText(String.format("%02d:%02d", (timeIncrement / 60000) % 60, (timeIncrement / 1000) % 60));
 		});
@@ -457,7 +543,7 @@ public class SettingsScreen extends JPanel {
 		c.weighty = 1;
 		timeContent.add(timeIncrementInc, c);
 
-		timeIncrementDec = new OptionButton(0.06 * w, 0.06 * w, decDefault, decHover, decHover, e -> {
+		timeIncrementDec = new OptionButton(0.06 * w, 0.06 * w, decrementButtonDefault, decrementButtonHover, decrementButtonHover, e -> {
 			timeIncrement -= 1000;
 			if (timeIncrement < 0) {
 				timeIncrement = 0;
@@ -503,7 +589,7 @@ public class SettingsScreen extends JPanel {
 		difficultyContent.setPreferredSize(new Dimension(w, h));
 		difficultyContent.setOpaque(false);
 
-		difficultyReturnBtn = new OptionButton(0.06 * w, 0.06 * w, returnDefault, returnHover, returnPress, e -> cl.show(this, MENU_PAGE));
+		difficultyReturnBtn = new OptionButton(0.06 * w, 0.06 * w, returnButtonDefault, returnButtonHover, returnButtonPress, e -> cardLayout.show(this, MENU_PAGE));
 		c = new GridBagConstraints();
 		c.anchor = GridBagConstraints.FIRST_LINE_START;
 		c.gridx = 0;
@@ -511,7 +597,7 @@ public class SettingsScreen extends JPanel {
 		c.insets = new Insets((int) (0.04 * h), (int) (0.04 * h), 0, 0);
 		difficultyContent.add(difficultyReturnBtn, c);
 
-		easyBtn = new OptionButton(0.05 * w, 0.05 * w, radioDefault, radioHover, radioSelect, e -> {
+		easyBtn = new OptionButton(0.05 * w, 0.05 * w, radioButtonDefault, radioButtonHover, radioButtonSelect, e -> {
 			easyBtn.setIcon(easyBtn.getPressIcon());
 			medBtn.setIcon(medBtn.getDefaultIcon());
 			hardBtn.setIcon(hardBtn.getDefaultIcon());
@@ -527,7 +613,7 @@ public class SettingsScreen extends JPanel {
 		c.weighty = 1;
 		difficultyContent.add(easyBtn, c);
 
-		medBtn = new OptionButton(0.05 * w, 0.05 * w, radioDefault, radioHover, radioSelect, e -> {
+		medBtn = new OptionButton(0.05 * w, 0.05 * w, radioButtonDefault, radioButtonHover, radioButtonSelect, e -> {
 			easyBtn.setIcon(easyBtn.getDefaultIcon());
 			medBtn.setIcon(medBtn.getPressIcon());
 			hardBtn.setIcon(hardBtn.getDefaultIcon());
@@ -545,7 +631,7 @@ public class SettingsScreen extends JPanel {
 		c.weighty = 1;
 		difficultyContent.add(medBtn, c);
 
-		hardBtn = new OptionButton(0.05 * w, 0.05 * w, radioDefault, radioHover, radioSelect, e -> {
+		hardBtn = new OptionButton(0.05 * w, 0.05 * w, radioButtonDefault, radioButtonHover, radioButtonSelect, e -> {
 			easyBtn.setIcon(easyBtn.getDefaultIcon());
 			medBtn.setIcon(medBtn.getDefaultIcon());
 			hardBtn.setIcon(hardBtn.getPressIcon());
@@ -561,7 +647,7 @@ public class SettingsScreen extends JPanel {
 		c.weighty = 1;
 		difficultyContent.add(hardBtn, c);
 
-		impossibleBtn = new OptionButton(0.05 * w, 0.05 * w, radioDefault, radioHover, radioSelect, e -> {
+		impossibleBtn = new OptionButton(0.05 * w, 0.05 * w, radioButtonDefault, radioButtonHover, radioButtonSelect, e -> {
 			easyBtn.setIcon(easyBtn.getDefaultIcon());
 			medBtn.setIcon(medBtn.getDefaultIcon());
 			hardBtn.setIcon(hardBtn.getDefaultIcon());
@@ -607,7 +693,7 @@ public class SettingsScreen extends JPanel {
 		musicContent.setPreferredSize(new Dimension(w, h));
 		musicContent.setOpaque(false);
 
-		musicReturnBtn = new OptionButton(0.06 * w, 0.06 * w, returnDefault, returnHover, returnPress, e -> cl.show(this, MENU_PAGE));
+		musicReturnBtn = new OptionButton(0.06 * w, 0.06 * w, returnButtonDefault, returnButtonHover, returnButtonPress, e -> cardLayout.show(this, MENU_PAGE));
 		c = new GridBagConstraints();
 		c.anchor = GridBagConstraints.FIRST_LINE_START;
 		c.gridx = 0;
@@ -615,7 +701,7 @@ public class SettingsScreen extends JPanel {
 		c.insets = new Insets((int) (0.04 * h), (int) (0.04 * h), 0, 0);
 		musicContent.add(musicReturnBtn, c);
 
-		defaultMusicBtn = new OptionButton(0.05 * w, 0.05 * w, radioDefault, radioHover, radioSelect, e -> {
+		defaultMusicBtn = new OptionButton(0.05 * w, 0.05 * w, radioButtonDefault, radioButtonHover, radioButtonSelect, e -> {
 			defaultMusicBtn.setIcon(defaultMusicBtn.getPressIcon());
 			calmMusicBtn.setIcon(calmMusicBtn.getDefaultIcon());
 			intenseMusicBtn.setIcon(intenseMusicBtn.getDefaultIcon());
@@ -632,7 +718,7 @@ public class SettingsScreen extends JPanel {
 		c.weighty = 1;
 		musicContent.add(defaultMusicBtn, c);
 
-		calmMusicBtn = new OptionButton(0.05 * w, 0.05 * w, radioDefault, radioHover, radioSelect, e -> {
+		calmMusicBtn = new OptionButton(0.05 * w, 0.05 * w, radioButtonDefault, radioButtonHover, radioButtonSelect, e -> {
 			defaultMusicBtn.setIcon(defaultMusicBtn.getDefaultIcon());
 			calmMusicBtn.setIcon(calmMusicBtn.getPressIcon());
 			intenseMusicBtn.setIcon(intenseMusicBtn.getDefaultIcon());
@@ -647,7 +733,7 @@ public class SettingsScreen extends JPanel {
 		c.weighty = 1;
 		musicContent.add(calmMusicBtn, c);
 
-		intenseMusicBtn = new OptionButton(0.05 * w, 0.05 * w, radioDefault, radioHover, radioSelect, e -> {
+		intenseMusicBtn = new OptionButton(0.05 * w, 0.05 * w, radioButtonDefault, radioButtonHover, radioButtonSelect, e -> {
 			defaultMusicBtn.setIcon(defaultMusicBtn.getDefaultIcon());
 			calmMusicBtn.setIcon(calmMusicBtn.getDefaultIcon());
 			intenseMusicBtn.setIcon(intenseMusicBtn.getPressIcon());
@@ -673,8 +759,8 @@ public class SettingsScreen extends JPanel {
 		this.prevScreen = prevScreen;
 	}
 
-	public int getMinWordLen() {
-		return minWordLen;
+	public int getMinimumWordLength() {
+		return minimumWordLength;
 	}
 
 	public int getTargetPts() {

@@ -15,51 +15,51 @@ import java.io.IOException;
 
 import static javax.swing.BorderFactory.createEmptyBorder;
 public class GameScreen extends JPanel {
-	private final JLayeredPane layers = new JLayeredPane();
-	private final JLabel background = new JLabel();
+	private JLayeredPane layers = new JLayeredPane();
+	private JLabel background = new JLabel();
 
-	private final JPanel content = new JPanel();
+	private JPanel content = new JPanel();
 
-	private final JLabel plr1Label = new JLabel();
-	private final JLabel plr1TimeDisplay = new JLabel();
-	private final JLabel plr1PtsDisplay = new JLabel();
-	private final JLabel plr2Label = new JLabel();
-	private final JLabel plr2TimeDisplay = new JLabel();
-	private final JLabel plr2PtsDisplay = new JLabel();
+	private JLabel plr1Label = new JLabel();
+	private JLabel plr1TimeDisplay = new JLabel();
+	private JLabel plr1PtsDisplay = new JLabel();
+	private JLabel plr2Label = new JLabel();
+	private JLabel plr2TimeDisplay = new JLabel();
+	private JLabel plr2PtsDisplay = new JLabel();
 
-	private final WordTable wordList;
-	private final JPanel wordListBg = new JPanel();
-	private final JScrollPane wordListScroll = new JScrollPane();
+	private WordTable wordList;
+	private JPanel wordListBg = new JPanel();
+	private JScrollPane wordListScroll = new JScrollPane();
 
 	private Board board;
-	private final JLabel wordDisplay = new JLabel();
-	private final JPanel boardBg = new JPanel();
+	private JLabel wordDisplay = new JLabel();
+	private JPanel boardBg = new JPanel();
 
-	private final OptionButton pauseBtn;
-	private final ImageIcon pauseDefault = new ImageIcon(getClass().getResource("assets/PauseBtnDefault.png"));
-	private final ImageIcon pauseHover = new ImageIcon(getClass().getResource("assets/PauseBtnHover.png"));
-	private final ImageIcon pausePress = new ImageIcon(getClass().getResource("assets/PauseBtnPress.png"));
+	private OptionButton pauseBtn;
+	private ImageIcon pauseDefault = new ImageIcon(getClass().getResource("assets/PauseBtnDefault.png"));
+	private ImageIcon pauseHover = new ImageIcon(getClass().getResource("assets/PauseBtnHover.png"));
+	private ImageIcon pausePress = new ImageIcon(getClass().getResource("assets/PauseBtnPress.png"));
 
-	private final OptionButton passBtn;
-	private final ImageIcon passDefault = new ImageIcon(getClass().getResource("assets/PassBtnDefault.png"));
-	private final ImageIcon passHover = new ImageIcon(getClass().getResource("assets/PassBtnHover.png"));
-	private final ImageIcon passPress = new ImageIcon(getClass().getResource("assets/PassBtnPress.png"));
+	private OptionButton passBtn;
+	private ImageIcon passDefault = new ImageIcon(getClass().getResource("assets/PassBtnDefault.png"));
+	private ImageIcon passHover = new ImageIcon(getClass().getResource("assets/PassBtnHover.png"));
+	private ImageIcon passPress = new ImageIcon(getClass().getResource("assets/PassBtnPress.png"));
 
-	private final OptionButton shakeBtn;
-	private final ImageIcon shakeDefault = new ImageIcon(getClass().getResource("assets/ShakeBtnDefault.png"));
-	private final ImageIcon shakeHover = new ImageIcon(getClass().getResource("assets/ShakeBtnHover.png"));
-	private final ImageIcon shakePress = new ImageIcon(getClass().getResource("assets/ShakeBtnPress.png"));
+	private OptionButton shakeBtn;
+	private ImageIcon shakeDefault = new ImageIcon(getClass().getResource("assets/ShakeBtnDefault.png"));
+	private ImageIcon shakeHover = new ImageIcon(getClass().getResource("assets/ShakeBtnHover.png"));
+	private ImageIcon shakePress = new ImageIcon(getClass().getResource("assets/ShakeBtnPress.png"));
 
-	private final OptionButton settingsBtn;
-	private final ImageIcon settingsDefault = new ImageIcon(getClass().getResource("assets/SettingsBtnDefault.png"));
-	private final ImageIcon settingsHover = new ImageIcon(getClass().getResource("assets/SettingsBtnHover.png"));
-	private final ImageIcon settingsPress = new ImageIcon(getClass().getResource("assets/SettingsBtnPress.png"));
+	private OptionButton settingsBtn;
+	private ImageIcon settingsDefault = new ImageIcon(getClass().getResource("assets/SettingsBtnDefault.png"));
+	private ImageIcon settingsHover = new ImageIcon(getClass().getResource("assets/SettingsBtnHover.png"));
+	private ImageIcon settingsPress = new ImageIcon(getClass().getResource("assets/SettingsBtnPress.png"));
 
 	private AudioInputStream calmBgm;
 	private AudioInputStream intenseBgm;
 	private Clip bgmClip;
 
-	private final Boggle mainFrame;
+	private  Boggle mainFrame;
 	private boolean isAI;
 
 	public GameScreen(Boggle mainFrame, boolean ai) {
@@ -229,7 +229,9 @@ public class GameScreen extends JPanel {
 		c.insets = new Insets((int) (0.086 * h), 0, 0, (int) (0.024 * w));
 		content.add(plr2PtsDisplay, c);
 
+		// Creating the options button.
 		passBtn = new OptionButton(0.05 * w, 0.05 * w, passDefault, passHover, passPress, e -> board.switchTurn());
+		// Positional the options button using GridBagLayout.
 		c = new GridBagConstraints();
 		c.anchor = GridBagConstraints.LINE_END;
 		c.gridx = 3;
@@ -239,10 +241,12 @@ public class GameScreen extends JPanel {
 		c.weighty = 0;
 		content.add(passBtn, c);
 
+		// Creating the pause button.
 		pauseBtn = new OptionButton(0.05 * w, 0.05 * w, pauseDefault, pauseHover, pausePress, e -> {
 			board.pause();
 			mainFrame.pauseOverlay();
 		});
+		// Positional the pause button using GridBagLayout.
 		c = new GridBagConstraints();
 		c.anchor = GridBagConstraints.LINE_END;
 		c.gridx = 3;
@@ -250,9 +254,12 @@ public class GameScreen extends JPanel {
 		c.insets = new Insets(0, 0, (int) (0.04 * h), (int) (0.025 * w));
 		c.weightx = 1;
 		c.weighty = 0;
+		// Adding the pause button to the content panel.
 		content.add(pauseBtn, c);
 
+		// Creating the shake button.
 		shakeBtn = new OptionButton(0.05 * w, 0.05 * w, shakeDefault, shakeHover, shakePress, e -> board.shuffle());
+		// Positional the shake button using GridBagLayout.
 		c = new GridBagConstraints();
 		c.anchor = GridBagConstraints.LINE_START;
 		c.gridx = 4;
@@ -260,12 +267,15 @@ public class GameScreen extends JPanel {
 		c.insets = new Insets((int) (0.055 * h), (int) (0.016 * w), 0, 0);
 		c.weightx = 1;
 		c.weighty = 0;
+		// Adding the shake button to the content panel.
 		content.add(shakeBtn, c);
 
+		// Creating the settings button.
 		settingsBtn = new OptionButton(0.05 * w, 0.05 * w, settingsDefault, settingsHover, settingsPress, e -> {
 			pauseGame();
 			mainFrame.settingsScreen(1);
 		});
+		// Positional the settings button using GridBagLayout.
 		c = new GridBagConstraints();
 		c.anchor = GridBagConstraints.LINE_START;
 		c.gridx = 4;
@@ -273,11 +283,14 @@ public class GameScreen extends JPanel {
 		c.insets = new Insets(0, (int) (0.016 * w), (int) (0.04 * h), 0);
 		c.weightx = 1;
 		c.weighty = 0;
+		// Adding the settings button to the content panel.
 		content.add(settingsBtn, c);
 
+		// Setting the dimensions of the boardBg panel.
 		boardBg.setMinimumSize(new Dimension((int) (0.43 * w), (int) (0.43 * w)));
 		boardBg.setPreferredSize(new Dimension((int) (0.43 * w), (int) (0.43 * w)));
 		boardBg.setOpaque(false);
+		// Positioning the boardBg panel using GridBagConstraints.
 		c = new GridBagConstraints();
 		c.anchor = GridBagConstraints.ABOVE_BASELINE;
 		c.gridx = 1;
@@ -286,13 +299,20 @@ public class GameScreen extends JPanel {
 		c.insets = new Insets(0, (int) (0.017 * w), (int) (0.06 * h), 0);
 		c.weightx = 1;
 		c.weighty = 1;
+		// Adding boardBg to the content panel.
 		content.add(boardBg, c);
 
-		board = new Board(mainFrame, boardBg, wordDisplay, wordList, plr1Label, plr1PtsDisplay, plr1TimeDisplay, ai, plr2Label, plr2PtsDisplay, plr2TimeDisplay, passBtn);
+		// Creates the board.
+		board = new Board(mainFrame, boardBg, wordDisplay, wordList, plr1Label,
+				plr1PtsDisplay, plr1TimeDisplay, ai, plr2Label,
+				plr2PtsDisplay, plr2TimeDisplay, passBtn);
 
+		// Adding the content Label to the LayeredPane.
 		layers.add(content, new GridBagConstraints());
+		// Setting content Label as the 1st layer on the LayeredPane.
 		layers.setLayer(content, 1);
 
+		// Adding the LayeredPane to the main screen.
 		this.add(layers, new GridBagConstraints());
 
 		pauseGame();
@@ -327,7 +347,7 @@ public class GameScreen extends JPanel {
 			calmBgm = AudioSystem.getAudioInputStream(getClass().getResource("assets/CalmBGM.wav"));
 			intenseBgm = AudioSystem.getAudioInputStream(getClass().getResource("assets/IntenseBGM.wav"));
 			bgmClip = AudioSystem.getClip();
-			switch (mainFrame.getBgmType()) {
+			switch (mainFrame.getBackgroundMusicType()) {
 				case 0:
 					if (isAI()) {
 						if (mainFrame.getAIDifficulty() <= 1) {

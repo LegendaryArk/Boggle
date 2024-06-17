@@ -17,17 +17,29 @@ import java.io.IOException;
 import java.util.Random;
 import java.util.Scanner;
 
+/**
+ * This class is the interactive game screen board
+ * implements MouseListener
+ */
 public class Board implements MouseListener {
-	private JPanel bg;
+	// Background panel of the board.
+	private JPanel background;
+	// 2D array for the dice objects.
 	private final Dice[][] dice = new Dice[5][5];
-	private final JLayeredPane layers = new JLayeredPane();
-	private final JPanel grid = new JPanel();
-	private final JPanel lineGrid = new JPanel();
-	private final JLabel[][][][] lines = new JLabel[5][5][3][3];
+	// Layered pane for managing multiple elements.
+	private JLayeredPane layers = new JLayeredPane();
+	// Panel for the dice objects.
+	private JPanel grid = new JPanel();
+	// Panel for the lines in the board.
+	private JPanel lineGrid = new JPanel();
+	// Lines for the different connections on the board.
+	private JLabel[][][][] lines = new JLabel[5][5][3][3];
+	// Dictionary.
 	private WordList dictionary;
-	private WordList wordsEntered;
-
-	private final String[][] combinations = {
+	// Words that have been entered.
+	private WordList wordsFound;
+	// Combinations of dice faces.
+	private final String[][] COMBINATIONS = {
 			{"AAAFRS", "AEEGMU", "CEIILT", "DHHNOT", "FIPRSY"},
 			{"AAEEEE", "AEGMNN", "CEILPT", "DHLNOR", "GORRVW"},
 			{"AAFIRS", "AFIRSY", "CEIPST", "EIIITT", "HIPRRY"},
@@ -35,81 +47,155 @@ public class Board implements MouseListener {
 			{"AEEEEM", "CCNSTW", "DHHLOR", "ENSSSU", "OOOTTU"}
 	};
 
+	// Horizontal Connection Default Icon.
 	private ImageIcon horizontalDefaultLine = new ImageIcon(getClass().getResource("assets/DieDefaultHorizontal.png"));
+	// Vertical Connection Default Icon.
 	private ImageIcon verticalDefaultLine = new ImageIcon(getClass().getResource("assets/DieDefaultVertical.png"));
+	// Left Diagonal Connection Default Icon.
 	private ImageIcon diagonalLeftDefaultLine = new ImageIcon(getClass().getResource("assets/DieDefaultDiagonalLeft.png"));
+	// Right Diagonal Connection Default Icon.
 	private ImageIcon diagonalRightDefaultLine = new ImageIcon(getClass().getResource("assets/DieDefaultDiagonalRight.png"));
 
+	// Horizontal Hold Connection.
 	private ImageIcon horizontalHoldLine = new ImageIcon(getClass().getResource("assets/DieHoldHorizontal.png"));
+	// Vertical Hold Connection.
 	private ImageIcon verticalHoldLine = new ImageIcon(getClass().getResource("assets/DieHoldVertical.png"));
+	// Diagonal Left Hold Connection.
 	private ImageIcon diagonalLeftHoldLine = new ImageIcon(getClass().getResource("assets/DieHoldDiagonalLeft.png"));
+	// Diagonal Right Hold Connection.
 	private ImageIcon diagonalRightHoldLine = new ImageIcon(getClass().getResource("assets/DieHoldDiagonalRight.png"));
+	// Diagonal Right Left Hold Connection.
 	private ImageIcon diagonalRightLeftHoldLine = new ImageIcon(getClass().getResource("assets/DieHoldDiagonalRightLeft.png"));
 
+	// Horizontal New Connection.
 	private ImageIcon horizontalNewLine = new ImageIcon(getClass().getResource("assets/DieNewHorizontal.png"));
+	// Vertical New Connection.
 	private ImageIcon verticalNewLine = new ImageIcon(getClass().getResource("assets/DieNewVertical.png"));
+	// Diagonal Left New Connection.
 	private ImageIcon diagonalLeftNewLine = new ImageIcon(getClass().getResource("assets/DieNewDiagonalLeft.png"));
+	// Diagonal Right New Connection.
 	private ImageIcon diagonalRightNewLine = new ImageIcon(getClass().getResource("assets/DieNewDiagonalRight.png"));
+	// Diagonal Right Left New Connection.
 	private ImageIcon diagonalRightLeftNewLine = new ImageIcon(getClass().getResource("assets/DieNewDiagonalRightLeft.png"));
 
+	// Horizontal Old Connection.
 	private ImageIcon horizontalOldLine = new ImageIcon(getClass().getResource("assets/DieOldHorizontal.png"));
+	// Vertical Old Connection.
 	private ImageIcon verticalOldLine = new ImageIcon(getClass().getResource("assets/DieOldVertical.png"));
+	// Diagonal Left Old Connection.
 	private ImageIcon diagonalLeftOldLine = new ImageIcon(getClass().getResource("assets/DieOldDiagonalLeft.png"));
+	// Diagonal Right Old Connection.
 	private ImageIcon diagonalRightOldLine = new ImageIcon(getClass().getResource("assets/DieOldDiagonalRight.png"));
+	// Diagonal Right Left Old Connection.
 	private ImageIcon diagonalRightLeftOldLine = new ImageIcon(getClass().getResource("assets/DieOldDiagonalRightLeft.png"));
 
+	// Currently selected word on the board.
 	private String wordSelected = "";
 
+	// Indicates whether a letter has been selected.
 	private boolean startedSelection = false;
-	private int lx = -2, ly = -2;
+	// Coordinates of the previously selected dice on the board.
+	private int px = -2, py = -2;
 
+	// Main game frame
 	private Boggle mainFrame;
+	// Displays the current word being formed
 	private JLabel wordDisplay;
+
+	// Icon for the default word.
 	private ImageIcon wordDisplayDefault = new ImageIcon(getClass().getResource("assets/WordDisplayDefault.png"));
+	// Icon for the new word.
 	private ImageIcon wordDisplayNew = new ImageIcon(getClass().getResource("assets/WordDisplayNew.png"));
+	// Icon for the old word.
 	private ImageIcon wordDisplayOld = new ImageIcon(getClass().getResource("assets/WordDisplayFound.png"));
+	// Table to display all the words.
 	private WordTable wordList;
+	// Button to skip a turn
 	private OptionButton passBtn;
 
+	// Player 2 title.
 	private JLabel plr2Label;
+	// Player 2 total points display.
 	private JLabel plr2PtsDisplay;
+	// Player 2 time remaining display.
 	private JLabel plr2TimeDisplay;
 
+	// Player object representing player 1.
 	private Player plr1;
+	// Player object representing player 2, null if playing against AI.
 	private Player plr2 = null;
+	// AI object representing the AI.
 	private AI ai = null;
+	// Current player's turn.
 	private int plrTurn = 0;
+	// Indicator if current game is player vs AI.
 	private boolean isAI;
 
+	// Audio file for select dice sound effect.
 	private AudioInputStream selectDiceSfx;
+	// Clip for selecting dice.
 	private Clip selectDiceClip;
+	// Audio file for valid word sound effect.
 	private AudioInputStream validWordSfx;
+	// Clip for valid word.
 	private Clip validWordClip;
 
-	public Board(Boggle mainFrame, JPanel bg, JLabel wordDisplay, WordTable wordList, JLabel plr1Label, JLabel plr1PtsDisplay, JLabel plr1TimeDisplay, boolean ai, JLabel plr2Label, JLabel plr2PtsDisplay, JLabel plr2TimeDisplay, OptionButton passBtn) {
+	/**
+	 * Constructor
+	 * @param mainFrame main game frame.
+	 * @param background background of the game.
+	 * @param wordDisplay display of the current word.
+	 * @param wordList list that contains all possible words.
+	 * @param plr1Label player 1 title.
+	 * @param plr1PtsDisplay player 1 points display.
+	 * @param plr1TimeDisplay player 1 time display.
+	 * @param ai AI if game is player vs AI.
+	 * @param plr2Label player 2 title.
+	 * @param plr2PtsDisplay player 2 points display.
+	 * @param plr2TimeDisplay player 2 time display.
+	 * @param passBtn button to skip turn.
+	 */
+	public Board(Boggle mainFrame, JPanel background, JLabel wordDisplay, WordTable wordList, JLabel plr1Label, JLabel plr1PtsDisplay, JLabel plr1TimeDisplay, boolean ai, JLabel plr2Label, JLabel plr2PtsDisplay, JLabel plr2TimeDisplay, OptionButton passBtn) {
+		// Set the game mode based on if player vs AI is chosen.
 		this.isAI = ai;
+		// Set pass button.
 		this.passBtn = passBtn;
+		// Set player 2 label, points and time.
 		this.plr2Label = plr2Label;
 		this.plr2PtsDisplay = plr2PtsDisplay;
 		this.plr2TimeDisplay = plr2TimeDisplay;
 
-		this.plr1 = new Player(plr1Label, plr1PtsDisplay, new Clock(plr1TimeDisplay, mainFrame.getInitTime(), this));
+		// Initialize player 1 with their title, points and clock.
+		this.plr1 = new Player(plr1Label, plr1PtsDisplay, new Clock(plr1TimeDisplay, mainFrame.getInitialTime(), this));
 		if (!ai) {
-			this.plr2 = new Player(plr2Label, plr2PtsDisplay, new Clock(plr2TimeDisplay, mainFrame.getInitTime(), this));
+			// Initialize player 2 with their title. points and clock.
+			this.plr2 = new Player(plr2Label, plr2PtsDisplay, new Clock(plr2TimeDisplay, mainFrame.getInitialTime(), this));
 		} else {
-			this.ai = new AI(this, mainFrame.getAIDifficulty(), mainFrame.getMinWordLen(), plr2Label, plr2PtsDisplay, new Clock(plr2TimeDisplay, mainFrame.getInitTime(), this));
+			// Intitalize AI with their difficulty,title, points and clock.
+			this.ai = new AI(this, mainFrame.getAIDifficulty(), mainFrame.getMinimumWordLength(), plr2Label, plr2PtsDisplay, new Clock(plr2TimeDisplay, mainFrame.getInitialTime(), this));
 		}
-		setup(mainFrame, bg, wordDisplay, wordList);
+		// Display the board based on the game mode selected.
+		setup(mainFrame, background, wordDisplay, wordList);
 
+		// Start with player 1's turn.
 		plr1.startTurn();
 	}
 
+	/**
+	 * This method setups the game screen.
+	 * @param mainFrame main game frame.
+	 * @param bg background of the game.
+	 * @param wordDisplay display of the current word.
+	 * @param wordList list that contains all possible words.
+	 */
 	private void setup(Boggle mainFrame, JPanel bg, JLabel wordDisplay, WordTable wordList) {
+		// Set frame, background, word display and list
 		this.mainFrame = mainFrame;
-		this.bg = bg;
+		this.background = bg;
 		this.wordDisplay = wordDisplay;
 		this.wordList = wordList;
 
+		// Scale the word display label to fit size.
 		int wdWidth = wordDisplay.getMinimumSize().width, wdHeight = wordDisplay.getMinimumSize().height;
 		wordDisplayDefault = new ImageIcon(wordDisplayDefault.getImage().getScaledInstance(wdWidth, wdHeight, Image.SCALE_SMOOTH));
 		wordDisplayNew = new ImageIcon(wordDisplayNew.getImage().getScaledInstance(wdWidth, wdHeight, Image.SCALE_SMOOTH));
@@ -118,6 +204,7 @@ public class Board implements MouseListener {
 
 		GridBagConstraints c;
 
+		// Configure background layout and add the layers to GridBagLayout.
 		bg.setLayout(new GridBagLayout());
 		layers.setPreferredSize(bg.getPreferredSize());
 		layers.setLayout(new GridBagLayout());
@@ -125,6 +212,7 @@ public class Board implements MouseListener {
 		c.anchor = GridBagConstraints.PAGE_START;
 		bg.add(layers, new GridBagConstraints());
 
+		// Set the layout for the grid.
 		grid.setLayout(new GridLayout(5, 5, 5, 5));
 		grid.setMinimumSize(bg.getMinimumSize());
 		grid.setPreferredSize(bg.getPreferredSize());
@@ -138,6 +226,7 @@ public class Board implements MouseListener {
 		layers.add(grid, c);
 		layers.setLayer(grid, 1);
 
+		// Set the layout for the lines in the board.
 		lineGrid.setLayout(new GridBagLayout());
 		lineGrid.setMinimumSize(bg.getMinimumSize());
 		lineGrid.setPreferredSize(bg.getPreferredSize());
@@ -151,35 +240,41 @@ public class Board implements MouseListener {
 		layers.add(lineGrid, c);
 		layers.setLayer(lineGrid, 0);
 
+		// Set the size of the dice based on width and height.
 		int diceWidth = (bg.getPreferredSize().width - 40) / 5;
 		int diceHeight = (bg.getPreferredSize().height - 40) / 5;
 
+		// Scale and set default line image.
 		horizontalDefaultLine = new ImageIcon(horizontalDefaultLine.getImage().getScaledInstance(diceWidth, (int) (0.3 * diceHeight), Image.SCALE_SMOOTH));
 		verticalDefaultLine = new ImageIcon(verticalDefaultLine.getImage().getScaledInstance((int) (0.3 * diceWidth), diceHeight, Image.SCALE_SMOOTH));
 		diagonalLeftDefaultLine = new ImageIcon(diagonalLeftDefaultLine.getImage().getScaledInstance(diceWidth, diceHeight, Image.SCALE_SMOOTH));
 		diagonalRightDefaultLine = new ImageIcon(diagonalRightDefaultLine.getImage().getScaledInstance(diceWidth, diceHeight, Image.SCALE_SMOOTH));
 
+		// Scale and set hold line image.
 		horizontalHoldLine = new ImageIcon(horizontalHoldLine.getImage().getScaledInstance(diceWidth, (int) (0.3 * diceHeight), Image.SCALE_SMOOTH));
 		verticalHoldLine = new ImageIcon(verticalHoldLine.getImage().getScaledInstance((int) (0.3 * diceWidth), diceHeight, Image.SCALE_SMOOTH));
 		diagonalLeftHoldLine = new ImageIcon(diagonalLeftHoldLine.getImage().getScaledInstance(diceWidth, diceHeight, Image.SCALE_SMOOTH));
 		diagonalRightHoldLine = new ImageIcon(diagonalRightHoldLine.getImage().getScaledInstance(diceWidth, diceHeight, Image.SCALE_SMOOTH));
 		diagonalRightLeftHoldLine = new ImageIcon(diagonalRightLeftHoldLine.getImage().getScaledInstance(diceWidth, diceHeight, Image.SCALE_SMOOTH));
 
+		// Scale and set new line image.
 		horizontalNewLine = new ImageIcon(horizontalNewLine.getImage().getScaledInstance(diceWidth, (int) (0.3 * diceHeight), Image.SCALE_SMOOTH));
 		verticalNewLine = new ImageIcon(verticalNewLine.getImage().getScaledInstance((int) (0.3 * diceWidth), diceHeight, Image.SCALE_SMOOTH));
 		diagonalLeftNewLine = new ImageIcon(diagonalLeftNewLine.getImage().getScaledInstance(diceWidth, diceHeight, Image.SCALE_SMOOTH));
 		diagonalRightNewLine = new ImageIcon(diagonalRightNewLine.getImage().getScaledInstance(diceWidth, diceHeight, Image.SCALE_SMOOTH));
 		diagonalRightLeftNewLine = new ImageIcon(diagonalRightLeftNewLine.getImage().getScaledInstance(diceWidth, diceHeight, Image.SCALE_SMOOTH));
 
+		// Scale and set old line image.
 		horizontalOldLine = new ImageIcon(horizontalOldLine.getImage().getScaledInstance(diceWidth, (int) (0.3 * diceHeight), Image.SCALE_SMOOTH));
 		verticalOldLine = new ImageIcon(verticalOldLine.getImage().getScaledInstance((int) (0.3 * diceWidth), diceHeight, Image.SCALE_SMOOTH));
 		diagonalLeftOldLine = new ImageIcon(diagonalLeftOldLine.getImage().getScaledInstance(diceWidth, diceHeight, Image.SCALE_SMOOTH));
 		diagonalRightOldLine = new ImageIcon(diagonalRightOldLine.getImage().getScaledInstance(diceWidth, diceHeight, Image.SCALE_SMOOTH));
 		diagonalRightLeftOldLine = new ImageIcon(diagonalRightLeftOldLine.getImage().getScaledInstance(diceWidth, diceHeight, Image.SCALE_SMOOTH));
 
+		// Setup the dice and connections
 		for (int x = 0; x < 5; x++) {
 			for (int y = 0; y < 5; y++) {
-				dice[x][y] = new Dice(combinations[x][y].toCharArray(), diceWidth, diceHeight);
+				dice[x][y] = new Dice(COMBINATIONS[x][y].toCharArray(), diceWidth, diceHeight);
 				grid.add(dice[x][y]);
 				dice[x][y].getCenter().addMouseListener(this);
 
@@ -222,79 +317,135 @@ public class Board implements MouseListener {
 		dictionary = new WordList();
 		initDict();
 
-		wordsEntered = new WordList();
+		wordsFound = new WordList();
 	}
 
+	/**
+	 * This method initalizes the dictionary array
+	 */
 	public void initDict() {
 		try {
+			// Read lines from dictionary.txt
 			Scanner sc = new Scanner(new File("src/Boggle/boggle/resources/dictionary.txt"));
 			while (sc.hasNextLine()) {
+				// Add each wrod and upper case them.
 				dictionary.add(sc.nextLine().toUpperCase());
 			}
+			// Close scanner.
 			sc.close();
 		} catch (FileNotFoundException e) {
+			// Handle if dictionary is not found.
 			e.printStackTrace();
 			System.err.println("Fatal error: Unable to find and load dictionary");
+			// Exit game.
 			System.exit(0);
 		}
 	}
 
+	/**
+	 * This method gets the dice grid.
+	 * @return the dice.
+	 */
 	public Dice[][] getDiceGrid() {
 		return dice;
 	}
 
+	/**
+	 * This method gets the words found.
+	 * @return the words found.
+	 */
 	public WordList getWordsFound() {
-		return wordsEntered;
+		return wordsFound;
 	}
 
+	/**
+	 * This method gets the word list.
+	 * @return the word list.
+	 */
 	public boggle.WordTable getWordList() {
 		return wordList;
 	}
 
+	/**
+	 * This method gets the word display.
+	 * @return the word display.
+	 */
 	public JLabel getWordDisplay() {
 		return wordDisplay;
 	}
 
+	/**
+	 * This method gets if the game mode is player vs AI
+	 * @return isAI
+	 */
 	public boolean isAI() {
 		return isAI;
 	}
 
+	/**
+	 * This method sets the AI by replacing player 2
+	 * @param isAI
+	 */
 	public void setAI(boolean isAI) {
+		// Reset the board.
 		resetBoard();
+		// Set the AI
 		this.isAI = isAI;
 		if (!isAI) {
-			this.plr2 = new Player(plr2Label, plr2PtsDisplay, new Clock(plr2TimeDisplay, mainFrame.getInitTime(), this));
+			// Initialize player 2 if game mode is not player vs player.
+			this.plr2 = new Player(plr2Label, plr2PtsDisplay, new Clock(plr2TimeDisplay, mainFrame.getInitialTime(), this));
 			this.ai = null;
 		} else {
-			this.ai = new AI(this, mainFrame.getAIDifficulty(), mainFrame.getMinWordLen(), plr2Label, plr2PtsDisplay, new Clock(plr2TimeDisplay, mainFrame.getInitTime(), this));
+			// Initialize AI if game mode is player vs AI.
+			this.ai = new AI(this, mainFrame.getAIDifficulty(), mainFrame.getMinimumWordLength(), plr2Label, plr2PtsDisplay, new Clock(plr2TimeDisplay, mainFrame.getInitialTime(), this));
 			this.plr2 = null;
 		}
 	}
 
+	/**
+	 * This method sets the turn.
+	 * @param turn which player/AI goes next.
+	 */
 	public void setTurn(int turn) {
 		plrTurn = turn;
 	}
 
+	/**
+	 * This method will reset the board.
+	 */
 	public void resetBoard() {
-		plr1.getTimer().reset(mainFrame.getInitTime());
+		// Reset the player 1 timer.
+		plr1.getTimer().reset(mainFrame.getInitialTime());
+		// Reset the points for player 1.
 		plr1.resetPoints();
 		if (!isAI) {
-			plr2.getTimer().reset(mainFrame.getInitTime());
+			// Reset player 2 timer.
+			plr2.getTimer().reset(mainFrame.getInitialTime());
+			// Reset player 2 points.
 			plr2.resetPoints();
 		} else {
-			ai.getTimer().reset(mainFrame.getInitTime());
+			// Reset AI timer.
+			ai.getTimer().reset(mainFrame.getInitialTime());
+			// Reset AI points
 			ai.resetPoints();
 		}
-		wordsEntered = new WordList();
+		// Reset words found.
+		wordsFound = new WordList();
+		// Shake the board
 		shuffle();
 	}
 
+	/**
+	 * Checks if the w
+	 * @param s
+	 * @return
+	 */
 	public boolean isValidWord(String s) {
-		return dictionary.contains(s) && s.length() >= mainFrame.getMinWordLen();
+		return dictionary.contains(s) && s.length() >= mainFrame.getMinimumWordLength();
 	}
 
 	public boolean isNewWord(String s) {
-		return !wordsEntered.contains(s);
+		return !wordsFound.contains(s);
 	}
 
 	public void switchTurn() {
@@ -456,7 +607,7 @@ public class Board implements MouseListener {
 		validWordClip.start();
 
 		int pts = getPoints(s);
-		wordsEntered.add(s);
+		wordsFound.add(s);
 		wordList.addWord(s, pts);
 		switch (plrTurn) {
 			case 0:
@@ -538,8 +689,8 @@ public class Board implements MouseListener {
 				break;
 		}
 
-		lx = -2;
-		ly = -2;
+		px = -2;
+		py = -2;
 		Timer clearSelected = new Timer(0, e -> {
 			for (int i = 0; i < 5; i++) {
 				for (int j = 0; j < 5; j++) {
@@ -575,11 +726,11 @@ public class Board implements MouseListener {
 		}
 		clearSelected.start();
 
-		if (plr1.getPoints() > mainFrame.getTargetPts()) {
+		if (plr1.getPoints() > mainFrame.getTargetPoints()) {
 			mainFrame.endgameScreen(1);
-		} else if (!isAI && plr2.getPoints() > mainFrame.getTargetPts()) {
+		} else if (!isAI && plr2.getPoints() > mainFrame.getTargetPoints()) {
 			mainFrame.endgameScreen(2);
-		} else if (isAI && ai.getPoints() > mainFrame.getTargetPts()) {
+		} else if (isAI && ai.getPoints() > mainFrame.getTargetPoints()) {
 			mainFrame.endgameScreen(3);
 		}
 	}
@@ -624,8 +775,8 @@ public class Board implements MouseListener {
 			for (int j = 0; j < 5; j++) {
 				if (e.getSource() == dice[i][j].getCenter()) {
 					startedSelection = true;
-					lx = i;
-					ly = j;
+					px = i;
+					py = j;
 					dice[i][j].select();
 					wordSelected = String.valueOf(dice[i][j].getTopFace());
 					wordDisplay.setText(wordSelected);
@@ -676,7 +827,6 @@ public class Board implements MouseListener {
 	@Override
 	public void mouseEntered(MouseEvent e) {
 		if (!startedSelection) return;
-
 		try {
 			selectDiceSfx = AudioSystem.getAudioInputStream(getClass().getResourceAsStream("assets/SelectDice.wav"));
 			selectDiceClip = AudioSystem.getClip();
@@ -695,13 +845,13 @@ public class Board implements MouseListener {
 
 		for (int i = 0; i < 5; i++) {
 			for (int j = 0; j < 5; j++) {
-				if (e.getSource() == dice[i][j].getCenter() && Math.abs(i - lx) <= 1 && Math.abs(j - ly) <= 1) {
+				if (e.getSource() == dice[i][j].getCenter() && Math.abs(i - px) <= 1 && Math.abs(j - py) <= 1) {
 					if (dice[i][j].isSelected()) return;
 
-					int dx = ly - j, dy = lx - i;
+					int dx = py - j, dy = px - i;
 					connect(j, i, dx, dy, 1);
-					lx = i;
-					ly = j;
+					px = i;
+					py = j;
 					dice[i][j].select();
 					wordSelected += dice[i][j].getTopFace();
 					wordDisplay.setText(wordSelected);

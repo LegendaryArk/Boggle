@@ -45,16 +45,16 @@ public class AI extends Player {
 
 	/**
 	 * Constructor
-	 * @param board
-	 * @param difficulty
-	 * @param playerDisplay
-	 * @param pointsDisplay
-	 * @param timer
+	 * @param board board of game
+	 * @param difficulty difficulty of AI
+	 * @param AIDisplay display of AI
+	 * @param pointsDisplay points display of AI
+	 * @param timer timer of AI
 	 */
 	public AI(Board board, int difficulty, int minimumWordLength,
-	          JLabel playerDisplay, JLabel pointsDisplay, Clock timer) {
+	          JLabel AIDisplay, JLabel pointsDisplay, Clock timer) {
 		// Instantiate variables.
-		super(playerDisplay, pointsDisplay, timer);
+		super(AIDisplay, pointsDisplay, timer);
 		this.board = board;
 		this.difficulty = difficulty;
 		this.minimumWordLength = minimumWordLength;

@@ -15,23 +15,46 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
 
+/**
+ * This class contains a method which creates a button given its dimensions,
+ * ImageIcons.
+ */
 public class OptionButton extends JButton implements ActionListener, MouseListener {
+	// Size of the button
 	private Dimension size;
 
+	// Default icon for button.
 	private ImageIcon defaultIcon;
+	// Hover icon for button.
 	private ImageIcon hoverIcon;
+	// Press icon for button.
 	private ImageIcon pressIcon;
 
-	private AudioInputStream clickSfx;
+	// Click sound effect audio
+	private AudioInputStream clickSoundEffect;
+	// Click sound clip
 	private Clip clickClip;
 
+	// Button clicked action
 	ButtonClicked action;
 
+	/**
+	 *
+	 * This method creates a button given its dimensions, ImageIcons, and action.
+	 *
+	 * @param width width of button.
+	 * @param height height of button.
+	 * @param defaultIcon ImageIcon of the button when it is not hovered over.
+	 * @param hoverIcon ImageIcon of the button when it is hovered.
+	 * @param pressIcon ImageIcon of the button when it is pressed.
+	 * @param action action.
+	 */
 	public OptionButton(double width, double height, ImageIcon defaultIcon, ImageIcon hoverIcon, ImageIcon pressIcon, ButtonClicked action) {
 		size = new Dimension((int) width, (int) height);
 
 		this.action = action;
 
+		// Resizing the ImageIcons.
 		this.defaultIcon = defaultIcon;
 		this.hoverIcon = hoverIcon;
 		this.pressIcon = pressIcon;
@@ -39,29 +62,43 @@ public class OptionButton extends JButton implements ActionListener, MouseListen
 		this.hoverIcon = new ImageIcon(hoverIcon.getImage().getScaledInstance(size.width, size.height, Image.SCALE_SMOOTH));
 		this.pressIcon = new ImageIcon(pressIcon.getImage().getScaledInstance(size.width, size.height, Image.SCALE_SMOOTH));
 
+		// Setting the dimensions.
 		setMinimumSize(size);
 		setPreferredSize(size);
+
+		// Setting the default Icon.
 		setIcon(this.defaultIcon);
+
+		// Making the button visible.
 		setOpaque(false);
 		setFocusable(false);
 		setFocusPainted(false);
 		setBorderPainted(false);
 		setContentAreaFilled(false);
 
+		// Adding the MouseListener and ActionListener.
 		addMouseListener(this);
 		addActionListener(this);
 
+		// Getting the sfx of the button being clicked.
 		try {
-			clickSfx = AudioSystem.getAudioInputStream(getClass().getResourceAsStream("assets/ClickSound.wav"));
+			// Path to the sound effects.
+			clickSoundEffect = AudioSystem.getAudioInputStream(getClass().getResourceAsStream("assets/ClickSound.wav"));
 			clickClip = AudioSystem.getClip();
-			clickClip.open(clickSfx);
+			// Open and play clip.
+			clickClip.open(clickSoundEffect);
+
+			// Catching possible errors.
 		} catch (UnsupportedAudioFileException e) {
+			// Handle if file type is invalid.
 			System.err.println("Error: Invalid file type, unable to play sound effect");
 			e.printStackTrace();
 		} catch (IOException e) {
+			// Handle if unable to read sound file.
 			System.err.println("Error: Unable to read sound file");
 			e.printStackTrace();
 		} catch (LineUnavailableException e) {
+			// Handle if there is no line to read.
 			System.err.println("Error: No line to read");
 			e.printStackTrace();
 		}

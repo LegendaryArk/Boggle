@@ -25,17 +25,17 @@ import java.util.Scanner;
  */
 public class IntroScreen extends JPanel {
 	// Intro animation.
-	private JLabel introGif = new JLabel();
+	private JLabel introAnimation;
 	// Text to display a random fact.
-	private  JTextPane fact;
+	private JTextPane fact;
 	// Sound effect of intro animation.
 	private AudioInputStream introSound;
 	// Clip for intro sound effect.
 	private Clip introClip;
 	// Layered pane to layer the animation and the fact.
-	private JLayeredPane layers = new JLayeredPane();
+	private JLayeredPane layeredPane;
 	// Arraylist to store facts.
-	private ArrayList<String> funFacts = new ArrayList<>();
+	private ArrayList<String> facts;
 	// Parent frame of the game.
 	private Boggle mainFrame;
 
@@ -46,41 +46,46 @@ public class IntroScreen extends JPanel {
 	public IntroScreen(Boggle mainFrame) {
 		this.mainFrame = mainFrame;
 
-		GridBagConstraints c;
+		GridBagConstraints constraints;
 
 		// Get the width and height of the frame.
-		int w = mainFrame.getScreenWidth(), h = mainFrame.getScreenHeight();
+		int width = mainFrame.getScreenWidth();
+		int height = mainFrame.getScreenHeight();
 
 		// Set the colour, layout, bounds and dimensions of the background.
 		this.setBackground(Color.black);
 		this.setLayout(new GridBagLayout());
-		this.setBounds(0, 0, w, h);
-		this.setPreferredSize(new Dimension(w, h));
+		this.setBounds(0, 0, width, height);
+		this.setPreferredSize(new Dimension(width, height));
 
 		// Set the colour, layout, bounds and dimensions of the layered pane.
-		layers.setBackground(Color.black);
-		layers.setLayout(new GridBagLayout());
-		layers.setPreferredSize(new Dimension(w, h));
+		layeredPane = new JLayeredPane();
+		layeredPane.setBackground(Color.black);
+		layeredPane.setLayout(new GridBagLayout());
+		layeredPane.setPreferredSize(new Dimension(width, height));
 
 		// Set the intro gif to the background.
-		ImageIcon bg = new ImageIcon(getClass().getResource("assets/IntroGif.gif"));
-		introGif.setIcon(new ImageIcon(bg.getImage().getScaledInstance(w, h, Image.SCALE_DEFAULT)));
-		// Set bounds, colour and visibility of the intro gif.
-		introGif.setBounds(0, 0, w, h);
-		introGif.setBackground(Color.black);
-		introGif.setVisible(true);
-		c = new GridBagConstraints();
-		c.gridx = 0;
-		c.gridy = 0;
-		layers.add(introGif, c);
-		layers.setLayer(introGif, 0);
+		ImageIcon bg = new ImageIcon(
+				getClass().getResource("assets/IntroGif.gif"));
+		introAnimation = new JLabel();
+		introAnimation.setIcon(new ImageIcon(
+				bg.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT)));
+		// Set colour of the intro gif.
+		introAnimation.setBackground(Color.black);
+		constraints = new GridBagConstraints();
+		constraints.gridx = 0;
+		constraints.gridy = 0;
+		layeredPane.add(introAnimation, constraints);
+		layeredPane.setLayer(introAnimation, 0);
 
-		// Read the funFacts text file
+		// Read the facts text file.
+		facts = new ArrayList<>();
 		try {
-			Scanner sc = new Scanner(new File("src/Boggle/boggle/resources/funFacts.txt"));
+			Scanner sc = new Scanner(
+					new File("src/Boggle/boggle/resources/funFacts.txt"));
 			while (sc.hasNextLine()) {
 				// Add facts to the ArrayList
-				funFacts.add(sc.nextLine());
+				facts.add(sc.nextLine());
 			}
 			// Close scanner
 			sc.close();
@@ -93,8 +98,8 @@ public class IntroScreen extends JPanel {
 		// Set the pane for the fun fact text
 		fact = new JTextPane();
 		// Set dimensions and preferred size of the fact
-		fact.setMinimumSize(new Dimension((int) (0.9 * w), (int) (0.15 * h)));
-		fact.setPreferredSize(new Dimension((int) (0.9 * w), (int) (0.15 * h)));
+		fact.setMinimumSize(new Dimension((int) (0.9 * width), (int) (0.15 * height)));
+		fact.setPreferredSize(new Dimension((int) (0.9 * width), (int) (0.15 * height)));
 		// Change attributes of the text.
 		StyledDocument doc = fact.getStyledDocument();
 		SimpleAttributeSet center = new SimpleAttributeSet();
@@ -106,32 +111,33 @@ public class IntroScreen extends JPanel {
 		fact.setFont(new Font("MV Boli", Font.BOLD, 40));
 		Random randFact = new Random();
 		// Randomize and display the random fact.
-		fact.setText(funFacts.get(randFact.nextInt(funFacts.size())));
+		fact.setText(facts.get(randFact.nextInt(facts.size())));
 		fact.setVisible(false);
-		c = new GridBagConstraints();
-		c.anchor = GridBagConstraints.PAGE_END;
-		c.gridx = 0;
-		c.gridy = 0;
-		c.weightx = 1;
-		c.weighty = 1;
-		c.insets = new Insets(0, 0, (int) (0.18 * h), 0);
-		layers.add(fact, c);
-		layers.setLayer(fact, 1);
+		constraints = new GridBagConstraints();
+		constraints.anchor = GridBagConstraints.PAGE_END;
+		constraints.gridx = 0;
+		constraints.gridy = 0;
+		constraints.weightx = 1;
+		constraints.weighty = 1;
+		constraints.insets = new Insets(0, 0, (int) (0.18 * height), 0);
+		layeredPane.add(fact, constraints);
+		layeredPane.setLayer(fact, 1);
 
 		// Add layered panes to the panel
-		this.add(layers, new GridBagConstraints());
+		this.add(layeredPane, new GridBagConstraints());
 
 		// Play the intro sound
 		try {
 			// Get the exit animation sound effect
-			introSound = AudioSystem.getAudioInputStream(getClass().getResource("assets/Opening.wav"));
+			introSound = AudioSystem.getAudioInputStream(
+					getClass().getResource("assets/Opening.wav"));
 			introClip = AudioSystem.getClip();
 			// Open sound as a clip
 			introClip.open(introSound);
 		} catch (Exception e) {
 			// Handle if audio file is unable to open
-			e.printStackTrace();
 			System.err.println("Error: Unable to play opening sound");
+			e.printStackTrace();
 		}
 	}
 
@@ -142,21 +148,21 @@ public class IntroScreen extends JPanel {
 		// Start the intro animation clip
 		introClip.start();
 
-		// Timer to close intro animation after 4800 milliseconds
+		// Timer to close intro animation after 4.8 seconds
 		Timer timer = new Timer(0, e -> {
-			// Stop and close the intro clip after timer reaches 0 milliseconds
+			// Stop and close the intro clip
 			introClip.stop();
 			introClip.close();
 			// Switch frame to the menu screen
 			mainFrame.menuScreen();
 		});
-		// Set timer for 4800 milliseconds
+		// Set timer for 4.8 seconds
 		timer.setInitialDelay(4800);
 		timer.setRepeats(false);
 		// Start the timer
 		timer.start();
 
-		// Timer to display the fact after 2500 milliseconds
+		// Timer to display the fact after 2.5 seconds
 		Timer timer2 = new Timer(0, e -> fact.setVisible(true));
 		// Set timer for 2500 milliseconds
 		timer2.setInitialDelay(2500);
