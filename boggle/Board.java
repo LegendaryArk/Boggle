@@ -1,3 +1,9 @@
+/**
+ * @author noah.sun
+ * @author jack.yuan
+ * 2024.05.31
+ */
+
 package boggle;
 
 import javax.sound.sampled.*;
@@ -13,13 +19,13 @@ import java.util.Scanner;
 
 public class Board implements MouseListener {
 	private JPanel bg;
-	private Dice[][] dice = new Dice[5][5];
-	private JLayeredPane layers = new JLayeredPane();
-	private JPanel grid = new JPanel();
-	private JPanel lineGrid = new JPanel();
-	private JLabel[][][][] lines = new JLabel[5][5][3][3];
-	private Trie dictionary;
-	private Trie wordsEntered;
+	private final Dice[][] dice = new Dice[5][5];
+	private final JLayeredPane layers = new JLayeredPane();
+	private final JPanel grid = new JPanel();
+	private final JPanel lineGrid = new JPanel();
+	private final JLabel[][][][] lines = new JLabel[5][5][3][3];
+	private WordList dictionary;
+	private WordList wordsEntered;
 
 	private final String[][] combinations = {
 			{"AAAFRS", "AEEGMU", "CEIILT", "DHHNOT", "FIPRSY"},
@@ -29,28 +35,28 @@ public class Board implements MouseListener {
 			{"AEEEEM", "CCNSTW", "DHHLOR", "ENSSSU", "OOOTTU"}
 	};
 
-	ImageIcon horizontalDefaultLine = new ImageIcon(getClass().getResource("assets/DieDefaultHorizontal.png"));
-	ImageIcon verticalDefaultLine = new ImageIcon(getClass().getResource("assets/DieDefaultVertical.png"));
-	ImageIcon diagonalLeftDefaultLine = new ImageIcon(getClass().getResource("assets/DieDefaultDiagonalLeft.png"));
-	ImageIcon diagonalRightDefaultLine = new ImageIcon(getClass().getResource("assets/DieDefaultDiagonalRight.png"));
+	private ImageIcon horizontalDefaultLine = new ImageIcon(getClass().getResource("assets/DieDefaultHorizontal.png"));
+	private ImageIcon verticalDefaultLine = new ImageIcon(getClass().getResource("assets/DieDefaultVertical.png"));
+	private ImageIcon diagonalLeftDefaultLine = new ImageIcon(getClass().getResource("assets/DieDefaultDiagonalLeft.png"));
+	private ImageIcon diagonalRightDefaultLine = new ImageIcon(getClass().getResource("assets/DieDefaultDiagonalRight.png"));
 
-	ImageIcon horizontalHoldLine = new ImageIcon(getClass().getResource("assets/DieHoldHorizontal.png"));
-	ImageIcon verticalHoldLine = new ImageIcon(getClass().getResource("assets/DieHoldVertical.png"));
-	ImageIcon diagonalLeftHoldLine = new ImageIcon(getClass().getResource("assets/DieHoldDiagonalLeft.png"));
-	ImageIcon diagonalRightHoldLine = new ImageIcon(getClass().getResource("assets/DieHoldDiagonalRight.png"));
-	ImageIcon diagonalRightLeftHoldLine = new ImageIcon(getClass().getResource("assets/DieHoldDiagonalRightLeft.png"));
+	private ImageIcon horizontalHoldLine = new ImageIcon(getClass().getResource("assets/DieHoldHorizontal.png"));
+	private ImageIcon verticalHoldLine = new ImageIcon(getClass().getResource("assets/DieHoldVertical.png"));
+	private ImageIcon diagonalLeftHoldLine = new ImageIcon(getClass().getResource("assets/DieHoldDiagonalLeft.png"));
+	private ImageIcon diagonalRightHoldLine = new ImageIcon(getClass().getResource("assets/DieHoldDiagonalRight.png"));
+	private ImageIcon diagonalRightLeftHoldLine = new ImageIcon(getClass().getResource("assets/DieHoldDiagonalRightLeft.png"));
 
-	ImageIcon horizontalNewLine = new ImageIcon(getClass().getResource("assets/DieNewHorizontal.png"));
-	ImageIcon verticalNewLine = new ImageIcon(getClass().getResource("assets/DieNewVertical.png"));
-	ImageIcon diagonalLeftNewLine = new ImageIcon(getClass().getResource("assets/DieNewDiagonalLeft.png"));
-	ImageIcon diagonalRightNewLine = new ImageIcon(getClass().getResource("assets/DieNewDiagonalRight.png"));
-	ImageIcon diagonalRightLeftNewLine = new ImageIcon(getClass().getResource("assets/DieNewDiagonalRightLeft.png"));
+	private ImageIcon horizontalNewLine = new ImageIcon(getClass().getResource("assets/DieNewHorizontal.png"));
+	private ImageIcon verticalNewLine = new ImageIcon(getClass().getResource("assets/DieNewVertical.png"));
+	private ImageIcon diagonalLeftNewLine = new ImageIcon(getClass().getResource("assets/DieNewDiagonalLeft.png"));
+	private ImageIcon diagonalRightNewLine = new ImageIcon(getClass().getResource("assets/DieNewDiagonalRight.png"));
+	private ImageIcon diagonalRightLeftNewLine = new ImageIcon(getClass().getResource("assets/DieNewDiagonalRightLeft.png"));
 
-	ImageIcon horizontalOldLine = new ImageIcon(getClass().getResource("assets/DieOldHorizontal.png"));
-	ImageIcon verticalOldLine = new ImageIcon(getClass().getResource("assets/DieOldVertical.png"));
-	ImageIcon diagonalLeftOldLine = new ImageIcon(getClass().getResource("assets/DieOldDiagonalLeft.png"));
-	ImageIcon diagonalRightOldLine = new ImageIcon(getClass().getResource("assets/DieOldDiagonalRight.png"));
-	ImageIcon diagonalRightLeftOldLine = new ImageIcon(getClass().getResource("assets/DieOldDiagonalRightLeft.png"));
+	private ImageIcon horizontalOldLine = new ImageIcon(getClass().getResource("assets/DieOldHorizontal.png"));
+	private ImageIcon verticalOldLine = new ImageIcon(getClass().getResource("assets/DieOldVertical.png"));
+	private ImageIcon diagonalLeftOldLine = new ImageIcon(getClass().getResource("assets/DieOldDiagonalLeft.png"));
+	private ImageIcon diagonalRightOldLine = new ImageIcon(getClass().getResource("assets/DieOldDiagonalRight.png"));
+	private ImageIcon diagonalRightLeftOldLine = new ImageIcon(getClass().getResource("assets/DieOldDiagonalRightLeft.png"));
 
 	private String wordSelected = "";
 
@@ -62,7 +68,7 @@ public class Board implements MouseListener {
 	private ImageIcon wordDisplayDefault = new ImageIcon(getClass().getResource("assets/WordDisplayDefault.png"));
 	private ImageIcon wordDisplayNew = new ImageIcon(getClass().getResource("assets/WordDisplayNew.png"));
 	private ImageIcon wordDisplayOld = new ImageIcon(getClass().getResource("assets/WordDisplayFound.png"));
-	private WordList wordList;
+	private WordTable wordList;
 	private OptionButton passBtn;
 
 	private JLabel plr2Label;
@@ -80,7 +86,7 @@ public class Board implements MouseListener {
 	private AudioInputStream validWordSfx;
 	private Clip validWordClip;
 
-	public Board(Boggle mainFrame, JPanel bg, JLabel wordDisplay, WordList wordList, JLabel plr1Label, JLabel plr1PtsDisplay, JLabel plr1TimeDisplay, boolean ai, JLabel plr2Label, JLabel plr2PtsDisplay, JLabel plr2TimeDisplay, OptionButton passBtn) {
+	public Board(Boggle mainFrame, JPanel bg, JLabel wordDisplay, WordTable wordList, JLabel plr1Label, JLabel plr1PtsDisplay, JLabel plr1TimeDisplay, boolean ai, JLabel plr2Label, JLabel plr2PtsDisplay, JLabel plr2TimeDisplay, OptionButton passBtn) {
 		this.isAI = ai;
 		this.passBtn = passBtn;
 		this.plr2Label = plr2Label;
@@ -91,14 +97,14 @@ public class Board implements MouseListener {
 		if (!ai) {
 			this.plr2 = new Player(plr2Label, plr2PtsDisplay, new Clock(plr2TimeDisplay, mainFrame.getInitTime(), this));
 		} else {
-			this.ai = new AI(this, mainFrame.getAIDifficulty(), plr2Label, plr2PtsDisplay, new Clock(plr2TimeDisplay, mainFrame.getInitTime(), this));
+			this.ai = new AI(this, mainFrame.getAIDifficulty(), mainFrame.getMinWordLen(), plr2Label, plr2PtsDisplay, new Clock(plr2TimeDisplay, mainFrame.getInitTime(), this));
 		}
 		setup(mainFrame, bg, wordDisplay, wordList);
 
 		plr1.startTurn();
 	}
 
-	private void setup(Boggle mainFrame, JPanel bg, JLabel wordDisplay, WordList wordList) {
+	private void setup(Boggle mainFrame, JPanel bg, JLabel wordDisplay, WordTable wordList) {
 		this.mainFrame = mainFrame;
 		this.bg = bg;
 		this.wordDisplay = wordDisplay;
@@ -213,18 +219,17 @@ public class Board implements MouseListener {
 		}
 
 		// 1.1e6 is scientific notation: 1.1 * 10^6
-		dictionary = new Trie((int) 1.1e6, 26);
+		dictionary = new WordList();
 		initDict();
 
-		wordsEntered = new Trie((int) 1.1e6, 26);
-
+		wordsEntered = new WordList();
 	}
 
 	public void initDict() {
 		try {
 			Scanner sc = new Scanner(new File("src/Boggle/boggle/resources/dictionary.txt"));
 			while (sc.hasNextLine()) {
-				dictionary.insert(sc.nextLine());
+				dictionary.add(sc.nextLine().toUpperCase());
 			}
 			sc.close();
 		} catch (FileNotFoundException e) {
@@ -237,15 +242,19 @@ public class Board implements MouseListener {
 	public Dice[][] getDiceGrid() {
 		return dice;
 	}
-	public Trie getWordsEntered() {
+
+	public WordList getWordsFound() {
 		return wordsEntered;
 	}
-	public WordList getWordList() {
+
+	public boggle.WordTable getWordList() {
 		return wordList;
 	}
+
 	public JLabel getWordDisplay() {
 		return wordDisplay;
 	}
+
 	public boolean isAI() {
 		return isAI;
 	}
@@ -257,9 +266,13 @@ public class Board implements MouseListener {
 			this.plr2 = new Player(plr2Label, plr2PtsDisplay, new Clock(plr2TimeDisplay, mainFrame.getInitTime(), this));
 			this.ai = null;
 		} else {
-			this.ai = new AI(this, mainFrame.getAIDifficulty(), plr2Label, plr2PtsDisplay, new Clock(plr2TimeDisplay, mainFrame.getInitTime(), this));
+			this.ai = new AI(this, mainFrame.getAIDifficulty(), mainFrame.getMinWordLen(), plr2Label, plr2PtsDisplay, new Clock(plr2TimeDisplay, mainFrame.getInitTime(), this));
 			this.plr2 = null;
 		}
+	}
+
+	public void setTurn(int turn) {
+		plrTurn = turn;
 	}
 
 	public void resetBoard() {
@@ -272,15 +285,16 @@ public class Board implements MouseListener {
 			ai.getTimer().reset(mainFrame.getInitTime());
 			ai.resetPoints();
 		}
-		wordsEntered = new Trie((int) 1.1e6, 26);
+		wordsEntered = new WordList();
 		shuffle();
 	}
 
 	public boolean isValidWord(String s) {
-		return dictionary.query(s) && s.length() >= mainFrame.getMinWordLen();
+		return dictionary.contains(s) && s.length() >= mainFrame.getMinWordLen();
 	}
+
 	public boolean isNewWord(String s) {
-		return !wordsEntered.query(s);
+		return !wordsEntered.contains(s);
 	}
 
 	public void switchTurn() {
@@ -327,6 +341,7 @@ public class Board implements MouseListener {
 			ai.getTimer().pause();
 		}
 	}
+
 	public void resume() {
 		switch (plrTurn) {
 			case 0 -> plr1.getTimer().start();
@@ -423,7 +438,7 @@ public class Board implements MouseListener {
 		};
 	}
 
-	public void validWord(String s) {
+	public void processValidWord(String s) {
 		try {
 			validWordSfx = AudioSystem.getAudioInputStream(getClass().getResourceAsStream("assets/ValidWord.wav"));
 			validWordClip = AudioSystem.getClip();
@@ -441,7 +456,7 @@ public class Board implements MouseListener {
 		validWordClip.start();
 
 		int pts = getPoints(s);
-		wordsEntered.insert(s);
+		wordsEntered.add(s);
 		wordList.addWord(s, pts);
 		switch (plrTurn) {
 			case 0:
@@ -469,8 +484,10 @@ public class Board implements MouseListener {
 
 						for (int dx = -1; dx <= 1; dx++) {
 							for (int dy = -1; dy <= 1; dy++) {
-								if (i + dx < 0 || i + dx > 4 || j + dy < 0 || j + dy > 4) continue;
-								if (lines[j][i][dx + 1][dy + 1] == null) continue;
+								if (i + dx < 0 || i + dx > 4 || j + dy < 0 || j + dy > 4)
+									continue;
+								if (lines[j][i][dx + 1][dy + 1] == null)
+									continue;
 								if (lines[j][i][dx + 1][dy + 1].getIcon() == horizontalDefaultLine ||
 										lines[j][i][dx + 1][dy + 1].getIcon() == verticalDefaultLine ||
 										lines[j][i][dx + 1][dy + 1].getIcon() == diagonalRightDefaultLine ||
@@ -521,7 +538,8 @@ public class Board implements MouseListener {
 				break;
 		}
 
-		lx = -2; ly = -2;
+		lx = -2;
+		ly = -2;
 		Timer clearSelected = new Timer(0, e -> {
 			for (int i = 0; i < 5; i++) {
 				for (int j = 0; j < 5; j++) {
@@ -573,7 +591,8 @@ public class Board implements MouseListener {
 	 * @param e the event to be processed
 	 */
 	@Override
-	public void mouseClicked(MouseEvent e) {}
+	public void mouseClicked(MouseEvent e) {
+	}
 
 	/**
 	 * Invoked when a mouse button has been pressed on a component.
@@ -605,7 +624,8 @@ public class Board implements MouseListener {
 			for (int j = 0; j < 5; j++) {
 				if (e.getSource() == dice[i][j].getCenter()) {
 					startedSelection = true;
-					lx = i; ly = j;
+					lx = i;
+					ly = j;
 					dice[i][j].select();
 					wordSelected = String.valueOf(dice[i][j].getTopFace());
 					wordDisplay.setText(wordSelected);
@@ -633,7 +653,7 @@ public class Board implements MouseListener {
 				System.out.println("Valid word");
 				state = 1;
 
-				validWord(wordSelected);
+				processValidWord(wordSelected);
 
 				switchTurn();
 			} else {
@@ -680,7 +700,8 @@ public class Board implements MouseListener {
 
 					int dx = ly - j, dy = lx - i;
 					connect(j, i, dx, dy, 1);
-					lx = i; ly = j;
+					lx = i;
+					ly = j;
 					dice[i][j].select();
 					wordSelected += dice[i][j].getTopFace();
 					wordDisplay.setText(wordSelected);
@@ -695,5 +716,6 @@ public class Board implements MouseListener {
 	 * @param e the event to be processed
 	 */
 	@Override
-	public void mouseExited(MouseEvent e) {}
+	public void mouseExited(MouseEvent e) {
+	}
 }

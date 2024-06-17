@@ -2,6 +2,7 @@
  * @author brian.cheang
  * 2024.06.12
  */
+
 package boggle;
 
 import javax.sound.sampled.AudioInputStream;
@@ -15,51 +16,52 @@ import java.io.IOException;
  * This class contains the panel for the menu screen.
  */
 public class MenuScreen extends JPanel {
-	private JLabel title;
+	private final JLabel title;
 
 	// Layered Pane
-	private JLayeredPane layers = new JLayeredPane();
+	private final JLayeredPane layers = new JLayeredPane();
 
 	// Background
-	private JLabel background = new JLabel();
+	private final JLabel background = new JLabel();
 
-	private JPanel content = new JPanel();
+	private final JPanel content = new JPanel();
 
 	// Images
-	private ImageIcon backgroundImg = new ImageIcon(getClass().getResource("assets/MenuScreenBg.png"));
-	private ImageIcon titleGif = new ImageIcon(getClass().getResource("assets/Title.gif"));
+	private final ImageIcon backgroundImg = new ImageIcon(getClass().getResource("assets/MenuScreenBg.png"));
+	private final ImageIcon titleGif = new ImageIcon(getClass().getResource("assets/Title.gif"));
 
-	// Button
-	private OptionButton playBtn;
-	private ImageIcon playDefault = new ImageIcon(getClass().getResource("assets/PlayMenuBtnDefault.png"));
-	private ImageIcon playHover = new ImageIcon(getClass().getResource("assets/PlayMenuBtnHover.png"));
-	private ImageIcon playPress = new ImageIcon(getClass().getResource("assets/PlayMenuBtnPress.png"));
+	// Buttons
+	private final OptionButton playBtn;
+	private final ImageIcon playDefault = new ImageIcon(getClass().getResource("assets/PlayMenuBtnDefault.png"));
+	private final ImageIcon playHover = new ImageIcon(getClass().getResource("assets/PlayMenuBtnHover.png"));
+	private final ImageIcon playPress = new ImageIcon(getClass().getResource("assets/PlayMenuBtnPress.png"));
 
-	private OptionButton guideBtn;
-	private ImageIcon guideDefault = new ImageIcon(getClass().getResource("assets/GuideMenuBtnDefault.png"));
-	private ImageIcon guideHover = new ImageIcon(getClass().getResource("assets/GuideMenuBtnHover.png"));
-	private ImageIcon guidePress = new ImageIcon(getClass().getResource("assets/GuideMenuBtnPress.png"));
+	private final OptionButton guideBtn;
+	private final ImageIcon guideDefault = new ImageIcon(getClass().getResource("assets/GuideMenuBtnDefault.png"));
+	private final ImageIcon guideHover = new ImageIcon(getClass().getResource("assets/GuideMenuBtnHover.png"));
+	private final ImageIcon guidePress = new ImageIcon(getClass().getResource("assets/GuideMenuBtnPress.png"));
 
-	private OptionButton settingsBtn;
-	private ImageIcon settingsDefault = new ImageIcon(getClass().getResource("assets/SettingsMenuBtnDefault.png"));
-	private ImageIcon settingsHover = new ImageIcon(getClass().getResource("assets/SettingsMenuBtnHover.png"));
-	private ImageIcon settingsPress = new ImageIcon(getClass().getResource("assets/SettingsMenuBtnPress.png"));
+	private final OptionButton settingsBtn;
+	private final ImageIcon settingsDefault = new ImageIcon(getClass().getResource("assets/SettingsMenuBtnDefault.png"));
+	private final ImageIcon settingsHover = new ImageIcon(getClass().getResource("assets/SettingsMenuBtnHover.png"));
+	private final ImageIcon settingsPress = new ImageIcon(getClass().getResource("assets/SettingsMenuBtnPress.png"));
 
-	private OptionButton creditsBtn;
-	private ImageIcon creditsDefault = new ImageIcon(getClass().getResource("assets/CreditsMenuBtnDefault.png"));
-	private ImageIcon creditsHover = new ImageIcon(getClass().getResource("assets/CreditsMenuBtnHover.png"));
-	private ImageIcon creditsPress = new ImageIcon(getClass().getResource("assets/CreditsMenuBtnPress.png"));
+	private final OptionButton creditsBtn;
+	private final ImageIcon creditsDefault = new ImageIcon(getClass().getResource("assets/CreditsMenuBtnDefault.png"));
+	private final ImageIcon creditsHover = new ImageIcon(getClass().getResource("assets/CreditsMenuBtnHover.png"));
+	private final ImageIcon creditsPress = new ImageIcon(getClass().getResource("assets/CreditsMenuBtnPress.png"));
 
-	private OptionButton exitBtn;
-	private ImageIcon exitDefault = new ImageIcon(getClass().getResource("assets/ExitMenuBtnDefault.png"));
-	private ImageIcon exitHover = new ImageIcon(getClass().getResource("assets/ExitMenuBtnHover.png"));
-	private ImageIcon exitPress = new ImageIcon(getClass().getResource("assets/ExitMenuBtnPress.png"));
+	private final OptionButton exitBtn;
+	private final ImageIcon exitDefault = new ImageIcon(getClass().getResource("assets/ExitMenuBtnDefault.png"));
+	private final ImageIcon exitHover = new ImageIcon(getClass().getResource("assets/ExitMenuBtnHover.png"));
+	private final ImageIcon exitPress = new ImageIcon(getClass().getResource("assets/ExitMenuBtnPress.png"));
 
 	private AudioInputStream menuBgm;
 	private Clip bgmClip;
 
-	private Boggle mainFrame;
-	private int w, h;
+	private final Boggle mainFrame;
+	private final int w;
+	private final int h;
 
 	/**
 	 * Constructor the main panel which contains all the objects.
@@ -102,8 +104,8 @@ public class MenuScreen extends JPanel {
 		// Boggle logo
 		title = new JLabel();
 		title.setIcon(new ImageIcon(titleGif.getImage().getScaledInstance((int) (0.4 * w), (int) (0.25 * h), Image.SCALE_DEFAULT)));
-		title.setMinimumSize(new Dimension((int) (0.4 * w), (int)(0.25 * h)));
-		title.setPreferredSize(new Dimension((int) (0.4 * w), (int)(0.25 * h)));
+		title.setMinimumSize(new Dimension((int) (0.4 * w), (int) (0.25 * h)));
+		title.setPreferredSize(new Dimension((int) (0.4 * w), (int) (0.25 * h)));
 		title.setOpaque(false);
 		c = new GridBagConstraints();
 		c.anchor = GridBagConstraints.FIRST_LINE_END;
@@ -145,7 +147,7 @@ public class MenuScreen extends JPanel {
 		c.insets = new Insets((int) (0.02 * h), 0, 0, (int) (0.135 * w));
 		content.add(creditsBtn, c);
 
-		exitBtn = new OptionButton(0.23 * w, 0.1 * h, exitDefault, exitHover, exitPress, e -> System.exit(0));
+		exitBtn = new OptionButton(0.23 * w, 0.1 * h, exitDefault, exitHover, exitPress, e -> mainFrame.exitScreen());
 		c = new GridBagConstraints();
 		c.anchor = GridBagConstraints.FIRST_LINE_END;
 		c.gridx = 0;
@@ -176,6 +178,7 @@ public class MenuScreen extends JPanel {
 		}
 		bgmClip.loop(Clip.LOOP_CONTINUOUSLY);
 	}
+
 	public void stopBgm() {
 		bgmClip.stop();
 		bgmClip.close();

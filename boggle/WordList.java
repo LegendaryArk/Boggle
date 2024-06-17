@@ -1,121 +1,112 @@
+/**
+ * @author noah.sun
+ * @author jack.yuan
+ * 2024.05.31
+ */
 package boggle;
 
-import javax.swing.*;
-import javax.swing.plaf.basic.BasicScrollBarUI;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
-import java.awt.*;
+import java.util.ArrayList;
 
-public class WordList {
-	JPanel bg;
-	JScrollPane scroll;
-	DefaultTableModel data;
-	JTable words;
+/**
+ * This class implements a word list that checks if a word is contained in the list by sorting the list using merge sort and then recursive binary search.
+ */
+public class WordList extends ArrayList<String> {
 
-	Boggle mainFrame;
-
-	int w, h;
-
-	public WordList(Boggle mainFrame, JPanel bg, JScrollPane scrollPane) {
-		this.bg = bg;
-		this.scroll = scrollPane;
-
-		this.mainFrame = mainFrame;
-		w = mainFrame.getScreenWidth();
-		h = mainFrame.getScreenHeight();
-
-		data = new DefaultTableModel() {
-			@Override
-			public boolean isCellEditable(int row, int column) {
-				return false;
-			}
-		};
-		data.addColumn("Words");
-		data.addColumn("Points");
-
-		DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
-		renderer.setOpaque(false);
-		renderer.setHorizontalAlignment(SwingConstants.CENTER);
-
-		words = new JTable();
-		words.setDefaultRenderer(Object.class, renderer);
-		words.setModel(data);
-		words.setFont(new Font("Calibri", Font.PLAIN, 25));
-		words.setRowHeight(30);
-		words.setTableHeader(null);
-		words.setMinimumSize(bg.getMinimumSize());
-		words.setPreferredSize(bg.getPreferredSize());
-		words.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		words.setColumnSelectionAllowed(false);
-		words.setRowSelectionAllowed(false);
-		words.getColumnModel().getColumn(0).setMinWidth((int) (0.7 * bg.getMinimumSize().width));
-		words.getColumnModel().getColumn(0).setPreferredWidth((int) (0.7 * bg.getPreferredSize().width));
-		words.setShowGrid(false);
-		words.setOpaque(false);
-		bg.add(words);
-
-		scroll.getVerticalScrollBar().setPreferredSize(new Dimension((int) (0.007 * w), (int) (0.802 * h)));
-		scroll.getVerticalScrollBar().setUI(new ScrollBarUI());
+	/**
+	 * Constructor
+	 */
+	public WordList() {
+		super();
 	}
 
-	public void addWord(String word, int pt) {
-		data.addRow(new Object[] { word, pt });
+	/**
+	 * This method adds a word to the word list.
+	 * @param s element whose presence in this collection is to be ensured
+	 * @return if the element is successfully added
+	 */
+	public boolean add(String s) {
+		return super.add(s.toUpperCase());
 	}
 
-	public void clear() {
-		data.setRowCount(0);
+	/**
+	 * This method checks if the word is contained in the word list.
+	 * @param s word
+	 * @return if the word is contained in the word list
+	 */
+	public boolean contains(String s) {
+		mergeSort(this);
+		return binarySearch(this, 0, this.size() - 1, s.toUpperCase());
 	}
 
-	private static class ScrollBarUI extends BasicScrollBarUI {
-		private final Dimension d = new Dimension();
+	/**
+	 *
+	 * @param list word list to be binary searched
+	 * @param l left boundary
+	 * @param r right boundary
+	 * @param s word to be searched for
+	 * @return if the word is contained in the word list
+	 */
+	private boolean binarySearch(ArrayList<String> list, int l, int r, String s) {
+		if (l > r) return false;
+		int m = (l + r) / 2;
+		if (s.equals(list.get(m))) return true;
+		if (s.compareTo(list.get(m)) < 0) return binarySearch(list, l, m - 1, s);
+		else return binarySearch(list, m + 1, r, s);
+	}
 
-		@Override
-		protected JButton createIncreaseButton(int orientation) {
-			return new JButton() {
-				@Override
-				public Dimension getPreferredSize() {
-					return d;
-				}
-			};
-		}
-		@Override
-		protected JButton createDecreaseButton(int orientation) {
-			return new JButton() {
-				@Override
-				public Dimension getPreferredSize() {
-					return d;
-				}
-			};
-		}
-
-		@Override
-		protected void paintTrack(Graphics g, JComponent c, Rectangle trackBounds) {}
-
-		@Override
-		protected void paintThumb(Graphics g, JComponent c, Rectangle trackBounds) {
-			Graphics2D g2 = (Graphics2D) g.create();
-
-			Color color;
-			JScrollBar sb = (JScrollBar)c;
-			if(!sb.isEnabled() || trackBounds.width > trackBounds.height) {
-				return;
-			} else if(isDragging) {
-				color = new Color(143, 143, 143);
-			} else if(isThumbRollover()) {
-				color = new Color(166, 166, 166);
-			} else {
-				color = new Color(200, 200, 200);
-			}
-
-			g2.setPaint(color);
-			g2.fillRoundRect(trackBounds.x, trackBounds.y, trackBounds.width, trackBounds.height,5,5);
-			g2.dispose();
+	/**
+	 * This method sorts a word list by using merge sort.
+	 * @param list word list to be sorted.
+	 */
+	private void mergeSort(ArrayList<String> list) {
+		// If the size of the list is less than or equal to one.
+		if (list.size() <= 1) {
+			return;
 		}
 
-		@Override
-		protected void setThumbBounds(int x, int y, int width, int height) {
-			super.setThumbBounds(x, y, width, height);
-			scrollbar.repaint();
+		// Instantiate left and right child lists.
+		ArrayList<String> left = new ArrayList<>();
+		ArrayList<String> right = new ArrayList<>();
+		
+		// Split list into left and right child lists.
+		int m = list.size() / 2;
+		for (int i = 0; i < list.size(); i++) {
+			if (i < m) left.add(list.get(i));
+			else right.add(list.get(i));
+		}
+		
+		// Sort left child list.
+		mergeSort(left);
+		// Sort right child list.
+		mergeSort(right);
+		// Merge child lists into parent list.
+		merge(left, right, list);
+	}
+
+	/**
+	 * This method merges two sorted list into one.
+	 * @param left left list
+	 * @param right right list
+	 * @param list the list to be merged into
+	 */
+	private void merge(ArrayList<String> left, ArrayList<String> right, ArrayList<String> list) {
+		// Instantiates pointers.
+		int l = 0, r = 0, i = 0;
+
+		// Iterate through both child lists simultaneously, adding the smaller element to the parent list.
+		while (l < left.size() && r < right.size()) {
+			if (left.get(l).compareTo(right.get(r)) < 0) list.set(i++, left.get(l++));
+			else list.set(i++, right.get(r++));
+		}
+
+		// Add the remaining elements from the left list to the parent list.
+		while (l < left.size()) {
+			list.set(i++, left.get(l++));
+		}
+
+		// Add the remaining elements from the right list to the parent list.
+		while (r < right.size()) {
+			list.set(i++, right.get(r++));
 		}
 	}
 }

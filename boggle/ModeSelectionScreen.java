@@ -1,25 +1,31 @@
+/**
+ * @author noah.sun
+ * @author jack.yuan
+ * 2024.05.31
+ */
+
 package boggle;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class ModeSelectionScreen extends JPanel {
-	private JLayeredPane layers = new JLayeredPane();
-	private ImageIcon bg = new ImageIcon(getClass().getResource("assets/GameOptionScreenBg.png"));
-	private JLabel background = new JLabel();
-	private JPanel content = new JPanel();
+	private final JLayeredPane layers = new JLayeredPane();
+	private final ImageIcon bg = new ImageIcon(getClass().getResource("assets/GameOptionScreenBg.png"));
+	private final JLabel background = new JLabel();
+	private final JPanel content = new JPanel();
 
-	private OptionButton plrVsPlrBtn;
-	private ImageIcon plrVsPlrDefault = new ImageIcon(getClass().getResource("assets/PlrVsPlrBtnDefault.png"));
-	private ImageIcon plrVsPlrHover = new ImageIcon(getClass().getResource("assets/PlrVsPlrBtnHover.png"));
-	private ImageIcon plrVsPlrPress = new ImageIcon(getClass().getResource("assets/PlrVsPlrBtnPress.png"));
+	private final OptionButton plrVsPlrBtn;
+	private final ImageIcon plrVsPlrDefault = new ImageIcon(getClass().getResource("assets/PlrVsPlrBtnDefault.png"));
+	private final ImageIcon plrVsPlrHover = new ImageIcon(getClass().getResource("assets/PlrVsPlrBtnHover.png"));
+	private final ImageIcon plrVsPlrPress = new ImageIcon(getClass().getResource("assets/PlrVsPlrBtnPress.png"));
 
-	private OptionButton plrVsAIBtn;
-	private ImageIcon plrVsAIDefault = new ImageIcon(getClass().getResource("assets/PlrVsAIBtnDefault.png"));
-	private ImageIcon plrVsAIHover = new ImageIcon(getClass().getResource("assets/PlrVsAIBtnHover.png"));
-	private ImageIcon plrVsAIPress = new ImageIcon(getClass().getResource("assets/PlrVsAIBtnPress.png"));
+	private final OptionButton plrVsAIBtn;
+	private final ImageIcon plrVsAIDefault = new ImageIcon(getClass().getResource("assets/PlrVsAIBtnDefault.png"));
+	private final ImageIcon plrVsAIHover = new ImageIcon(getClass().getResource("assets/PlrVsAIBtnHover.png"));
+	private final ImageIcon plrVsAIPress = new ImageIcon(getClass().getResource("assets/PlrVsAIBtnPress.png"));
 
-	private Boggle mainFrame;
+	private final Boggle mainFrame;
 
 	public ModeSelectionScreen(Boggle mainFrame) {
 		this.mainFrame = mainFrame;

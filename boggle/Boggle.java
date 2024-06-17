@@ -1,22 +1,44 @@
+/**
+ * @author noah.sun
+ * @author jack.yuan
+ * 2024.05.31
+ */
+
 package boggle;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
+/**
+ * This class contains all the boggle game elements
+ * Extends JFrame to create a window
+ */
 public class Boggle extends JFrame {
+	// Intro Screen.
 	private IntroScreen introScreen;
+	// Menu Screen.
 	private MenuScreen menuScreen;
+	// Mode Selection Screen.
 	private ModeSelectionScreen modeSelectionScreen;
+	// Game Screen.
 	private GameScreen gameScreen;
+	// Pause Overlay Screen.
 	private PauseOverlay pauseOverlay;
+	// End Game Screen
 	private EndGameScreen endgameScreen;
+	// Guide Screen
 	private GuideScreen guideScreen;
+	// Credits Screen
 	private CreditsScreen creditsScreen;
+	// Settings Screen
 	private SettingsScreen settingsScreen;
+	// Exit Screen
+	private ExitScreen exitScreen;
 
+	// Height and width of the screen
 	private int screenWidth, screenHeight;
-	private final double aspectRatio = 16 / 9.0;
+	private final double ASPECT_RATIO = 16 / 9.0;
 
 	private int minWordLen;
 	private int targetPts;
@@ -29,9 +51,9 @@ public class Boggle extends JFrame {
 		screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
 		screenHeight = Toolkit.getDefaultToolkit().getScreenSize().height;
 		if (screenWidth > screenHeight) {
-			screenHeight = (int) (screenWidth / aspectRatio);
+			screenHeight = (int) (screenWidth / ASPECT_RATIO);
 		} else {
-			screenWidth = (int) (screenHeight * aspectRatio);
+			screenWidth = (int) (screenHeight * ASPECT_RATIO);
 		}
 
 		settingsScreen = new SettingsScreen(this, 0);
@@ -43,6 +65,8 @@ public class Boggle extends JFrame {
 		pauseOverlay = new PauseOverlay(this);
 		guideScreen = new GuideScreen(this);
 		creditsScreen = new CreditsScreen(this);
+		endgameScreen = new EndGameScreen(this, 2);
+		exitScreen = new ExitScreen(this);
 		this.setContentPane(introScreen);
 
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -61,10 +85,12 @@ public class Boggle extends JFrame {
 		menuScreen.startBgm();
 		repaint();
 	}
+
 	public void modeSelectionScreen() {
 		this.setContentPane(modeSelectionScreen);
 		repaint();
 	}
+
 	public void gameScreen(boolean isAI) {
 		this.setContentPane(gameScreen);
 		gameScreen.resetGame(isAI);
@@ -72,74 +98,96 @@ public class Boggle extends JFrame {
 		gameScreen.startBgm();
 		repaint();
 	}
+
 	public void pauseOverlay() {
 		this.setContentPane(pauseOverlay);
 		repaint();
 	}
+
 	public void endgameScreen(int winner) {
 		endgameScreen = new EndGameScreen(this, winner);
 		this.setContentPane(endgameScreen);
 		repaint();
 	}
+
 	public void guideScreen() {
 		this.setContentPane(guideScreen);
 		repaint();
 	}
+
 	public void settingsScreen(int prevScreen) {
 		settingsScreen.setPrevScreen(prevScreen);
 		this.setContentPane(settingsScreen);
 		repaint();
 	}
+
 	public void creditsScreen() {
 		this.setContentPane(creditsScreen);
 		repaint();
-		creditsScreen.ret();
+	}
+	
+	public void exitScreen() {
+		this.setContentPane(exitScreen);
+		repaint();
+		exitScreen.start();
 	}
 
 	public MenuScreen getMenuScreen() {
 		return menuScreen;
 	}
+
 	public ModeSelectionScreen getModeSelectionScreen() {
 		return modeSelectionScreen;
 	}
+
 	public GameScreen getGameScreen() {
 		return gameScreen;
 	}
+
 	public PauseOverlay getPauseOverlay() {
 		return pauseOverlay;
 	}
+
 	public EndGameScreen getEndgameScreen() {
 		return endgameScreen;
 	}
+
 	public GuideScreen getGuideScreen() {
 		return guideScreen;
 	}
+
 	public SettingsScreen getSettingsScreen() {
 		return settingsScreen;
 	}
+
 	public CreditsScreen getCreditsScreen() {
 		return creditsScreen;
 	}
 
-	public boolean isAgainstAI() {
+	public boolean isAI() {
 		return gameScreen.isAI();
 	}
 
 	public int getMinWordLen() {
 		return minWordLen;
 	}
+
 	public int getTargetPts() {
 		return targetPts;
 	}
+
 	public int getInitTime() {
 		return initTime;
 	}
+
 	public int getTimeIncrement() {
 		return timeIncrement;
 	}
+
 	public int getAIDifficulty() {
 		return aiDifficulty;
 	}
+
 	public int getBgmType() {
 		return bgmType;
 	}
@@ -162,11 +210,9 @@ public class Boggle extends JFrame {
 	public int getScreenWidth() {
 		return screenWidth;
 	}
+
 	public int getScreenHeight() {
 		return screenHeight;
-	}
-	public double getAspectRatio() {
-		return aspectRatio;
 	}
 
 	public static void sort(ArrayList<Integer> arr) {

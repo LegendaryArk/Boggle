@@ -1,58 +1,65 @@
+/**
+ * @author noah.sun
+ * @author jack.yuan
+ * 2024.05.31
+ */
+
 package boggle;
 
-import javax.sound.sampled.*;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 
 import static javax.swing.BorderFactory.createEmptyBorder;
-
 public class GameScreen extends JPanel {
-	private JLayeredPane layers = new JLayeredPane();
-	private JLabel background = new JLabel();
+	private final JLayeredPane layers = new JLayeredPane();
+	private final JLabel background = new JLabel();
 
-	private JPanel content = new JPanel();
+	private final JPanel content = new JPanel();
 
-	private JLabel plr1Label = new JLabel();
-	private JLabel plr1TimeDisplay = new JLabel();
-	private JLabel plr1PtsDisplay = new JLabel();
-	private JLabel plr2Label = new JLabel();
-	private JLabel plr2TimeDisplay = new JLabel();
-	private JLabel plr2PtsDisplay = new JLabel();
+	private final JLabel plr1Label = new JLabel();
+	private final JLabel plr1TimeDisplay = new JLabel();
+	private final JLabel plr1PtsDisplay = new JLabel();
+	private final JLabel plr2Label = new JLabel();
+	private final JLabel plr2TimeDisplay = new JLabel();
+	private final JLabel plr2PtsDisplay = new JLabel();
 
-	private WordList wordList;
-	private JPanel wordListBg = new JPanel();
-	private JScrollPane wordListScroll = new JScrollPane();
+	private final WordTable wordList;
+	private final JPanel wordListBg = new JPanel();
+	private final JScrollPane wordListScroll = new JScrollPane();
 
 	private Board board;
-	private JLabel wordDisplay = new JLabel();
-	private JPanel boardBg = new JPanel();
+	private final JLabel wordDisplay = new JLabel();
+	private final JPanel boardBg = new JPanel();
 
-	private OptionButton pauseBtn;
-	private ImageIcon pauseDefault = new ImageIcon(getClass().getResource("assets/PauseBtnDefault.png"));
-	private ImageIcon pauseHover = new ImageIcon(getClass().getResource("assets/PauseBtnHover.png"));
-	private ImageIcon pausePress = new ImageIcon(getClass().getResource("assets/PauseBtnPress.png"));
+	private final OptionButton pauseBtn;
+	private final ImageIcon pauseDefault = new ImageIcon(getClass().getResource("assets/PauseBtnDefault.png"));
+	private final ImageIcon pauseHover = new ImageIcon(getClass().getResource("assets/PauseBtnHover.png"));
+	private final ImageIcon pausePress = new ImageIcon(getClass().getResource("assets/PauseBtnPress.png"));
 
-	private OptionButton passBtn;
-	private ImageIcon passDefault = new ImageIcon(getClass().getResource("assets/PassBtnDefault.png"));
-	private ImageIcon passHover = new ImageIcon(getClass().getResource("assets/PassBtnHover.png"));
-	private ImageIcon passPress = new ImageIcon(getClass().getResource("assets/PassBtnPress.png"));
+	private final OptionButton passBtn;
+	private final ImageIcon passDefault = new ImageIcon(getClass().getResource("assets/PassBtnDefault.png"));
+	private final ImageIcon passHover = new ImageIcon(getClass().getResource("assets/PassBtnHover.png"));
+	private final ImageIcon passPress = new ImageIcon(getClass().getResource("assets/PassBtnPress.png"));
 
-	private OptionButton shakeBtn;
-	private ImageIcon shakeDefault = new ImageIcon(getClass().getResource("assets/ShakeBtnDefault.png"));
-	private ImageIcon shakeHover = new ImageIcon(getClass().getResource("assets/ShakeBtnHover.png"));
-	private ImageIcon shakePress = new ImageIcon(getClass().getResource("assets/ShakeBtnPress.png"));
+	private final OptionButton shakeBtn;
+	private final ImageIcon shakeDefault = new ImageIcon(getClass().getResource("assets/ShakeBtnDefault.png"));
+	private final ImageIcon shakeHover = new ImageIcon(getClass().getResource("assets/ShakeBtnHover.png"));
+	private final ImageIcon shakePress = new ImageIcon(getClass().getResource("assets/ShakeBtnPress.png"));
 
-	private OptionButton settingsBtn;
-	private ImageIcon settingsDefault = new ImageIcon(getClass().getResource("assets/SettingsBtnDefault.png"));
-	private ImageIcon settingsHover = new ImageIcon(getClass().getResource("assets/SettingsBtnHover.png"));
-	private ImageIcon settingsPress = new ImageIcon(getClass().getResource("assets/SettingsBtnPress.png"));
+	private final OptionButton settingsBtn;
+	private final ImageIcon settingsDefault = new ImageIcon(getClass().getResource("assets/SettingsBtnDefault.png"));
+	private final ImageIcon settingsHover = new ImageIcon(getClass().getResource("assets/SettingsBtnHover.png"));
+	private final ImageIcon settingsPress = new ImageIcon(getClass().getResource("assets/SettingsBtnPress.png"));
 
 	private AudioInputStream calmBgm;
 	private AudioInputStream intenseBgm;
 	private Clip bgmClip;
 
-	private Boggle mainFrame;
+	private final Boggle mainFrame;
 	private boolean isAI;
 
 	public GameScreen(Boggle mainFrame, boolean ai) {
@@ -124,7 +131,7 @@ public class GameScreen extends JPanel {
 		wordListScroll.setBorder(createEmptyBorder());
 		content.add(wordListScroll, c);
 
-		wordList = new WordList(mainFrame, wordListBg, wordListScroll);
+		wordList = new WordTable(mainFrame, wordListBg, wordListScroll);
 
 		plr1Label.setMinimumSize(new Dimension((int) (0.22 * w), (int) (0.09 * h)));
 		plr1Label.setPreferredSize(new Dimension((int) (0.22 * w), (int) (0.09 * h)));
@@ -298,13 +305,16 @@ public class GameScreen extends JPanel {
 	public void pauseGame() {
 		board.pause();
 	}
+
 	public void resumeGame() {
 		board.resume();
 	}
+
 	public void resetGame(boolean isAI) {
 		this.isAI = isAI;
 		plr2Label.setText(isAI ? "λBoggle" : "Player 2");
 		wordList.clear();
+		board.setTurn(0);
 		board.setAI(isAI);
 	}
 
@@ -343,6 +353,7 @@ public class GameScreen extends JPanel {
 
 		bgmClip.loop(Clip.LOOP_CONTINUOUSLY);
 	}
+
 	public void stopBgm() {
 		bgmClip.stop();
 		bgmClip.close();

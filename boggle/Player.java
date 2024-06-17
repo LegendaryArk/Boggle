@@ -1,3 +1,9 @@
+/**
+ * @author noah.sun
+ * @author jack.yuan
+ * 2024.05.31
+ */
+
 package boggle;
 
 import javax.swing.*;
@@ -14,7 +20,7 @@ public class Player {
 	public Player(JLabel plrDisplay, JLabel ptsDisplay, Clock timer) {
 		this.plrDisplay = plrDisplay;
 		this.ptsDisplay = ptsDisplay;
-		plrTurnInd = new ImageIcon(plrTurnInd.getImage().getScaledInstance(plrDisplay.getMinimumSize().width, plrDisplay.getMinimumSize().height, Image.SCALE_SMOOTH));
+		plrTurnInd = new ImageIcon(plrTurnInd.getImage().getScaledInstance(plrDisplay.getMinimumSize().width,plrDisplay.getMinimumSize().height, Image.SCALE_SMOOTH));
 
 		points = 0;
 		this.timer = timer;
@@ -26,10 +32,12 @@ public class Player {
 		points += increment;
 		ptsDisplay.setText(String.valueOf(points));
 	}
+
 	public void resetPoints() {
 		points = 0;
 		ptsDisplay.setText(String.valueOf(points));
 	}
+
 	public int getPoints() {
 		return points;
 	}
@@ -43,6 +51,7 @@ public class Player {
 
 		plrDisplay.setIcon(plrTurnInd);
 	}
+
 	public void endTurn() {
 		timer.pause();
 

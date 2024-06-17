@@ -1,3 +1,9 @@
+/**
+ * @author noah.sun
+ * @author jack.yuan
+ * 2024.05.31
+ */
+
 package boggle;
 
 import javax.swing.*;
@@ -6,20 +12,20 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 public class PauseOverlay extends JPanel implements MouseListener {
-	private JLayeredPane layers = new JLayeredPane();
-	private JLabel background = new JLabel();
+	private final JLayeredPane layers = new JLayeredPane();
+	private final JLabel background = new JLabel();
 
-	private JPanel options = new JPanel();
+	private final JPanel options = new JPanel();
 
-	private OptionButton restartBtn;
-	private ImageIcon restartDefault = new ImageIcon(getClass().getResource("assets/RestartBtnDefault.png"));
-	private ImageIcon restartHover = new ImageIcon(getClass().getResource("assets/RestartBtnHover.png"));
-	private ImageIcon restartPress = new ImageIcon(getClass().getResource("assets/RestartBtnPress.png"));
+	private final OptionButton restartBtn;
+	private final ImageIcon restartDefault = new ImageIcon(getClass().getResource("assets/RestartBtnDefault.png"));
+	private final ImageIcon restartHover = new ImageIcon(getClass().getResource("assets/RestartBtnHover.png"));
+	private final ImageIcon restartPress = new ImageIcon(getClass().getResource("assets/RestartBtnPress.png"));
 
-	private OptionButton homeBtn;
-	private ImageIcon homeDefault = new ImageIcon(getClass().getResource("assets/HomeBtnDefault.png"));
-	private ImageIcon homeHover = new ImageIcon(getClass().getResource("assets/HomeBtnHover.png"));
-	private ImageIcon homePress = new ImageIcon(getClass().getResource("assets/HomeBtnPress.png"));
+	private final OptionButton homeBtn;
+	private final ImageIcon homeDefault = new ImageIcon(getClass().getResource("assets/HomeBtnDefault.png"));
+	private final ImageIcon homeHover = new ImageIcon(getClass().getResource("assets/HomeBtnHover.png"));
+	private final ImageIcon homePress = new ImageIcon(getClass().getResource("assets/HomeBtnPress.png"));
 
 	Boggle mainFrame;
 
@@ -66,7 +72,7 @@ public class PauseOverlay extends JPanel implements MouseListener {
 		c.weighty = 1;
 		options.add(homeBtn, c);
 
-		restartBtn = new OptionButton(0.2 * w, 0.15 * h, restartDefault, restartHover, restartPress, e -> mainFrame.gameScreen(mainFrame.isAgainstAI()));
+		restartBtn = new OptionButton(0.2 * w, 0.15 * h, restartDefault, restartHover, restartPress, e -> mainFrame.gameScreen(mainFrame.isAI()));
 		c = new GridBagConstraints();
 		c.anchor = GridBagConstraints.LAST_LINE_START;
 		c.gridx = 1;
@@ -90,7 +96,7 @@ public class PauseOverlay extends JPanel implements MouseListener {
 	 */
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		mainFrame.gameScreen(mainFrame.isAgainstAI());
+		mainFrame.gameScreen(mainFrame.isAI());
 	}
 
 	/**
@@ -99,7 +105,8 @@ public class PauseOverlay extends JPanel implements MouseListener {
 	 * @param e the event to be processed
 	 */
 	@Override
-	public void mousePressed(MouseEvent e) {}
+	public void mousePressed(MouseEvent e) {
+	}
 
 	/**
 	 * Invoked when a mouse button has been released on a component.
@@ -107,7 +114,8 @@ public class PauseOverlay extends JPanel implements MouseListener {
 	 * @param e the event to be processed
 	 */
 	@Override
-	public void mouseReleased(MouseEvent e) {}
+	public void mouseReleased(MouseEvent e) {
+	}
 
 	/**
 	 * Invoked when the mouse enters a component.
@@ -115,7 +123,8 @@ public class PauseOverlay extends JPanel implements MouseListener {
 	 * @param e the event to be processed
 	 */
 	@Override
-	public void mouseEntered(MouseEvent e) {}
+	public void mouseEntered(MouseEvent e) {
+	}
 
 	/**
 	 * Invoked when the mouse exits a component.
@@ -123,5 +132,6 @@ public class PauseOverlay extends JPanel implements MouseListener {
 	 * @param e the event to be processed
 	 */
 	@Override
-	public void mouseExited(MouseEvent e) {}
+	public void mouseExited(MouseEvent e) {
+	}
 }

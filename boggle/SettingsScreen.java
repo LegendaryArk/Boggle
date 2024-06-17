@@ -1,98 +1,103 @@
+/**
+ * @author noah.sun
+ * @author jack.yuan
+ * 2024.05.31
+ */
+
 package boggle;
 
 import javax.swing.*;
-import javax.swing.border.LineBorder;
 import java.awt.*;
 
 public class SettingsScreen extends JPanel {
-	private CardLayout cl;
+	private final CardLayout cl;
 
-	private ImageIcon returnDefault = new ImageIcon(getClass().getResource("assets/ReturnBtnDefault.png"));
-	private ImageIcon returnHover = new ImageIcon(getClass().getResource("assets/ReturnBtnHover.png"));
-	private ImageIcon returnPress = new ImageIcon(getClass().getResource("assets/ReturnBtnPress.png"));
+	private final ImageIcon returnDefault = new ImageIcon(getClass().getResource("assets/ReturnBtnDefault.png"));
+	private final ImageIcon returnHover = new ImageIcon(getClass().getResource("assets/ReturnBtnHover.png"));
+	private final ImageIcon returnPress = new ImageIcon(getClass().getResource("assets/ReturnBtnPress.png"));
 
-	private JPanel menu = new JPanel();
+	private final JPanel menu = new JPanel();
 	private final String MENU_PAGE = "Menu Page";
-	private JLayeredPane menuLayer = new JLayeredPane();
-	private JLabel menuBg = new JLabel();
-	private ImageIcon menuBgImg = new ImageIcon(getClass().getResource("assets/SettingsScreenMenuBg.png"));
-	private JPanel menuContent = new JPanel();
-	private OptionButton menuReturnBtn;
+	private final JLayeredPane menuLayer = new JLayeredPane();
+	private final JLabel menuBg = new JLabel();
+	private final ImageIcon menuBgImg = new ImageIcon(getClass().getResource("assets/SettingsScreenMenuBg.png"));
+	private final JPanel menuContent = new JPanel();
+	private final OptionButton menuReturnBtn;
 
-	private OptionButton generalBtn;
-	private ImageIcon generalDefault = new ImageIcon(getClass().getResource("assets/GeneralBtnDefault.png"));
-	private ImageIcon generalHover = new ImageIcon(getClass().getResource("assets/GeneralBtnHover.png"));
-	private ImageIcon generalPress = new ImageIcon(getClass().getResource("assets/GeneralBtnPress.png"));
+	private final OptionButton generalBtn;
+	private final ImageIcon generalDefault = new ImageIcon(getClass().getResource("assets/GeneralBtnDefault.png"));
+	private final ImageIcon generalHover = new ImageIcon(getClass().getResource("assets/GeneralBtnHover.png"));
+	private final ImageIcon generalPress = new ImageIcon(getClass().getResource("assets/GeneralBtnPress.png"));
 
-	private OptionButton timeBtn;
-	private ImageIcon timeDefault = new ImageIcon(getClass().getResource("assets/TimeBtnDefault.png"));
-	private ImageIcon timeHover = new ImageIcon(getClass().getResource("assets/TimeBtnHover.png"));
-	private ImageIcon timePress = new ImageIcon(getClass().getResource("assets/TimeBtnPress.png"));
+	private final OptionButton timeBtn;
+	private final ImageIcon timeDefault = new ImageIcon(getClass().getResource("assets/TimeBtnDefault.png"));
+	private final ImageIcon timeHover = new ImageIcon(getClass().getResource("assets/TimeBtnHover.png"));
+	private final ImageIcon timePress = new ImageIcon(getClass().getResource("assets/TimeBtnPress.png"));
 
-	private OptionButton difficultyBtn;
-	private ImageIcon difficultyDefault = new ImageIcon(getClass().getResource("assets/DifficultyBtnDefault.png"));
-	private ImageIcon difficultyHover = new ImageIcon(getClass().getResource("assets/DifficultyBtnHover.png"));
-	private ImageIcon difficultyPress = new ImageIcon(getClass().getResource("assets/DifficultyBtnPress.png"));
+	private final OptionButton difficultyBtn;
+	private final ImageIcon difficultyDefault = new ImageIcon(getClass().getResource("assets/DifficultyBtnDefault.png"));
+	private final ImageIcon difficultyHover = new ImageIcon(getClass().getResource("assets/DifficultyBtnHover.png"));
+	private final ImageIcon difficultyPress = new ImageIcon(getClass().getResource("assets/DifficultyBtnPress.png"));
 
-	private OptionButton musicBtn;
-	private ImageIcon musicDefault = new ImageIcon(getClass().getResource("assets/MusicBtnDefault.png"));
-	private ImageIcon musicHover = new ImageIcon(getClass().getResource("assets/MusicBtnHover.png"));
-	private ImageIcon musicPress = new ImageIcon(getClass().getResource("assets/MusicBtnPress.png"));
+	private final OptionButton musicBtn;
+	private final ImageIcon musicDefault = new ImageIcon(getClass().getResource("assets/MusicBtnDefault.png"));
+	private final ImageIcon musicHover = new ImageIcon(getClass().getResource("assets/MusicBtnHover.png"));
+	private final ImageIcon musicPress = new ImageIcon(getClass().getResource("assets/MusicBtnPress.png"));
 
-	private ImageIcon incDefault = new ImageIcon(getClass().getResource("assets/SettingsIncBtnDefault.png"));
-	private ImageIcon incHover = new ImageIcon(getClass().getResource("assets/SettingsIncBtnHover.png"));
-	private ImageIcon incPress = new ImageIcon(getClass().getResource("assets/SettingsIncBtnPress.png"));
-	private ImageIcon decDefault = new ImageIcon(getClass().getResource("assets/SettingsDecBtnDefault.png"));
-	private ImageIcon decHover = new ImageIcon(getClass().getResource("assets/SettingsDecBtnHover.png"));
-	private ImageIcon decPress = new ImageIcon(getClass().getResource("assets/SettingsDecBtnPress.png"));
+	private final ImageIcon incDefault = new ImageIcon(getClass().getResource("assets/SettingsIncBtnDefault.png"));
+	private final ImageIcon incHover = new ImageIcon(getClass().getResource("assets/SettingsIncBtnHover.png"));
+	private final ImageIcon incPress = new ImageIcon(getClass().getResource("assets/SettingsIncBtnPress.png"));
+	private final ImageIcon decDefault = new ImageIcon(getClass().getResource("assets/SettingsDecBtnDefault.png"));
+	private final ImageIcon decHover = new ImageIcon(getClass().getResource("assets/SettingsDecBtnHover.png"));
+	private final ImageIcon decPress = new ImageIcon(getClass().getResource("assets/SettingsDecBtnPress.png"));
 
-	private ImageIcon radioDefault = new ImageIcon(getClass().getResource("assets/RadioBtnDefault.png"));
-	private ImageIcon radioHover = new ImageIcon(getClass().getResource("assets/RadioBtnHover.png"));
-	private ImageIcon radioSelect = new ImageIcon(getClass().getResource("assets/RadioBtnSelected.png"));
+	private final ImageIcon radioDefault = new ImageIcon(getClass().getResource("assets/RadioBtnDefault.png"));
+	private final ImageIcon radioHover = new ImageIcon(getClass().getResource("assets/RadioBtnHover.png"));
+	private final ImageIcon radioSelect = new ImageIcon(getClass().getResource("assets/RadioBtnSelected.png"));
 
-	private JPanel general = new JPanel();
-	private ImageIcon generalBgImg = new ImageIcon(getClass().getResource("assets/GeneralSettingsScreenBg.png"));
+	private final JPanel general = new JPanel();
+	private final ImageIcon generalBgImg = new ImageIcon(getClass().getResource("assets/GeneralSettingsScreenBg.png"));
 	private final String GENERAL_PAGE = "General Page";
-	private JLayeredPane generalLayer = new JLayeredPane();
-	private JLabel generalBg = new JLabel();
-	private JPanel generalContent = new JPanel();
-	private OptionButton generalReturnBtn;
+	private final JLayeredPane generalLayer = new JLayeredPane();
+	private final JLabel generalBg = new JLabel();
+	private final JPanel generalContent = new JPanel();
+	private final OptionButton generalReturnBtn;
 
 	private int targetPts;
-	private JLabel targetPtsDisplay = new JLabel();
-	private OptionButton targetPtsInc;
-	private OptionButton targetPtsDec;
+	private final JLabel targetPtsDisplay = new JLabel();
+	private final OptionButton targetPtsInc;
+	private final OptionButton targetPtsDec;
 
 	private int minWordLen;
-	private JLabel minWordLenDisplay = new JLabel();
-	private OptionButton minWordLenInc;
-	private OptionButton minWordLenDec;
+	private final JLabel minWordLenDisplay = new JLabel();
+	private final OptionButton minWordLenInc;
+	private final OptionButton minWordLenDec;
 
-	private JPanel time = new JPanel();
-	private ImageIcon timeBgImg = new ImageIcon(getClass().getResource("assets/TimeSettingsScreenBg.png"));
+	private final JPanel time = new JPanel();
+	private final ImageIcon timeBgImg = new ImageIcon(getClass().getResource("assets/TimeSettingsScreenBg.png"));
 	private final String TIME_PAGE = "Time Page";
-	private JLayeredPane timeLayer = new JLayeredPane();
-	private JLabel timeBg = new JLabel();
-	private JPanel timeContent = new JPanel();
-	private OptionButton timeReturnBtn;
+	private final JLayeredPane timeLayer = new JLayeredPane();
+	private final JLabel timeBg = new JLabel();
+	private final JPanel timeContent = new JPanel();
+	private final OptionButton timeReturnBtn;
 
 	private int initTime;
-	private JLabel initTimeDisplay = new JLabel();
-	private OptionButton initTimeInc;
-	private OptionButton initTimeDec;
+	private final JLabel initTimeDisplay = new JLabel();
+	private final OptionButton initTimeInc;
+	private final OptionButton initTimeDec;
 
 	private int timeIncrement;
-	private JLabel timeIncrementDisplay = new JLabel();
-	private OptionButton timeIncrementInc;
-	private OptionButton timeIncrementDec;
+	private final JLabel timeIncrementDisplay = new JLabel();
+	private final OptionButton timeIncrementInc;
+	private final OptionButton timeIncrementDec;
 
-	private JPanel difficulty = new JPanel();
-	private ImageIcon difficultyBgImg = new ImageIcon(getClass().getResource("assets/DifficultySettingsScreenBg.png"));
+	private final JPanel difficulty = new JPanel();
+	private final ImageIcon difficultyBgImg = new ImageIcon(getClass().getResource("assets/DifficultySettingsScreenBg.png"));
 	private final String DIFFICULTY_PAGE = "Difficulty Page";
-	private JLayeredPane difficultyLayer = new JLayeredPane();
-	private JLabel difficultyBg = new JLabel();
-	private JPanel difficultyContent = new JPanel();
-	private OptionButton difficultyReturnBtn;
+	private final JLayeredPane difficultyLayer = new JLayeredPane();
+	private final JLabel difficultyBg = new JLabel();
+	private final JPanel difficultyContent = new JPanel();
+	private final OptionButton difficultyReturnBtn;
 
 	private int aiDifficulty;
 	private OptionButton easyBtn;
@@ -100,20 +105,20 @@ public class SettingsScreen extends JPanel {
 	private OptionButton hardBtn;
 	private OptionButton impossibleBtn;
 
-	private JPanel music = new JPanel();
-	private ImageIcon musicBgImg = new ImageIcon(getClass().getResource("assets/MusicSettingsScreenBg.png"));
+	private final JPanel music = new JPanel();
+	private final ImageIcon musicBgImg = new ImageIcon(getClass().getResource("assets/MusicSettingsScreenBg.png"));
 	private final String MUSIC_PAGE = "Music Page";
-	private JLayeredPane musicLayer = new JLayeredPane();
-	private JLabel musicBg = new JLabel();
-	private JPanel musicContent = new JPanel();
-	private OptionButton musicReturnBtn;
+	private final JLayeredPane musicLayer = new JLayeredPane();
+	private final JLabel musicBg = new JLabel();
+	private final JPanel musicContent = new JPanel();
+	private final OptionButton musicReturnBtn;
 
 	private int musicType;
 	private OptionButton defaultMusicBtn;
 	private OptionButton calmMusicBtn;
 	private OptionButton intenseMusicBtn;
 
-	private Boggle mainFrame;
+	private final Boggle mainFrame;
 	private int prevScreen;
 
 	public SettingsScreen(Boggle mainFrame, int prevScreen) {
@@ -158,7 +163,7 @@ public class SettingsScreen extends JPanel {
 			mainFrame.updateSettings();
 			switch (this.prevScreen) {
 				case 0 -> mainFrame.menuScreen();
-				case 1 -> mainFrame.gameScreen(mainFrame.isAgainstAI());
+				case 1 -> mainFrame.gameScreen(mainFrame.isAI());
 			}
 		});
 		c = new GridBagConstraints();
@@ -671,18 +676,23 @@ public class SettingsScreen extends JPanel {
 	public int getMinWordLen() {
 		return minWordLen;
 	}
+
 	public int getTargetPts() {
 		return targetPts;
 	}
+
 	public int getInitTime() {
 		return initTime;
 	}
+
 	public int getTimeIncrement() {
 		return timeIncrement;
 	}
+
 	public int getAIDifficulty() {
 		return aiDifficulty;
 	}
+
 	public int getMusicType() {
 		return musicType;
 	}

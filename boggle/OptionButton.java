@@ -1,13 +1,21 @@
+/**
+ * @author noah.sun
+ * @author jack.yuan
+ * 2024.05.31
+ */
+
 package boggle;
 
 import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
 
-public class OptionButton extends JLabel implements MouseListener {
+public class OptionButton extends JButton implements ActionListener, MouseListener {
 	private Dimension size;
 
 	private ImageIcon defaultIcon;
@@ -34,8 +42,14 @@ public class OptionButton extends JLabel implements MouseListener {
 		setMinimumSize(size);
 		setPreferredSize(size);
 		setIcon(this.defaultIcon);
+		setOpaque(false);
+		setFocusable(false);
+		setFocusPainted(false);
+		setBorderPainted(false);
+		setContentAreaFilled(false);
 
 		addMouseListener(this);
+		addActionListener(this);
 
 		try {
 			clickSfx = AudioSystem.getAudioInputStream(getClass().getResourceAsStream("assets/ClickSound.wav"));
@@ -53,14 +67,46 @@ public class OptionButton extends JLabel implements MouseListener {
 		}
 	}
 
+	/**
+	 * Gets the default icon.
+	 *
+	 * @return The default icon
+	 */
 	public ImageIcon getDefaultIcon() {
 		return defaultIcon;
 	}
+
+	/**
+	 * Gets the hover icon.
+	 *
+	 * @return The hover icon
+	 */
 	public ImageIcon getHoverIcon() {
 		return hoverIcon;
 	}
+
+	/**
+	 * Gets the press icon.
+	 *
+	 * @return The press icon
+	 */
 	public ImageIcon getPressIcon() {
 		return pressIcon;
+	}
+
+	/**
+	 * Invoked when an action occurs.
+	 * The function of the button.
+	 *
+	 * @param e the event to be processed
+	 */
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		clickClip.start();
+
+		action.clicked(e);
+
+		setIcon(defaultIcon);
 	}
 
 	/**
@@ -70,11 +116,7 @@ public class OptionButton extends JLabel implements MouseListener {
 	 * @param e the event to be processed
 	 */
 	@Override
-	public void mouseClicked(MouseEvent e) {
-		clickClip.start();
-
-		action.clicked(e);
-	}
+	public void mouseClicked(MouseEvent e) {}
 
 	/**
 	 * Invoked when a mouse button has been pressed on a component.
