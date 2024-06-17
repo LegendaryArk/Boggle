@@ -69,7 +69,8 @@ public class IntroScreen extends JPanel {
 				getClass().getResource("assets/IntroGif.gif"));
 		introAnimation = new JLabel();
 		introAnimation.setIcon(new ImageIcon(
-				bg.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT)));
+				bg.getImage().getScaledInstance(width, height,
+						Image.SCALE_DEFAULT)));
 		// Set colour of the intro gif.
 		introAnimation.setBackground(Color.black);
 		constraints = new GridBagConstraints();
@@ -98,8 +99,10 @@ public class IntroScreen extends JPanel {
 		// Set the pane for the fun fact text
 		fact = new JTextPane();
 		// Set dimensions and preferred size of the fact
-		fact.setMinimumSize(new Dimension((int) (0.9 * width), (int) (0.15 * height)));
-		fact.setPreferredSize(new Dimension((int) (0.9 * width), (int) (0.15 * height)));
+		fact.setMinimumSize(new Dimension((int) (0.9 * width),
+				(int) (0.15 * height)));
+		fact.setPreferredSize(new Dimension((int) (0.9 * width),
+				(int) (0.15 * height)));
 		// Change attributes of the text.
 		StyledDocument doc = fact.getStyledDocument();
 		SimpleAttributeSet center = new SimpleAttributeSet();

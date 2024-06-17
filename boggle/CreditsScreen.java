@@ -16,16 +16,16 @@ public class CreditsScreen extends JPanel {
 	// Credits animation.
 	private ImageIcon creditsAnimation;
 	// Credits image.
-	private ImageIcon creditsImg;
+	private ImageIcon creditsImage;
 	// Background.
 	private JLabel creditsBackground;
 	// Layers for background and button.
-	private JLayeredPane layers;
+	private JLayeredPane layeredPane;
 	// Holds the buttons
 	private JPanel content;
 
 	// Return button.
-	private OptionButton returnBtn;
+	private OptionButton returnButton;
 	// Default return button.
 	private ImageIcon returnDefault;
 	// Hover return button.
@@ -33,8 +33,7 @@ public class CreditsScreen extends JPanel {
 	// Press return button.
 	private ImageIcon returnPress;
 
-	// Main game frame.
-	private Boggle mainFrame;
+	// mainFrame width and height.
 	private int width;
 	private int height;
 
@@ -43,12 +42,12 @@ public class CreditsScreen extends JPanel {
 	 * @param mainFrame main game frame.
 	 */
 	public CreditsScreen(Boggle mainFrame) {
-		this.mainFrame = mainFrame;
+		// Initialize width and height.
 		this.width = mainFrame.getScreenWidth();
 		this.height = mainFrame.getScreenHeight();
 
 		// Used to set the location of the components.
-		GridBagConstraints c;
+		GridBagConstraints constraints;
 
 		// Setting the layout and dimensions of the Panel.
 		this.setBackground(Color.black);
@@ -56,25 +55,25 @@ public class CreditsScreen extends JPanel {
 		this.setPreferredSize(new Dimension(width, height));
 
 		// Setting the colour and dimensions of the LayeredPane.
-		layers = new JLayeredPane();
-		layers.setBackground(Color.black);
-		layers.setLayout(new GridBagLayout());
-		layers.setPreferredSize(new Dimension(width, height));
+		layeredPane = new JLayeredPane();
+		layeredPane.setBackground(Color.black);
+		layeredPane.setLayout(new GridBagLayout());
+		layeredPane.setPreferredSize(new Dimension(width, height));
 
 		// Set credits animation.
 		creditsAnimation = new ImageIcon(getClass().
 				getResource("assets/Credits.gif"));
-		creditsImg = new ImageIcon(getClass()
+		creditsImage = new ImageIcon(getClass()
 				.getResource("assets/Credits.png"));
 		creditsBackground = new JLabel();
 		creditsBackground.setIcon(new ImageIcon(creditsAnimation.getImage().
 				getScaledInstance(width, height, Image.SCALE_DEFAULT)));
 		creditsBackground.setBackground(Color.black);
-		c = new GridBagConstraints();
-		c.gridx = 0;
-		c.gridy = 0;
-		layers.add(creditsBackground, c);
-		layers.setLayer(creditsBackground, 0);
+		constraints = new GridBagConstraints();
+		constraints.gridx = 0;
+		constraints.gridy = 0;
+		layeredPane.add(creditsBackground, constraints);
+		layeredPane.setLayer(creditsBackground, 0);
 
 		// Set layout and dimensions of content.
 		content = new JPanel();
@@ -91,27 +90,29 @@ public class CreditsScreen extends JPanel {
 				getClass().getResource("assets/ReturnBtnPress.png"));
 
 		// Setting the return button size and location.
-		returnBtn = new OptionButton(0.06 * width, 0.06 * width,
+		// Inline method (lambda expressions).
+		// https://www.geeksforgeeks.org/lambda-expressions-java-8/.
+		returnButton = new OptionButton(false, 0.06 * width, 0.06 * width,
 				returnDefault, returnHover, returnPress,
 				e -> mainFrame.menuScreen());
-		c = new GridBagConstraints();
-		c.anchor = GridBagConstraints.FIRST_LINE_START;
-		c.gridx = 0;
-		c.gridy = 0;
-		c.insets = new Insets(
+		constraints = new GridBagConstraints();
+		constraints.anchor = GridBagConstraints.FIRST_LINE_START;
+		constraints.gridx = 0;
+		constraints.gridy = 0;
+		constraints.insets = new Insets(
 				(int) (0.04 * height), (int) (0.04 * height), 0,0);
-		c.weightx = 1;
-		c.weighty = 1;
+		constraints.weightx = 1;
+		constraints.weighty = 1;
 
 		// Adding return button to content panel.
-		content.add(returnBtn, c);
+		content.add(returnButton, constraints);
 
 		// Adding content panel to layeredPane.
-		layers.add(content, new GridBagConstraints());
-		layers.setLayer(content, 1);
+		layeredPane.add(content, new GridBagConstraints());
+		layeredPane.setLayer(content, 1);
 
 		// Adding LayeredPane to Panel.
-		this.add(layers, new GridBagConstraints());
+		this.add(layeredPane, new GridBagConstraints());
 	}
 
 	/**
@@ -124,7 +125,10 @@ public class CreditsScreen extends JPanel {
 
 		// Stop animation after 2 seconds.
 		Timer stopAnimation = new Timer(0, e -> {
-			creditsBackground.setIcon(new ImageIcon(creditsImg.getImage()
+			// Inline method (lambda expressions).
+			// https://www.geeksforgeeks.org/lambda-expressions-java-8/.
+
+			creditsBackground.setIcon(new ImageIcon(creditsImage.getImage()
 					.getScaledInstance(width, height, Image.SCALE_SMOOTH)));
 		});
 		stopAnimation.setInitialDelay(7000); // 2 seconds delay

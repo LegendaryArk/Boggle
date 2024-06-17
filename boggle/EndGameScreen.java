@@ -149,7 +149,7 @@ public class EndGameScreen extends JPanel {
 				.getResource("assets/EndMenuBtnHover.png"));
 		menuButtonPress = new ImageIcon(getClass()
 				.getResource("assets/EndMenuBtnPress.png"));
-		menuButton = new OptionButton(0.2 * width, 0.1 * height,
+		menuButton = new OptionButton(false, 0.2 * width, 0.1 * height,
 				menuButtonDefault, menuButtonHover, menuButtonPress,
 				e -> mainFrame.menuScreen());
 		constraints = new GridBagConstraints();
@@ -169,10 +169,10 @@ public class EndGameScreen extends JPanel {
 				.getResource("assets/PlayAgainBtnHover.png"));
 		playAgainButtonPress = new ImageIcon(getClass()
 				.getResource("assets/PlayAgainBtnPress.png"));
-		playAgainButton = new OptionButton(0.2 * width, 0.1 * height,
+		playAgainButton = new OptionButton(false, 0.2 * width, 0.1 * height,
 				playAgainButtonDefault, playAgainButtonHover,
 				playAgainButtonPress,
-				e -> mainFrame.gameScreen(mainFrame.isAI()));
+				e -> mainFrame.gameScreen(true, mainFrame.isAI()));
 		constraints = new GridBagConstraints();
 		constraints.anchor = GridBagConstraints.PAGE_END;
 		constraints.gridx = 1;
@@ -190,7 +190,7 @@ public class EndGameScreen extends JPanel {
 				.getResource("assets/EndExitBtnHover.png"));
 		exitButtonPress = new ImageIcon(getClass()
 				.getResource("assets/EndExitBtnPress.png"));
-		exitButton = new OptionButton(0.2 * width, 0.1 * height,
+		exitButton = new OptionButton(false, 0.2 * width, 0.1 * height,
 				exitButtonDefault, exitButtonHover, exitButtonPress,
 				e -> mainFrame.exitScreen());
 		constraints = new GridBagConstraints();
@@ -205,7 +205,12 @@ public class EndGameScreen extends JPanel {
 
 		// Timer to switch from animation to screen for 2 seconds.
 		Timer stopGif = new Timer(0, e -> {
+			// Inline method (lambda expressions).
+			// https://www.geeksforgeeks.org/lambda-expressions-java-8/.
+
 			// Set the background image based on the winner.
+			// Enhanced switch statement
+// https://www.geeksforgeeks.org/enhancements-for-switch-statement-in-java-13/
 			switch (winner) {
 				case 1 -> background.setIcon(playerOneImage);
 				case 2 -> background.setIcon(playerTwoImage);

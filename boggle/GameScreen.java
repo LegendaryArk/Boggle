@@ -14,378 +14,577 @@ import java.awt.*;
 import java.io.IOException;
 
 import static javax.swing.BorderFactory.createEmptyBorder;
+
+/**
+ * This class contains the panel for the game screen
+ */
 public class GameScreen extends JPanel {
-	private JLayeredPane layers = new JLayeredPane();
-	private JLabel background = new JLabel();
+	// JLayered Pane for layers.
+	private JLayeredPane layeredPane;
+	// Holds the background image.
+	private JLabel background;
+	// Holds the buttons of the game screen.
+	private JPanel content;
+	
+	// Title for player 1.
+	private JLabel playerOneLabel;
+	// Displays the timer for player 1.
+	private JLabel playerOneTimeDisplay;
+	// Displays player 1's points.
+	private JLabel playerOnePointsDisplay;
+	// Title for player 2.
+	private JLabel playerTwoLabel;
+	// Displays the timer for player 2.
+	private JLabel playerTwoTimeDisplay;
+	// Displays player 2's points.
+	private JLabel playerTwoPointsDisplay;
 
-	private JPanel content = new JPanel();
+	// Table that displays the words.
+	private WordTable wordTable;
+	// Background for the word list.
+	private JPanel wordTableBackground;
+	// The scroll pane for the word list.
+	private JScrollPane wordTableScrollPane;
 
-	private JLabel plr1Label = new JLabel();
-	private JLabel plr1TimeDisplay = new JLabel();
-	private JLabel plr1PtsDisplay = new JLabel();
-	private JLabel plr2Label = new JLabel();
-	private JLabel plr2TimeDisplay = new JLabel();
-	private JLabel plr2PtsDisplay = new JLabel();
-
-	private WordTable wordList;
-	private JPanel wordListBg = new JPanel();
-	private JScrollPane wordListScroll = new JScrollPane();
-
+	// Board for the game.
 	private Board board;
-	private JLabel wordDisplay = new JLabel();
-	private JPanel boardBg = new JPanel();
+	// Displays the word that is being selected.
+	private JLabel wordDisplay;
+	// Background for the board.
+	private JPanel boardBackground;
 
-	private OptionButton pauseBtn;
-	private ImageIcon pauseDefault = new ImageIcon(getClass().getResource("assets/PauseBtnDefault.png"));
-	private ImageIcon pauseHover = new ImageIcon(getClass().getResource("assets/PauseBtnHover.png"));
-	private ImageIcon pausePress = new ImageIcon(getClass().getResource("assets/PauseBtnPress.png"));
+	// Pause Button.
+	private OptionButton pauseButton;
+	// Default Pause Button Icon.
+	private ImageIcon pauseDefault;
+	// Hover Pause Button Icon.
+	private ImageIcon pauseHover;
+	// Press Pause Button Icon.
+	private ImageIcon pausePress;
 
-	private OptionButton passBtn;
-	private ImageIcon passDefault = new ImageIcon(getClass().getResource("assets/PassBtnDefault.png"));
-	private ImageIcon passHover = new ImageIcon(getClass().getResource("assets/PassBtnHover.png"));
-	private ImageIcon passPress = new ImageIcon(getClass().getResource("assets/PassBtnPress.png"));
+	// Pass Button.
+	private OptionButton passButton;
+	// Default Pass Button Icon.
+	private ImageIcon passDefault;
+	// Hover Pass Button Icon.
+	private ImageIcon passHover;
+	// Press Pass Button Icon.
+	private ImageIcon passPress;
 
-	private OptionButton shakeBtn;
-	private ImageIcon shakeDefault = new ImageIcon(getClass().getResource("assets/ShakeBtnDefault.png"));
-	private ImageIcon shakeHover = new ImageIcon(getClass().getResource("assets/ShakeBtnHover.png"));
-	private ImageIcon shakePress = new ImageIcon(getClass().getResource("assets/ShakeBtnPress.png"));
+	// Shake Button.
+	private OptionButton shakeButton;
+	// Default Shake Button Icon.
+	private ImageIcon shakeDefault;
+	// Hover Shake Button Icon
+	private ImageIcon shakeHover;
+	// Press Shake Button Icon.
+	private ImageIcon shakePress;
 
-	private OptionButton settingsBtn;
-	private ImageIcon settingsDefault = new ImageIcon(getClass().getResource("assets/SettingsBtnDefault.png"));
-	private ImageIcon settingsHover = new ImageIcon(getClass().getResource("assets/SettingsBtnHover.png"));
-	private ImageIcon settingsPress = new ImageIcon(getClass().getResource("assets/SettingsBtnPress.png"));
+	// Settings Button.
+	private OptionButton settingsButton;
+	// Default Settings Button Icon.
+	private ImageIcon settingsDefault;
+	// Hover Settings Button Icon.
+	private ImageIcon settingsHover;
+	// Press Settings Button Icon.
+	private ImageIcon settingsPress;
 
-	private AudioInputStream calmBgm;
-	private AudioInputStream intenseBgm;
-	private Clip bgmClip;
+	// Calm background music.
+	private AudioInputStream calmBackgroundMusic;
+	// Intense background music.
+	private AudioInputStream intenseBackgroundMusic;
+	// Clip of the current background music.
+	private Clip backgroundMusicClip;
 
-	private  Boggle mainFrame;
-	private boolean isAI;
+	// Main game frame.
+	private Boggle mainFrame;
 
-	public GameScreen(Boggle mainFrame, boolean ai) {
+	/**
+	 * Constructor
+	 * @param mainFrame main game frame.
+	 * @param isAI check if mode is player vs AI.
+	 */
+	public GameScreen(Boggle mainFrame, boolean isAI) {
+		// Initialize instance variables.
 		this.mainFrame = mainFrame;
-		int w = mainFrame.getScreenWidth(), h = mainFrame.getScreenHeight();
+		// Get dimensions of the screen.
+		int width = mainFrame.getScreenWidth();
+		int height = mainFrame.getScreenHeight();
 
-		this.isAI = ai;
+		// Constraints to set the position of the components.
+		GridBagConstraints constraints;
 
-		GridBagConstraints c;
-
+		// Set background, layout and dimensions of game screen.
 		this.setBackground(Color.black);
 		this.setLayout(new GridBagLayout());
-		this.setPreferredSize(new Dimension(w, h));
+		this.setPreferredSize(new Dimension(width, height));
 
-		layers.setBackground(Color.black);
-		layers.setLayout(new GridBagLayout());
-		layers.setPreferredSize(new Dimension(w, h));
+		// Set background, layout and dimensions of game screen.
+		layeredPane = new JLayeredPane();
+		layeredPane.setBackground(Color.black);
+		layeredPane.setLayout(new GridBagLayout());
+		layeredPane.setPreferredSize(new Dimension(width, height));
 
-		ImageIcon bg = new ImageIcon(getClass().getResource("assets/GameScreenBg.png"));
-		background.setIcon(new ImageIcon(bg.getImage().getScaledInstance(w, h, Image.SCALE_SMOOTH)));
+		// Set the background for the game screen.
+		background = new JLabel();
+		ImageIcon backgroundImage = new ImageIcon(getClass()
+				.getResource("assets/GameScreenBg.png"));
+		background.setIcon(new ImageIcon(backgroundImage.getImage()
+				.getScaledInstance(width, height, Image.SCALE_SMOOTH)));
 		background.setBackground(Color.black);
-		c = new GridBagConstraints();
-		c.gridx = 0;
-		c.gridy = 0;
-		c.gridwidth = 4;
-		c.gridheight = 6;
-		layers.add(background, c);
-		layers.setLayer(background, 0);
+		constraints = new GridBagConstraints();
+		constraints.gridx = 0;
+		constraints.gridy = 0;
+		constraints.gridwidth = 4;
+		constraints.gridheight = 6;
+		layeredPane.add(background, constraints);
+		layeredPane.setLayer(background, 0);
 
+		// Set layout and dimensions of content.
+		content = new JPanel();
 		content.setLayout(new GridBagLayout());
 		content.setOpaque(false);
-		content.setPreferredSize(new Dimension(w, h));
+		content.setPreferredSize(new Dimension(width, height));
 
-		wordDisplay.setMinimumSize(new Dimension((int) (0.365 * w), (int) (0.09 * h)));
-		wordDisplay.setPreferredSize(new Dimension((int) (0.365 * w), (int) (0.09 * h)));
+		// Set the dimensions and positions of the word display.
+		wordDisplay = new JLabel();
+		wordDisplay.setMinimumSize(
+				new Dimension((int) (0.365 * width), (int) (0.09 * height)));
+		wordDisplay.setPreferredSize(
+				new Dimension((int) (0.365 * width), (int) (0.09 * height)));
 		wordDisplay.setHorizontalTextPosition(JLabel.CENTER);
 		wordDisplay.setVerticalTextPosition(JLabel.CENTER);
 		wordDisplay.setHorizontalAlignment(JLabel.CENTER);
 		wordDisplay.setVerticalAlignment(JLabel.CENTER);
 		wordDisplay.setFont(new Font("Arial", Font.PLAIN, 40));
-		c = new GridBagConstraints();
-		c.anchor = GridBagConstraints.FIRST_LINE_START;
-		c.gridx = 1;
-		c.gridy = 0;
-		c.insets = new Insets((int) (0.0395 * h), (int) (0.059 * w), (int) (0.02 * h), (int) (0.05 * w));
-		c.weightx = 1;
-		c.weighty = 1;
-		content.add(wordDisplay, c);
+		constraints = new GridBagConstraints();
+		constraints.anchor = GridBagConstraints.FIRST_LINE_START;
+		constraints.gridx = 1;
+		constraints.gridy = 0;
+		constraints.insets = new Insets((int) (0.0395 * height),
+				(int) (0.059 * width), (int) (0.02 * height),
+				(int) (0.05 * width));
+		constraints.weightx = 1;
+		constraints.weighty = 1;
+		content.add(wordDisplay, constraints);
 
-		wordListBg.setLayout(new GridBagLayout());
-		wordListBg.setMinimumSize(new Dimension((int) (0.22 * w), (int) (1.2 * h)));
-		wordListBg.setPreferredSize(new Dimension((int) (0.22 * w), (int) (1.2 * h)));
-		wordListBg.setOpaque(false);
-		c = new GridBagConstraints();
-		c.anchor = GridBagConstraints.FIRST_LINE_START;
-		c.gridwidth = 1;
-		c.gridheight = 6;
-		c.gridx = 0;
-		c.gridy = 0;
-		c.insets = new Insets((int) (0.17 * h), (int) (0.023 * w), 0, (int) (0.00625 * w));
-		c.weightx = 1;
-		c.weighty = 1;
+		// Set the dimensions and positions of the word table.
+		wordTableBackground = new JPanel();
+		wordTableBackground.setLayout(new GridBagLayout());
+		wordTableBackground.setMinimumSize(
+				new Dimension((int) (0.22 * width), (int) (1.2 * height)));
+		wordTableBackground.setPreferredSize(
+				new Dimension((int) (0.22 * width), (int) (1.2 * height)));
+		wordTableBackground.setOpaque(false);
+		constraints = new GridBagConstraints();
+		constraints.anchor = GridBagConstraints.FIRST_LINE_START;
+		constraints.gridwidth = 1;
+		constraints.gridheight = 6;
+		constraints.gridx = 0;
+		constraints.gridy = 0;
+		constraints.insets = new Insets((int) (0.17 * height),
+				(int) (0.023 * width), 0, (int) (0.00625 * width));
+		constraints.weightx = 1;
+		constraints.weighty = 1;
 
-		wordListScroll.setViewportView(wordListBg);
-		wordListScroll.setMinimumSize(new Dimension((int) (0.23475 * w), (int) (0.79 * h)));
-		wordListScroll.setPreferredSize(new Dimension((int) (0.23475 * w), (int) (0.79 * h)));
-		wordListScroll.setOpaque(false);
-		wordListScroll.getViewport().setOpaque(false);
-		wordListScroll.setBorder(createEmptyBorder());
-		content.add(wordListScroll, c);
+		// Set the dimensions and position of the word table scroll.
+		wordTableScrollPane = new JScrollPane();
+		wordTableScrollPane.setViewportView(wordTableBackground);
+		wordTableScrollPane.setMinimumSize(
+				new Dimension((int) (0.23475 * width), (int) (0.79 * height)));
+		wordTableScrollPane.setPreferredSize(
+				new Dimension((int) (0.23475 * width), (int) (0.79 * height)));
+		wordTableScrollPane.setOpaque(false);
+		wordTableScrollPane.getViewport().setOpaque(false);
+		wordTableScrollPane.setBorder(createEmptyBorder());
+		content.add(wordTableScrollPane, constraints);
 
-		wordList = new WordTable(mainFrame, wordListBg, wordListScroll);
+		wordTable = new WordTable(mainFrame, wordTableBackground,
+				wordTableScrollPane);
 
-		plr1Label.setMinimumSize(new Dimension((int) (0.22 * w), (int) (0.09 * h)));
-		plr1Label.setPreferredSize(new Dimension((int) (0.22 * w), (int) (0.09 * h)));
-		plr1Label.setHorizontalTextPosition(JLabel.CENTER);
-		plr1Label.setHorizontalAlignment(JLabel.CENTER);
-		plr1Label.setText("Player 1");
-		plr1Label.setFont(new Font("Verdana", Font.BOLD, 50));
-		plr1Label.setForeground(Color.WHITE);
-		c = new GridBagConstraints();
-		c.anchor = GridBagConstraints.ABOVE_BASELINE;
-		c.gridwidth = 2;
-		c.gridheight = 1;
-		c.gridx = 3;
-		c.gridy = 0;
-		c.weightx = 1;
-		c.weighty = 1;
-		c.insets = new Insets((int) (0.08 * h), 0, 0, (int) (0.01 * w));
-		content.add(plr1Label, c);
+		// Set the dimensions and positions of the player 1 title.
+		playerOneLabel = new JLabel();
+		playerOneLabel.setMinimumSize(
+				new Dimension((int) (0.22 * width), (int) (0.09 * height)));
+		playerOneLabel.setPreferredSize(
+				new Dimension((int) (0.22 * width), (int) (0.09 * height)));
+		playerOneLabel.setHorizontalTextPosition(JLabel.CENTER);
+		playerOneLabel.setHorizontalAlignment(JLabel.CENTER);
+		playerOneLabel.setText("Player 1");
+		playerOneLabel.setFont(new Font("Verdana", Font.BOLD, 50));
+		playerOneLabel.setForeground(Color.WHITE);
+		constraints = new GridBagConstraints();
+		constraints.anchor = GridBagConstraints.ABOVE_BASELINE;
+		constraints.gridwidth = 2;
+		constraints.gridheight = 1;
+		constraints.gridx = 3;
+		constraints.gridy = 0;
+		constraints.weightx = 1;
+		constraints.weighty = 1;
+		constraints.insets = new Insets(
+				(int) (0.08 * height), 0, 0, (int) (0.01 * width));
+		content.add(playerOneLabel, constraints);
 
-		plr1TimeDisplay.setMinimumSize(new Dimension((int) (0.109375 * w), (int) (0.111 * h)));
-		plr1TimeDisplay.setPreferredSize(new Dimension((int) (0.109375 * w), (int) (0.111 * h)));
-		plr1TimeDisplay.setHorizontalAlignment(JLabel.CENTER);
-		plr1TimeDisplay.setFont(new Font("Verdana", Font.PLAIN, 40));
-		c = new GridBagConstraints();
-		c.anchor = GridBagConstraints.FIRST_LINE_START;
-		c.gridwidth = 1;
-		c.gridheight = 1;
-		c.gridx = 3;
-		c.gridy = 1;
-		c.weightx = 1;
-		c.weighty = 0;
-		c.insets = new Insets((int) (0.075 * h), (int) (0.016 * w), 0, (int) (0.007 * w));
-		content.add(plr1TimeDisplay, c);
+		// Set the dimensions and positions of the time display for player 1.
+		playerOneTimeDisplay = new JLabel();
+		playerOneTimeDisplay.setMinimumSize(new Dimension(
+				(int) (0.109375 * width), (int) (0.111 * height)));
+		playerOneTimeDisplay.setPreferredSize(new Dimension(
+				(int) (0.109375 * width), (int) (0.111 * height)));
+		playerOneTimeDisplay.setHorizontalAlignment(JLabel.CENTER);
+		playerOneTimeDisplay.setFont(new Font("Verdana", Font.PLAIN, 40));
+		constraints = new GridBagConstraints();
+		constraints.anchor = GridBagConstraints.FIRST_LINE_START;
+		constraints.gridwidth = 1;
+		constraints.gridheight = 1;
+		constraints.gridx = 3;
+		constraints.gridy = 1;
+		constraints.weightx = 1;
+		constraints.weighty = 0;
+		constraints.insets = new Insets((int) (0.075 * height),
+				(int) (0.016 * width), 0, (int) (0.007 * width));
+		content.add(playerOneTimeDisplay, constraints);
 
-		plr1PtsDisplay.setMinimumSize(new Dimension((int) (0.109375 * w), (int) (0.111 * h)));
-		plr1PtsDisplay.setPreferredSize(new Dimension((int) (0.109375 * w), (int) (0.111 * h)));
-		plr1PtsDisplay.setHorizontalAlignment(JLabel.CENTER);
-		plr1PtsDisplay.setFont(new Font("Verdana", Font.PLAIN, 40));
-		c = new GridBagConstraints();
-		c.anchor = GridBagConstraints.FIRST_LINE_START;
-		c.gridwidth = 1;
-		c.gridheight = 1;
-		c.gridx = 4;
-		c.gridy = 1;
-		c.weightx = 1;
-		c.weighty = 0;
-		c.insets = new Insets((int) (0.075 * h), 0, 0, (int) (0.024 * w));
-		content.add(plr1PtsDisplay, c);
+		// Set the dimensions and positions of the points display for player 1.
+		playerOnePointsDisplay = new JLabel();
+		playerOnePointsDisplay.setMinimumSize(new Dimension(
+				(int) (0.109375 * width), (int) (0.111 * height)));
+		playerOnePointsDisplay.setPreferredSize(new Dimension(
+				(int) (0.109375 * width), (int) (0.111 * height)));
+		playerOnePointsDisplay.setHorizontalAlignment(JLabel.CENTER);
+		playerOnePointsDisplay.setFont(new Font("Verdana", Font.PLAIN, 40));
+		constraints = new GridBagConstraints();
+		constraints.anchor = GridBagConstraints.FIRST_LINE_START;
+		constraints.gridwidth = 1;
+		constraints.gridheight = 1;
+		constraints.gridx = 4;
+		constraints.gridy = 1;
+		constraints.weightx = 1;
+		constraints.weighty = 0;
+		constraints.insets = new Insets(
+				(int) (0.075 * height), 0, 0, (int) (0.024 * width));
+		content.add(playerOnePointsDisplay, constraints);
 
-		plr2Label.setMinimumSize(new Dimension((int) (0.22 * w), (int) (0.09 * h)));
-		plr2Label.setPreferredSize(new Dimension((int) (0.22 * w), (int) (0.09 * h)));
-		plr2Label.setHorizontalTextPosition(JLabel.CENTER);
-		plr2Label.setHorizontalAlignment(JLabel.CENTER);
-		plr2Label.setText(ai ? "λBoggle" : "Player 2");
-		plr2Label.setFont(new Font("Verdana", Font.BOLD, 50));
-		plr2Label.setForeground(Color.WHITE);
-		c = new GridBagConstraints();
-		c.anchor = GridBagConstraints.ABOVE_BASELINE;
-		c.gridwidth = 2;
-		c.gridheight = 1;
-		c.gridx = 3;
-		c.gridy = 2;
-		c.weightx = 1;
-		c.weighty = 0;
-		c.insets = new Insets((int) (0.05 * h), 0, 0, (int) (0.01 * w));
-		content.add(plr2Label, c);
+		// Set the dimensions and positions of the player 2 title.
+		playerTwoLabel = new JLabel();
+		playerTwoLabel.setMinimumSize(
+				new Dimension((int) (0.22 * width), (int) (0.09 * height)));
+		playerTwoLabel.setPreferredSize(
+				new Dimension((int) (0.22 * width), (int) (0.09 * height)));
+		playerTwoLabel.setHorizontalTextPosition(JLabel.CENTER);
+		playerTwoLabel.setHorizontalAlignment(JLabel.CENTER);
+		// Uses shorthand if-else blocks (ternary operator).
+		// https://www.w3schools.com/java/java_conditions_shorthand.asp.
+		playerTwoLabel.setText(isAI ? "λBoggle" : "Player 2");
+		playerTwoLabel.setFont(new Font("Verdana", Font.BOLD, 50));
+		playerTwoLabel.setForeground(Color.WHITE);
+		constraints = new GridBagConstraints();
+		constraints.anchor = GridBagConstraints.ABOVE_BASELINE;
+		constraints.gridwidth = 2;
+		constraints.gridheight = 1;
+		constraints.gridx = 3;
+		constraints.gridy = 2;
+		constraints.weightx = 1;
+		constraints.weighty = 0;
+		constraints.insets = new Insets(
+				(int) (0.05 * height), 0, 0, (int) (0.01 * width));
+		content.add(playerTwoLabel, constraints);
 
-		plr2TimeDisplay.setMinimumSize(new Dimension((int) (0.109375 * w), (int) (0.111 * h)));
-		plr2TimeDisplay.setPreferredSize(new Dimension((int) (0.109375 * w), (int) (0.111 * h)));
-		plr2TimeDisplay.setHorizontalAlignment(JLabel.CENTER);
-		plr2TimeDisplay.setFont(new Font("Verdana", Font.PLAIN, 40));
-		c = new GridBagConstraints();
-		c.anchor = GridBagConstraints.FIRST_LINE_START;
-		c.gridwidth = 1;
-		c.gridheight = 1;
-		c.gridx = 3;
-		c.gridy = 3;
-		c.weightx = 1;
-		c.weighty = 0;
-		c.insets = new Insets((int) (0.086 * h), (int) (0.016 * w), 0, (int) (0.007 * w));
-		content.add(plr2TimeDisplay, c);
+		// Set dimensions and positions for player 2 timer display.
+		playerTwoTimeDisplay = new JLabel();
+		playerTwoTimeDisplay.setMinimumSize(new Dimension(
+				(int) (0.109375 * width), (int) (0.111 * height)));
+		playerTwoTimeDisplay.setPreferredSize(new Dimension(
+				(int) (0.109375 * width), (int) (0.111 * height)));
+		playerTwoTimeDisplay.setHorizontalAlignment(JLabel.CENTER);
+		playerTwoTimeDisplay.setFont(new Font("Verdana", Font.PLAIN, 40));
+		constraints = new GridBagConstraints();
+		constraints.anchor = GridBagConstraints.FIRST_LINE_START;
+		constraints.gridwidth = 1;
+		constraints.gridheight = 1;
+		constraints.gridx = 3;
+		constraints.gridy = 3;
+		constraints.weightx = 1;
+		constraints.weighty = 0;
+		constraints.insets = new Insets((int) (0.086 * height),
+				(int) (0.016 * width), 0, (int) (0.007 * width));
+		content.add(playerTwoTimeDisplay, constraints);
 
-		plr2PtsDisplay.setMinimumSize(new Dimension((int) (0.109375 * w), (int) (0.111 * h)));
-		plr2PtsDisplay.setPreferredSize(new Dimension((int) (0.109375 * w), (int) (0.111 * h)));
-		plr2PtsDisplay.setHorizontalAlignment(JLabel.CENTER);
-		plr2PtsDisplay.setFont(new Font("Verdana", Font.PLAIN, 40));
-		c = new GridBagConstraints();
-		c.anchor = GridBagConstraints.FIRST_LINE_START;
-		c.gridwidth = 1;
-		c.gridheight = 1;
-		c.gridx = 4;
-		c.gridy = 3;
-		c.weightx = 1;
-		c.weighty = 0;
-		c.insets = new Insets((int) (0.086 * h), 0, 0, (int) (0.024 * w));
-		content.add(plr2PtsDisplay, c);
+		// Set dimensions and positions for player 2 points display.
+		playerTwoPointsDisplay = new JLabel();
+		playerTwoPointsDisplay.setMinimumSize(new Dimension(
+				(int) (0.109375 * width), (int) (0.111 * height)));
+		playerTwoPointsDisplay.setPreferredSize(new Dimension(
+				(int) (0.109375 * width), (int) (0.111 * height)));
+		playerTwoPointsDisplay.setHorizontalAlignment(JLabel.CENTER);
+		playerTwoPointsDisplay.setFont(new Font("Verdana", Font.PLAIN, 40));
+		constraints = new GridBagConstraints();
+		constraints.anchor = GridBagConstraints.FIRST_LINE_START;
+		constraints.gridwidth = 1;
+		constraints.gridheight = 1;
+		constraints.gridx = 4;
+		constraints.gridy = 3;
+		constraints.weightx = 1;
+		constraints.weighty = 0;
+		constraints.insets = new Insets(
+				(int) (0.086 * height), 0, 0, (int) (0.024 * width));
+		content.add(playerTwoPointsDisplay, constraints);
 
-		// Creating the options button.
-		passBtn = new OptionButton(0.05 * w, 0.05 * w, passDefault, passHover, passPress, e -> board.switchTurn());
-		// Positional the options button using GridBagLayout.
-		c = new GridBagConstraints();
-		c.anchor = GridBagConstraints.LINE_END;
-		c.gridx = 3;
-		c.gridy = 4;
-		c.insets = new Insets((int) (0.055 * h), 0, 0, (int) (0.025 * w));
-		c.weightx = 1;
-		c.weighty = 0;
-		content.add(passBtn, c);
+		// Instantiate pass button images.
+		passDefault = new ImageIcon(getClass()
+				.getResource("assets/PassBtnDefault.png"));
+		passHover = new ImageIcon(getClass()
+				.getResource("assets/PassBtnHover.png"));
+		passPress = new ImageIcon(getClass()
+				.getResource("assets/PassBtnPress.png"));
 
-		// Creating the pause button.
-		pauseBtn = new OptionButton(0.05 * w, 0.05 * w, pauseDefault, pauseHover, pausePress, e -> {
+		// Instantiating the pass button.
+		// Inline method (lambda expressions).
+		// https://www.geeksforgeeks.org/lambda-expressions-java-8/.
+		passButton = new OptionButton(false, 0.05 * width, 0.05 * width,
+				passDefault, passHover, passPress, e -> board.switchTurn());
+		// Position the pass button using GridBagLayout.
+		constraints = new GridBagConstraints();
+		constraints.anchor = GridBagConstraints.LINE_END;
+		constraints.gridx = 3;
+		constraints.gridy = 4;
+		constraints.insets = new Insets(
+				(int) (0.055 * height), 0, 0, (int) (0.025 * width));
+		constraints.weightx = 1;
+		constraints.weighty = 0;
+		content.add(passButton, constraints);
+
+		// Instantiate pause button images.
+		pauseDefault = new ImageIcon(getClass()
+				.getResource("assets/PauseBtnDefault.png"));
+		pauseHover = new ImageIcon(getClass()
+				.getResource("assets/PauseBtnHover.png"));
+		pausePress = new ImageIcon(getClass()
+				.getResource("assets/PauseBtnPress.png"));
+
+		// Instantiating the pause button.
+		pauseButton = new OptionButton(false, 0.05 * width, 0.05 * width,
+				pauseDefault, pauseHover, pausePress, e -> {
+			// Inline method (lambda expressions).
+			// https://www.geeksforgeeks.org/lambda-expressions-java-8/.
+
 			board.pause();
 			mainFrame.pauseOverlay();
 		});
-		// Positional the pause button using GridBagLayout.
-		c = new GridBagConstraints();
-		c.anchor = GridBagConstraints.LINE_END;
-		c.gridx = 3;
-		c.gridy = 5;
-		c.insets = new Insets(0, 0, (int) (0.04 * h), (int) (0.025 * w));
-		c.weightx = 1;
-		c.weighty = 0;
+		// Position the pause button using GridBagLayout.
+		constraints = new GridBagConstraints();
+		constraints.anchor = GridBagConstraints.LINE_END;
+		constraints.gridx = 3;
+		constraints.gridy = 5;
+		constraints.insets = new Insets(
+				0, 0, (int) (0.04 * height), (int) (0.025 * width));
+		constraints.weightx = 1;
+		constraints.weighty = 0;
 		// Adding the pause button to the content panel.
-		content.add(pauseBtn, c);
+		content.add(pauseButton, constraints);
 
-		// Creating the shake button.
-		shakeBtn = new OptionButton(0.05 * w, 0.05 * w, shakeDefault, shakeHover, shakePress, e -> board.shuffle());
-		// Positional the shake button using GridBagLayout.
-		c = new GridBagConstraints();
-		c.anchor = GridBagConstraints.LINE_START;
-		c.gridx = 4;
-		c.gridy = 4;
-		c.insets = new Insets((int) (0.055 * h), (int) (0.016 * w), 0, 0);
-		c.weightx = 1;
-		c.weighty = 0;
+		// Instantiate shake button images.
+		shakeDefault = new ImageIcon(getClass()
+				.getResource("assets/ShakeBtnDefault.png"));
+		shakeHover = new ImageIcon(getClass()
+				.getResource("assets/ShakeBtnHover.png"));
+		shakePress = new ImageIcon(getClass()
+				.getResource("assets/ShakeBtnPress.png"));
+
+		// Instantiating the shake button.
+		// Inline method (lambda expressions).
+		// https://www.geeksforgeeks.org/lambda-expressions-java-8/.
+		shakeButton = new OptionButton(false, 0.05 * width, 0.05 * width,
+				shakeDefault, shakeHover, shakePress, e -> board.shuffle());
+		// Position the shake button using GridBagLayout.
+		constraints = new GridBagConstraints();
+		constraints.anchor = GridBagConstraints.LINE_START;
+		constraints.gridx = 4;
+		constraints.gridy = 4;
+		constraints.insets = new Insets(
+				(int) (0.055 * height), (int) (0.016 * width), 0, 0);
+		constraints.weightx = 1;
+		constraints.weighty = 0;
 		// Adding the shake button to the content panel.
-		content.add(shakeBtn, c);
+		content.add(shakeButton, constraints);
 
-		// Creating the settings button.
-		settingsBtn = new OptionButton(0.05 * w, 0.05 * w, settingsDefault, settingsHover, settingsPress, e -> {
+		// Instantiate settings button images.
+		settingsDefault = new ImageIcon(getClass()
+				.getResource("assets/SettingsBtnDefault.png"));
+		settingsHover = new ImageIcon(getClass()
+				.getResource("assets/SettingsBtnHover.png"));
+		settingsPress = new ImageIcon(getClass()
+				.getResource("assets/SettingsBtnPress.png"));
+
+		// Instantiating the settings button.
+		settingsButton = new OptionButton(false, 0.05 * width, 0.05 * width,
+				settingsDefault, settingsHover, settingsPress, e -> {
+			// Inline method (lambda expressions).
+			// https://www.geeksforgeeks.org/lambda-expressions-java-8/.
+
 			pauseGame();
 			mainFrame.settingsScreen(1);
 		});
-		// Positional the settings button using GridBagLayout.
-		c = new GridBagConstraints();
-		c.anchor = GridBagConstraints.LINE_START;
-		c.gridx = 4;
-		c.gridy = 5;
-		c.insets = new Insets(0, (int) (0.016 * w), (int) (0.04 * h), 0);
-		c.weightx = 1;
-		c.weighty = 0;
+		// Position the settings button using GridBagLayout.
+		constraints = new GridBagConstraints();
+		constraints.anchor = GridBagConstraints.LINE_START;
+		constraints.gridx = 4;
+		constraints.gridy = 5;
+		constraints.insets = new Insets(
+				0, (int) (0.016 * width), (int) (0.04 * height), 0);
+		constraints.weightx = 1;
+		constraints.weighty = 0;
 		// Adding the settings button to the content panel.
-		content.add(settingsBtn, c);
+		content.add(settingsButton, constraints);
 
-		// Setting the dimensions of the boardBg panel.
-		boardBg.setMinimumSize(new Dimension((int) (0.43 * w), (int) (0.43 * w)));
-		boardBg.setPreferredSize(new Dimension((int) (0.43 * w), (int) (0.43 * w)));
-		boardBg.setOpaque(false);
-		// Positioning the boardBg panel using GridBagConstraints.
-		c = new GridBagConstraints();
-		c.anchor = GridBagConstraints.ABOVE_BASELINE;
-		c.gridx = 1;
-		c.gridy = 1;
-		c.gridheight = 5;
-		c.insets = new Insets(0, (int) (0.017 * w), (int) (0.06 * h), 0);
-		c.weightx = 1;
-		c.weighty = 1;
-		// Adding boardBg to the content panel.
-		content.add(boardBg, c);
+		// Setting the dimensions of the boardBackground panel.
+		boardBackground = new JPanel();
+		boardBackground.setMinimumSize(
+				new Dimension((int) (0.43 * width), (int) (0.43 * width)));
+		boardBackground.setPreferredSize(
+				new Dimension((int) (0.43 * width), (int) (0.43 * width)));
+		boardBackground.setOpaque(false);
+		// Positioning the boardBackground panel using GridBagConstraints.
+		constraints = new GridBagConstraints();
+		constraints.anchor = GridBagConstraints.ABOVE_BASELINE;
+		constraints.gridx = 1;
+		constraints.gridy = 1;
+		constraints.gridheight = 5;
+		constraints.insets = new Insets(
+				0, (int) (0.017 * width), (int) (0.06 * height), 0);
+		constraints.weightx = 1;
+		constraints.weighty = 1;
+		// Adding boardBackground to the content panel.
+		content.add(boardBackground, constraints);
 
-		// Creates the board.
-		board = new Board(mainFrame, boardBg, wordDisplay, wordList, plr1Label,
-				plr1PtsDisplay, plr1TimeDisplay, ai, plr2Label,
-				plr2PtsDisplay, plr2TimeDisplay, passBtn);
+		// Instantiates the board.
+		board = new Board(mainFrame, boardBackground, wordDisplay, wordTable,
+				playerOneLabel, playerOnePointsDisplay, playerOneTimeDisplay,
+				isAI, playerTwoLabel, playerTwoPointsDisplay,
+				playerTwoTimeDisplay, passButton);
 
 		// Adding the content Label to the LayeredPane.
-		layers.add(content, new GridBagConstraints());
+		layeredPane.add(content, new GridBagConstraints());
 		// Setting content Label as the 1st layer on the LayeredPane.
-		layers.setLayer(content, 1);
+		layeredPane.setLayer(content, 1);
 
 		// Adding the LayeredPane to the main screen.
-		this.add(layers, new GridBagConstraints());
+		this.add(layeredPane, new GridBagConstraints());
 
 		pauseGame();
 	}
 
+	/**
+	 * This method gets the board.
+	 * @return the board
+	 */
 	public Board getBoard() {
 		return board;
 	}
 
+	/**
+	 * This method will pause the game.
+	 */
 	public void pauseGame() {
 		board.pause();
 	}
 
+	/**
+	 * This method will resume game after pausing.
+	 */
 	public void resumeGame() {
 		board.resume();
 	}
 
+	/**
+	 * This method will reset the game.
+	 * @param isAI to set game.
+	 */
 	public void resetGame(boolean isAI) {
-		this.isAI = isAI;
-		plr2Label.setText(isAI ? "λBoggle" : "Player 2");
-		wordList.clear();
+		// Set the player text based on the game mode.
+		// Uses shorthand if-else blocks (ternary operator).
+		// https://www.w3schools.com/java/java_conditions_shorthand.asp.
+		playerTwoLabel.setText(isAI ? "λBoggle" : "Player 2");
+		// Clear the word list.
+		wordTable.clear();
 		board.setTurn(0);
+		// Set the game mode of the board.
 		board.setAI(isAI);
 	}
 
-	public void startBgm() {
-		if (bgmClip != null && bgmClip.isRunning()) {
+	/**
+	 * This method will play the background music.
+	 */
+	public void startBackgroundMusic() {
+		// Skip if the background music is running.
+		if (backgroundMusicClip != null && backgroundMusicClip.isRunning()) {
 			return;
 		}
-
 		try {
-			calmBgm = AudioSystem.getAudioInputStream(getClass().getResource("assets/CalmBGM.wav"));
-			intenseBgm = AudioSystem.getAudioInputStream(getClass().getResource("assets/IntenseBGM.wav"));
-			bgmClip = AudioSystem.getClip();
+			// Set the background music of calm and intense.
+			calmBackgroundMusic = AudioSystem.getAudioInputStream(getClass()
+					.getResource("assets/CalmBGM.wav"));
+			intenseBackgroundMusic = AudioSystem.getAudioInputStream(getClass()
+					.getResource("assets/IntenseBGM.wav"));
+			// Play the background music.
+			backgroundMusicClip = AudioSystem.getClip();
 			switch (mainFrame.getBackgroundMusicType()) {
 				case 0:
 					if (isAI()) {
+						// Set calm bgm music if difficulty is easy or medium.
 						if (mainFrame.getAIDifficulty() <= 1) {
-							bgmClip.open(calmBgm);
-						} else {
-							bgmClip.open(intenseBgm);
+							backgroundMusicClip.open(calmBackgroundMusic);
 						}
-					} else {
-						bgmClip.open(intenseBgm);
+						// Set intense bgm if difficulty is hard or impossible.
+						else {
+							backgroundMusicClip.open(intenseBackgroundMusic);
+						}
+					}
+					else {
+						// Handle other exception as intense bgm.
+						backgroundMusicClip.open(intenseBackgroundMusic);
 					}
 					break;
 				case 1:
-					bgmClip.open(calmBgm);
+					// Play the calm background music.
+					backgroundMusicClip.open(calmBackgroundMusic);
 					break;
 				case 2:
-					bgmClip.open(intenseBgm);
+					// Play the intense background music.
+					backgroundMusicClip.open(intenseBackgroundMusic);
 					break;
 			}
 		} catch (Exception e) {
+			// Handle if unable to open the bgm.
 			System.err.println("Error: Unable to start BGM");
 			e.printStackTrace();
 		}
-
-		bgmClip.loop(Clip.LOOP_CONTINUOUSLY);
+		// Loop the bgm indefinitely.
+		backgroundMusicClip.loop(Clip.LOOP_CONTINUOUSLY);
 	}
 
-	public void stopBgm() {
-		bgmClip.stop();
-		bgmClip.close();
+	/**
+	 * This method will stop the background music.
+	 */
+	public void stopBackgroundMusic() {
+		// Stop and close background music clip.
+		backgroundMusicClip.stop();
+		backgroundMusicClip.close();
 		try {
-			calmBgm.close();
-			intenseBgm.close();
+			// Close calm and intense bgm.
+			calmBackgroundMusic.close();
+			intenseBackgroundMusic.close();
 		} catch (IOException e) {
+			// Handle if unable to stop bgm.
 			System.err.println("Error: Unable to reset BGM");
 			e.printStackTrace();
 		}
 	}
 
+	/**
+	 * This method checks the game mode of the board.
+	 * @return true if AI, false if player vs player.
+	 */
 	public boolean isAI() {
 		return board.isAI();
 	}

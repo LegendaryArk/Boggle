@@ -17,178 +17,243 @@ import java.io.IOException;
  */
 public class MenuScreen extends JPanel {
 	// Holds title animation.
-	private final JLabel title;
+	private JLabel title;
 
 	// Layered Pane.
-	private final JLayeredPane layers = new JLayeredPane();
-
-	// Background.
-	private final JLabel background = new JLabel();
-	// Content.
-	private final JPanel content = new JPanel();
+	private JLayeredPane layers;
 
 	// Background image.
-	private final ImageIcon backgroundImg = new ImageIcon(getClass().getResource("assets/MenuScreenBg.png"));
+	private ImageIcon backgroundImage;
+	// Background.
+	private JLabel background;
+	// Content.
+	private JPanel content;
+
 	// Title animation of menu.
-	private final ImageIcon titleGif = new ImageIcon(getClass().getResource("assets/Title.gif"));
+	private ImageIcon titleAnimation;
 
 	// Play Button.
-	private final OptionButton playBtn;
+	private OptionButton playButton;
 	// Default Play Button.
-	private final ImageIcon playDefault = new ImageIcon(getClass().getResource("assets/PlayMenuBtnDefault.png"));
+	private ImageIcon playDefault;
 	// Hover Play Button.
-	private final ImageIcon playHover = new ImageIcon(getClass().getResource("assets/PlayMenuBtnHover.png"));
+	private ImageIcon playHover;
 	// Press Play Button.
-	private final ImageIcon playPress = new ImageIcon(getClass().getResource("assets/PlayMenuBtnPress.png"));
+	private ImageIcon playPress;
 
 	// Guide Button.
-	private final OptionButton guideBtn;
-	// Default Guide Button.
-	private final ImageIcon guideDefault = new ImageIcon(getClass().getResource("assets/GuideMenuBtnDefault.png"));
-	// Hover Guide Button.
-	private final ImageIcon guideHover = new ImageIcon(getClass().getResource("assets/GuideMenuBtnHover.png"));
-	// Press Guide Button
-	private final ImageIcon guidePress = new ImageIcon(getClass().getResource("assets/GuideMenuBtnPress.png"));
+	private OptionButton guideButton;
+	// Default Guide Button Icon.
+	private ImageIcon guideDefault;
+	// Hover Guide Button Icon.
+	private ImageIcon guideHover;
+	// Press Guide Button Icon.
+	private ImageIcon guidePress;
 
 	// Settings Button.
-	private final OptionButton settingsBtn;
-	// Default Settings Button.
-	private final ImageIcon settingsDefault = new ImageIcon(getClass().getResource("assets/SettingsMenuBtnDefault.png"));
-	// Hover Settings Button.
-	private final ImageIcon settingsHover = new ImageIcon(getClass().getResource("assets/SettingsMenuBtnHover.png"));
-	// Press Settings Button.
-	private final ImageIcon settingsPress = new ImageIcon(getClass().getResource("assets/SettingsMenuBtnPress.png"));
+	private OptionButton settingsButton;
+	// Default Settings Button Icon.
+	private ImageIcon settingsDefault;
+	// Hover Settings Button Icon.
+	private ImageIcon settingsHover;
+	// Press Settings Button Icon.
+	private ImageIcon settingsPress;
 
 	// Credits Button.
-	private final OptionButton creditsBtn;
-	// Default Settings Button.
-	private final ImageIcon creditsDefault = new ImageIcon(getClass().getResource("assets/CreditsMenuBtnDefault.png"));
-	// Hover Settings Button.
-	private final ImageIcon creditsHover = new ImageIcon(getClass().getResource("assets/CreditsMenuBtnHover.png"));
-	// Press Settings Button.
-	private final ImageIcon creditsPress = new ImageIcon(getClass().getResource("assets/CreditsMenuBtnPress.png"));
+	private OptionButton creditsButton;
+	// Default Settings Button Icon.
+	private ImageIcon creditsDefault;
+	// Hover Settings Button Icon.
+	private ImageIcon creditsHover;
+	// Press Settings Button Icon.
+	private ImageIcon creditsPress;
 
 	// Exit Button.
-	private final OptionButton exitBtn;
-	// Default Exit Button.
-	private final ImageIcon exitDefault = new ImageIcon(getClass().getResource("assets/ExitMenuBtnDefault.png"));
-	// Hover Exit Button.
-	private final ImageIcon exitHover = new ImageIcon(getClass().getResource("assets/ExitMenuBtnHover.png"));
-	// Pres Exit Button.
-	private final ImageIcon exitPress = new ImageIcon(getClass().getResource("assets/ExitMenuBtnPress.png"));
+	private OptionButton exitButton;
+	// Default Exit Button Icon.
+	private ImageIcon exitDefault;
+	// Hover Exit Button Icon.
+	private ImageIcon exitHover;
+	// Pres Exit Button Icon.
+	private ImageIcon exitPress;
 
 	// Menu background music.
-	private AudioInputStream menuBgm;
+	private AudioInputStream menuBackgroundMusic;
 	// Background music clip.
-	private Clip bgmClip;
+	private Clip backgroundMusicClip;
 
-	// Main game frame.
-	private final Boggle mainFrame;
-
-	// Width.
-	private final int w;
-	// Height.
-	private final int h;
+	// The width of the screen.
+	private int width;
+	// The height of the screen.
+	private int height;
 
 	/**
 	 * Constructor the main panel which contains all the objects.
 	 *
 	 * @param mainFrame, class Boggle.
 	 */
-	public MenuScreen(Boggle mainFrame) {
-		this.mainFrame = mainFrame;
-
+	public MenuScreen(Boggle mainFrame) {;
 		// The dimensions of the players of screen.
-		w = mainFrame.getScreenWidth();
-		h = mainFrame.getScreenHeight();
+		width = mainFrame.getScreenWidth();
+		height = mainFrame.getScreenHeight();
 
-		GridBagConstraints c;
+		// Used to set the position of the components.
+		GridBagConstraints contraints;
 
-		// Set background colour, layout and dimensions.
+		// Set up the main panel.
 		this.setBackground(Color.black);
 		this.setLayout(new GridBagLayout());
-		this.setPreferredSize(new Dimension(w, h));
+		this.setPreferredSize(new Dimension(width, height));
 
 		// Layered Pane
+		layers = new JLayeredPane();
 		layers.setBackground(Color.black);
 		layers.setLayout(new GridBagLayout());
-		layers.setPreferredSize(new Dimension(w, h));
+		layers.setPreferredSize(new Dimension(width, height));
 
 		// Background
-		background.setIcon(new ImageIcon(backgroundImg.getImage().getScaledInstance(w, h, Image.SCALE_SMOOTH)));
+		backgroundImage = new ImageIcon(getClass()
+				.getResource("assets/MenuScreenBg.png"));
+		background = new JLabel();
+		background.setIcon(new ImageIcon(backgroundImage.getImage()
+				.getScaledInstance(width, height, Image.SCALE_SMOOTH)));
 		background.setBackground(Color.black);
-		c = new GridBagConstraints();
-		c.gridx = 0;
-		c.gridy = 0;
-		c.gridwidth = 1;
-		c.gridheight = 6;
-		layers.add(background, c);
+		contraints = new GridBagConstraints();
+		contraints.gridx = 0;
+		contraints.gridy = 0;
+		contraints.gridwidth = 1;
+		contraints.gridheight = 6;
+		layers.add(background, contraints);
 		layers.setLayer(background, 0); // Add background to layer 0
 
 		// Set content layout and dimensions.
+		content = new JPanel();
 		content.setLayout(new GridBagLayout());
 		content.setOpaque(false);
-		content.setPreferredSize(new Dimension(w, h));
+		content.setPreferredSize(new Dimension(width, height));
 
 		// Boggle title.
+		titleAnimation = new ImageIcon(getClass()
+				.getResource("assets/Title.gif"));
 		title = new JLabel();
-		title.setIcon(new ImageIcon(titleGif.getImage().getScaledInstance((int) (0.4 * w), (int) (0.25 * h), Image.SCALE_DEFAULT)));
-		title.setMinimumSize(new Dimension((int) (0.4 * w), (int) (0.25 * h)));
-		title.setPreferredSize(new Dimension((int) (0.4 * w), (int) (0.25 * h)));
+		title.setIcon(new ImageIcon(titleAnimation.getImage()
+				.getScaledInstance((int) (0.4 * width), (int) (0.25 * height),
+						Image.SCALE_DEFAULT)));
+		title.setMinimumSize(new Dimension((int) (0.4 * width),
+				(int) (0.25 * height)));
+		title.setPreferredSize(
+				new Dimension((int) (0.4 * width), (int) (0.25 * height)));
 		title.setOpaque(false);
-		c = new GridBagConstraints();
-		c.anchor = GridBagConstraints.FIRST_LINE_END;
-		c.gridx = 0;
-		c.gridy = 0;
-		c.insets = new Insets((int) (0.02 * h), 0, 0, (int) (0.05 * w));
-		content.add(title, c);
+		contraints = new GridBagConstraints();
+		contraints.anchor = GridBagConstraints.FIRST_LINE_END;
+		contraints.gridx = 0;
+		contraints.gridy = 0;
+		contraints.insets = new Insets((int) (0.02 * height), 0,
+				0, (int) (0.05 * width));
+		content.add(title, contraints);
 
 		// Play Button.
-		playBtn = new OptionButton(0.23 * w, 0.1 * h, playDefault, playHover, playPress, e -> mainFrame.modeSelectionScreen());
-		c = new GridBagConstraints();
-		c.anchor = GridBagConstraints.FIRST_LINE_END;
-		c.gridx = 0;
-		c.gridy = 1;
-		c.insets = new Insets((int) (0.05 * h), 0, 0, (int) (0.135 * w));
-		content.add(playBtn, c);
+		playDefault = new ImageIcon(getClass()
+				.getResource("assets/PlayMenuBtnDefault.png"));
+		playHover = new ImageIcon(getClass()
+				.getResource("assets/PlayMenuBtnHover.png"));
+		playPress = new ImageIcon(getClass()
+				.getResource("assets/PlayMenuBtnPress.png"));
+		// Inline method (lambda expressions).
+		// https://www.geeksforgeeks.org/lambda-expressions-java-8/.
+		playButton = new OptionButton(false,
+				0.23 * width, 0.1 * height, playDefault,
+				playHover, playPress, e -> mainFrame.modeSelectionScreen());
+		contraints = new GridBagConstraints();
+		contraints.anchor = GridBagConstraints.FIRST_LINE_END;
+		contraints.gridx = 0;
+		contraints.gridy = 1;
+		contraints.insets = new Insets((int) (0.05 * height),
+				0, 0, (int) (0.135 * width));
+		content.add(playButton, contraints);
 
 		// Guide Button.
-		guideBtn = new OptionButton(0.23 * w, 0.1 * h, guideDefault, guideHover, guidePress, e -> mainFrame.guideScreen());
-		c = new GridBagConstraints();
-		c.anchor = GridBagConstraints.FIRST_LINE_END;
-		c.gridx = 0;
-		c.gridy = 2;
-		c.insets = new Insets((int) (0.02 * h), 0, 0, (int) (0.135 * w));
-		content.add(guideBtn, c);
+		guideDefault = new ImageIcon(getClass()
+				.getResource("assets/GuideMenuBtnDefault.png"));
+		guideHover = new ImageIcon(getClass()
+				.getResource("assets/GuideMenuBtnHover.png"));
+		guidePress = new ImageIcon(getClass()
+				.getResource("assets/GuideMenuBtnPress.png"));
+		// Inline method (lambda expressions).
+		// https://www.geeksforgeeks.org/lambda-expressions-java-8/.
+		guideButton = new OptionButton(false, 0.23 * width,
+				0.1 * height, guideDefault,
+				guideHover, guidePress, e -> mainFrame.guideScreen());
+		contraints = new GridBagConstraints();
+		contraints.anchor = GridBagConstraints.FIRST_LINE_END;
+		contraints.gridx = 0;
+		contraints.gridy = 2;
+		contraints.insets = new Insets((int) (0.02 * height), 0, 0,
+				(int) (0.135 * width));
+		content.add(guideButton, contraints);
 
 		// Settings Button.
-		settingsBtn = new OptionButton(0.23 * w, 0.1 * h, settingsDefault, settingsHover, settingsPress, e -> mainFrame.settingsScreen(0));
-		c = new GridBagConstraints();
-		c.anchor = GridBagConstraints.FIRST_LINE_END;
-		c.gridx = 0;
-		c.gridy = 3;
-		c.insets = new Insets((int) (0.02 * h), 0, 0, (int) (0.135 * w));
-		content.add(settingsBtn, c);
+		settingsDefault = new ImageIcon(getClass()
+				.getResource("assets/SettingsMenuBtnDefault.png"));
+		settingsHover = new ImageIcon(getClass()
+				.getResource("assets/SettingsMenuBtnHover.png"));
+		settingsPress = new ImageIcon(getClass()
+				.getResource("assets/SettingsMenuBtnPress.png"));
+		// Inline method (lambda expressions).
+		// https://www.geeksforgeeks.org/lambda-expressions-java-8/.
+		settingsButton = new OptionButton(false, 0.23 * width,
+				0.1 * height,
+				settingsDefault, settingsHover, settingsPress,
+				e -> mainFrame.settingsScreen(0));
+		contraints = new GridBagConstraints();
+		contraints.anchor = GridBagConstraints.FIRST_LINE_END;
+		contraints.gridx = 0;
+		contraints.gridy = 3;
+		contraints.insets = new Insets((int) (0.02 * height), 0, 0,
+				(int) (0.135 * width));
+		content.add(settingsButton, contraints);
 
 		// Credits Button.
-		creditsBtn = new OptionButton(0.23 * w, 0.1 * h, creditsDefault, creditsHover, creditsPress, e -> mainFrame.creditsScreen());
-		c = new GridBagConstraints();
-		c.anchor = GridBagConstraints.FIRST_LINE_END;
-		c.gridx = 0;
-		c.gridy = 4;
-		c.insets = new Insets((int) (0.02 * h), 0, 0, (int) (0.135 * w));
-		content.add(creditsBtn, c);
+		creditsDefault = new ImageIcon(getClass()
+				.getResource("assets/CreditsMenuBtnDefault.png"));
+		creditsHover = new ImageIcon(getClass()
+				.getResource("assets/CreditsMenuBtnHover.png"));
+		creditsPress = new ImageIcon(getClass()
+				.getResource("assets/CreditsMenuBtnPress.png"));
+		// Inline method (lambda expressions).
+		// https://www.geeksforgeeks.org/lambda-expressions-java-8/.
+		creditsButton = new OptionButton(false, 0.23 * width,
+				0.1 * height, creditsDefault,
+				creditsHover, creditsPress, e -> mainFrame.creditsScreen());
+		contraints = new GridBagConstraints();
+		contraints.anchor = GridBagConstraints.FIRST_LINE_END;
+		contraints.gridx = 0;
+		contraints.gridy = 4;
+		contraints.insets = new Insets((int) (0.02 * height), 0, 0,
+				(int) (0.135 * width));
+		content.add(creditsButton, contraints);
 
 		// Exit Button.
-		exitBtn = new OptionButton(0.23 * w, 0.1 * h, exitDefault, exitHover, exitPress, e -> mainFrame.exitScreen());
-		c = new GridBagConstraints();
-		c.anchor = GridBagConstraints.FIRST_LINE_END;
-		c.gridx = 0;
-		c.gridy = 5;
-		c.insets = new Insets((int) (0.02 * h), 0, 0, (int) (0.135 * w));
-		c.weightx = 1;
-		c.weighty = 1;
-		content.add(exitBtn, c);
+		exitDefault = new ImageIcon(getClass()
+				.getResource("assets/ExitMenuBtnDefault.png"));
+		exitHover = new ImageIcon(getClass()
+				.getResource("assets/ExitMenuBtnHover.png"));
+		exitPress = new ImageIcon(getClass()
+				.getResource("assets/ExitMenuBtnPress.png"));
+		// Inline method (lambda expressions).
+		// https://www.geeksforgeeks.org/lambda-expressions-java-8/.
+		exitButton = new OptionButton(false, 0.23 * width,
+				0.1 * height, exitDefault,
+				exitHover, exitPress, e -> mainFrame.exitScreen());
+		contraints = new GridBagConstraints();
+		contraints.anchor = GridBagConstraints.FIRST_LINE_END;
+		contraints.gridx = 0;
+		contraints.gridy = 5;
+		contraints.insets = new Insets((int) (0.02 * height), 0, 0,
+				(int) (0.135 * width));
+		contraints.weightx = 1;
+		contraints.weighty = 1;
+		content.add(exitButton, contraints);
 
 		// Add and layer the buttons to the menu screen.
 		layers.add(content, new GridBagConstraints());
@@ -199,36 +264,37 @@ public class MenuScreen extends JPanel {
 	/**
 	 * This method stars the background music
 	 */
-	public void startBgm() {
-		if (bgmClip != null && bgmClip.isRunning()) {
+	public void startBackgroundMusic() {
+		if (backgroundMusicClip != null && backgroundMusicClip.isRunning()) {
 			// Continue playing background music if running.
 			return;
 		}
 		try {
 			// Set menu background music.
-			menuBgm = AudioSystem.getAudioInputStream(getClass().getResource("assets/MenuBGM.wav"));
-			bgmClip = AudioSystem.getClip();
+			menuBackgroundMusic = AudioSystem.getAudioInputStream(getClass()
+					.getResource("assets/MenuBGM.wav"));
+			backgroundMusicClip = AudioSystem.getClip();
 			// Open sound as a clip.
-			bgmClip.open(menuBgm);
+			backgroundMusicClip.open(menuBackgroundMusic);
 		} catch (Exception e) {
 			// Handle if unable to open the background music.
 			System.err.println("Error: Unable to start Menu BGM");
 			e.printStackTrace();
 		}
 		// Loop background music indefinitely.
-		bgmClip.loop(Clip.LOOP_CONTINUOUSLY);
+		backgroundMusicClip.loop(Clip.LOOP_CONTINUOUSLY);
 	}
 
 	/**
 	 * This method will stop the menu background music
 	 */
-	public void stopBgm() {
+	public void stopBackgroundMusic() {
 		// Stop the background music and close the clip.
-		bgmClip.stop();
-		bgmClip.close();
+		backgroundMusicClip.stop();
+		backgroundMusicClip.close();
 		try {
 			// Close the menu background.
-			menuBgm.close();
+			menuBackgroundMusic.close();
 		} catch (IOException e) {
 			// Handle if unable to reset the menu background music.
 			System.err.println("Error: Unable to reset Menu BGM");

@@ -96,12 +96,17 @@ public class PauseOverlay extends JPanel implements MouseListener {
 				getResource("assets/HomeBtnDefault.png"));
 		homeButtonHover = new ImageIcon(getClass().
 				getResource("assets/HomeBtnHover.png"));
-		homeButtonPress = new ImageIcon(getClass().getResource("assets/HomeBtnPress.png"));
+		homeButtonPress = new ImageIcon(getClass()
+				.getResource("assets/HomeBtnPress.png"));
 		
 		// Instantiating the home button.
-		homeButton = new OptionButton(0.2 * width, 0.15 * height,
+		homeButton = new OptionButton(false,
+				0.2 * width, 0.15 * height,
 				homeButtonDefault, homeButtonHover, homeButtonPress, e -> {
-			mainFrame.getGameScreen().stopBgm();
+			// Inline method (lambda expressions).
+			// https://www.geeksforgeeks.org/lambda-expressions-java-8/.
+
+			mainFrame.getGameScreen().stopBackgroundMusic();
 			mainFrame.menuScreen();
 		});
 
@@ -110,7 +115,8 @@ public class PauseOverlay extends JPanel implements MouseListener {
 		constraints.anchor = GridBagConstraints.LAST_LINE_END;
 		constraints.gridx = 0;
 		constraints.gridy = 0;
-		constraints.insets = new Insets(0, 0, (int) (0.05 * height), (int) (0.05 * width));
+		constraints.insets = new Insets(
+				0, 0, (int) (0.05 * height), (int) (0.05 * width));
 		constraints.weightx = 1;
 		constraints.weighty = 1;
 		options.add(homeButton, constraints);
@@ -124,14 +130,18 @@ public class PauseOverlay extends JPanel implements MouseListener {
 				getResource("assets/RestartBtnPress.png"));
 		
 		// Instantiate restart button.
-		restartButton = new OptionButton(0.2 * width, 0.15 * height,
-				restartButtonDefault, restartButtonHover, restartButtonPress, e -> mainFrame.
-				gameScreen(mainFrame.isAI()));
+		// Inline method (lambda expressions).
+		// https://www.geeksforgeeks.org/lambda-expressions-java-8/.
+		restartButton = new OptionButton(false,
+				0.2 * width, 0.15 * height,
+				restartButtonDefault, restartButtonHover, restartButtonPress,
+				e -> mainFrame.gameScreen(true, mainFrame.isAI()));
 		constraints = new GridBagConstraints();
 		constraints.anchor = GridBagConstraints.LAST_LINE_START;
 		constraints.gridx = 1;
 		constraints.gridy = 0;
-		constraints.insets = new Insets(0, (int) (0.05 * width), (int) (0.05 * height), 0);
+		constraints.insets = new Insets(
+				0, (int) (0.05 * width), (int) (0.05 * height), 0);
 		constraints.weightx = 1;
 		constraints.weighty = 1;
 		// Adding the restart button to the options panel.
@@ -154,7 +164,7 @@ public class PauseOverlay extends JPanel implements MouseListener {
 	 */
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		mainFrame.gameScreen(mainFrame.isAI());
+		mainFrame.gameScreen(false, mainFrame.isAI());
 	}
 
 	/**
@@ -163,8 +173,7 @@ public class PauseOverlay extends JPanel implements MouseListener {
 	 * @param e the event to be processed
 	 */
 	@Override
-	public void mousePressed(MouseEvent e) {
-	}
+	public void mousePressed(MouseEvent e) {}
 
 	/**
 	 * Invoked when a mouse button has been released on a component.
@@ -172,8 +181,7 @@ public class PauseOverlay extends JPanel implements MouseListener {
 	 * @param e the event to be processed
 	 */
 	@Override
-	public void mouseReleased(MouseEvent e) {
-	}
+	public void mouseReleased(MouseEvent e) {}
 
 	/**
 	 * Invoked when the mouse enters a component.
@@ -181,8 +189,7 @@ public class PauseOverlay extends JPanel implements MouseListener {
 	 * @param e the event to be processed
 	 */
 	@Override
-	public void mouseEntered(MouseEvent e) {
-	}
+	public void mouseEntered(MouseEvent e) {}
 
 	/**
 	 * Invoked when the mouse exits a component.
@@ -190,6 +197,5 @@ public class PauseOverlay extends JPanel implements MouseListener {
 	 * @param e the event to be processed
 	 */
 	@Override
-	public void mouseExited(MouseEvent e) {
-	}
+	public void mouseExited(MouseEvent e) {}
 }

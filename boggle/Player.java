@@ -34,8 +34,12 @@ public class Player {
 		// Instantiate variables.
 		this.playerDisplay = playerDisplay;
 		this.pointsDisplay = pointsDisplay;
-		playerTurnIndicator = new ImageIcon(getClass().getResource("assets/PlrTurnIndicator.png"));
-		playerTurnIndicator = new ImageIcon(playerTurnIndicator.getImage().getScaledInstance(playerDisplay.getMinimumSize().width,playerDisplay.getMinimumSize().height, Image.SCALE_SMOOTH));
+		playerTurnIndicator = new ImageIcon(getClass().
+				getResource("assets/PlrTurnIndicator.png"));
+		playerTurnIndicator = new ImageIcon(playerTurnIndicator.getImage()
+				.getScaledInstance(playerDisplay.getMinimumSize().width,
+						playerDisplay.getMinimumSize().height,
+						Image.SCALE_SMOOTH));
 		points = 0;
 		this.timer = timer;
 

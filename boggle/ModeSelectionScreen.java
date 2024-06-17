@@ -14,44 +14,45 @@ import java.awt.*;
  * player.
  */
 public class ModeSelectionScreen extends JPanel {
-
-	// Creating the LayeredPane, panel, and background label.
+	// Layered pane to hold all components.
 	private JLayeredPane layeredPane;
+	// Background for the mode selection screen.
 	private JLabel background;
+	// Panel Holds buttons.
 	private JPanel content;
 
+	// Button for player vs player game mode.
 	private OptionButton playerVersusPlayerButton;
 
-	// Path to the player vs player button default image.
+	// Player versus player button default image.
 	private ImageIcon playerVersusPlayerButtonDefault;
-	// Path to the player vs player button hover image.
+	// Player versus player button hover image.
 	private ImageIcon playerVersusPlayerButtonHover;
-	// Path to the player vs player button pressed image.
+	// Path to the player versus player button pressed image.
 	private ImageIcon playerVersusPlayerButtonPress;
 
 	private OptionButton playerVersusAIButton;
-	// Path to the player vs AI button default image.
+	// Player versus AI button default image.
 	private ImageIcon playerVersusAIButtonDefault;
-	// Path to the player vs AI button hover image.
+	// Player versus AI button hover image.
 	private ImageIcon playerVersusAIButtonHover;
-	// Path to the player vs AI button pressed image.
+	// Player versus AI button pressed image.
 	private ImageIcon playerVersusAIButtonPress;
 
-	// Path to the background image.
-	private final ImageIcon backgroundImage;
+	// Background image.
+	private ImageIcon backgroundImage;
 
 	/**
 	 * Constructor, this method displays a frame where the player has the option
-	 * to play againist another player or the AI.
-	 * @param mainFrame
+	 * to play against another player or the AI.
+	 * @param mainFrame The parent frame of the game.
 	 */
 	public ModeSelectionScreen(Boggle mainFrame) {
-
-		// Setting the dimensions of the Panel.
+		// Dimensions of the frame.
 		int width = mainFrame.getScreenWidth();
 		int height = mainFrame.getScreenHeight();
 
-		// GridBagConstraints.
+		// Used to set the position of the components.
 		GridBagConstraints constraints;
 
 		// Setting the colour and dimensions of the background.
@@ -69,8 +70,8 @@ public class ModeSelectionScreen extends JPanel {
 		background = new JLabel();
 		backgroundImage = new ImageIcon(getClass().
 				getResource("assets/GameOptionScreenBg.png"));
-		background.setIcon(new ImageIcon(backgroundImage.getImage().getScaledInstance(width, height,
-				Image.SCALE_SMOOTH)));
+		background.setIcon(new ImageIcon(backgroundImage.getImage()
+				.getScaledInstance(width, height, Image.SCALE_SMOOTH)));
 		background.setBackground(Color.black);
 		// Setting its position using GridBagLayout.
 		constraints = new GridBagConstraints();
@@ -83,7 +84,7 @@ public class ModeSelectionScreen extends JPanel {
 		// Setting the background as the 0th layer on the LayeredPane.
 		layeredPane.setLayer(background, 0);
 
-		// Adding GridBagLayout for content panel.
+		// Set layout to GridBagLayout for content panel.
 		content = new JPanel();
 		content.setLayout(new GridBagLayout());
 		content.setOpaque(false);
@@ -91,7 +92,7 @@ public class ModeSelectionScreen extends JPanel {
 		// Setting the dimensions of the content screen.
 		content.setPreferredSize(new Dimension(width, height));
 
-		// Instantiate player vs. player button images.
+		// Instantiate player versus player button images.
 		playerVersusPlayerButtonDefault = new ImageIcon(getClass().
 				getResource("assets/PlrVsPlrBtnDefault.png"));
 		playerVersusPlayerButtonHover = new ImageIcon(getClass().
@@ -99,7 +100,7 @@ public class ModeSelectionScreen extends JPanel {
 		playerVersusPlayerButtonPress = new ImageIcon(getClass().
 				getResource("assets/PlrVsPlrBtnPress.png"));
 
-		// Instantiate player vs. AI button images.
+		// Instantiate player versus AI button images.
 		playerVersusAIButtonDefault = new ImageIcon(getClass().
 				getResource("assets/PlrVsAIBtnDefault.png"));
 		playerVersusAIButtonHover = new ImageIcon(getClass().
@@ -107,39 +108,53 @@ public class ModeSelectionScreen extends JPanel {
 		playerVersusAIButtonPress = new ImageIcon(getClass().
 				getResource("assets/PlrVsAIBtnPress.png"));
 
-		// Creating the Player vs Player button.
-		playerVersusPlayerButton = new OptionButton(0.3 * width, 0.2 * height, playerVersusPlayerButtonDefault, playerVersusPlayerButtonHover, playerVersusPlayerButtonPress, e -> {
-			mainFrame.getMenuScreen().stopBgm();
-			mainFrame.gameScreen(false);
+		// Instantiating the player versus player button.
+		playerVersusPlayerButton = new OptionButton(false,
+				0.3 * width, 0.2 * height,
+				playerVersusPlayerButtonDefault, playerVersusPlayerButtonHover,
+				playerVersusPlayerButtonPress, e -> {
+			// Inline method (lambda expressions).
+			// https://www.geeksforgeeks.org/lambda-expressions-java-8/.
+
+			mainFrame.getMenuScreen().stopBackgroundMusic();
+			mainFrame.gameScreen(true, false);
 		});
 		// Setting the position of the button using GridBagLayout.
 		constraints = new GridBagConstraints();
 		constraints.anchor = GridBagConstraints.PAGE_START;
 		constraints.gridx = 0;
 		constraints.gridy = 0;
-		constraints.insets = new Insets((int) (0.35 * height), 0, 0, 0);
+		constraints.insets = new Insets((int) (0.35 * height),
+				0, 0, 0);
 		constraints.weightx = 1;
 		constraints.weighty = 1;
-		// Adding the player vs player button to the content panel.
+		// Adding the player versus player button to the content panel.
 		content.add(playerVersusPlayerButton, constraints);
 
-		// Creating the Player vs AI button using.
-		playerVersusAIButton = new OptionButton(0.3 * width, 0.2 * height, playerVersusAIButtonDefault, playerVersusAIButtonHover, playerVersusAIButtonPress, e -> {
-			mainFrame.getMenuScreen().stopBgm();
-			mainFrame.gameScreen(true);
+		// Instantiating the player versus AI button.
+		playerVersusAIButton = new OptionButton(false,
+				0.3 * width, 0.2 * height,
+				playerVersusAIButtonDefault, playerVersusAIButtonHover,
+				playerVersusAIButtonPress, e -> {
+			// Inline method (lambda expressions).
+			// https://www.geeksforgeeks.org/lambda-expressions-java-8/.
+
+			mainFrame.getMenuScreen().stopBackgroundMusic();
+			mainFrame.gameScreen(true, true);
 		});
 		// Setting the position of the button using GridBagLayout.
 		constraints = new GridBagConstraints();
 		constraints.anchor = GridBagConstraints.PAGE_END;
 		constraints.gridx = 0;
 		constraints.gridy = 1;
-		constraints.insets = new Insets(0, 0, (int) (0.2 * height), 0);
+		constraints.insets = new Insets(0, 0,
+				(int) (0.2 * height), 0);
 		constraints.weightx = 1;
 		constraints.weighty = 1;
 		// Adding the player vs player button to the content panel.
 		content.add(playerVersusAIButton, constraints);
 
-		// Adding the content Label to the LayeredPane
+		// Adding the content panel to the LayeredPane
 		layeredPane.add(content, new GridBagConstraints());
 		layeredPane.setLayer(content, 1);
 

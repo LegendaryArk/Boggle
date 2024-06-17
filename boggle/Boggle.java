@@ -58,6 +58,9 @@ public class Boggle extends JFrame {
 	 * Constructor
 	 */
 	public Boggle() {
+		System.out.println("Launching Boggle... Get ready to play! " +
+				"(This process may take a few seconds.)");
+
 		// Set the dimensions of the screen based on the aspect ratio.
 		screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
 		screenHeight = Toolkit.getDefaultToolkit().getScreenSize().height;
@@ -110,7 +113,7 @@ public class Boggle extends JFrame {
 	 */
 	public void menuScreen() {
 		this.setContentPane(menuScreen);
-		menuScreen.startBgm();
+		menuScreen.startBackgroundMusic();
 		repaint();
 	}
 
@@ -126,11 +129,13 @@ public class Boggle extends JFrame {
 	 * This method switches to the game screen.
 	 * @param isAI if player selects player vs AI.
 	 */
-	public void gameScreen(boolean isAI) {
+	public void gameScreen(boolean reset, boolean isAI) {
 		this.setContentPane(gameScreen);
-		gameScreen.resetGame(isAI);
+		if (reset) {
+			gameScreen.resetGame(isAI);
+		}
 		gameScreen.resumeGame();
-		gameScreen.startBgm();
+		gameScreen.startBackgroundMusic();
 		repaint();
 	}
 
@@ -309,12 +314,12 @@ public class Boggle extends JFrame {
 	}
 
 	/**
-	 * This method updates the game settings based on the screen.
+	 * This method updates the game settings based on the settings screen.
 	 */
 	public void updateSettings() {
 		minimumWordLength = settingsScreen.getMinimumWordLength();
 		targetPoints = settingsScreen.getTargetPoints();
-		initialTime = settingsScreen.getInitTime();
+		initialTime = settingsScreen.getInitialTime();
 		timeIncrement = settingsScreen.getTimeIncrement();
 		AIDifficulty = settingsScreen.getAIDifficulty();
 		backgroundMusicType = settingsScreen.getMusicType();
@@ -346,8 +351,8 @@ public class Boggle extends JFrame {
 	}
 
 	/**
-	 * This method sorts and array list of integers.
-	 * @param list ArrayList.
+	 * This method sorts an array list of integers using merge sort.
+	 * @param list ArrayList of integers.
 	 */
 	public static void sort(ArrayList<Integer> list) {
 		if (list.size() <= 1) {
@@ -371,12 +376,13 @@ public class Boggle extends JFrame {
 	}
 
 	/**
-	 * Helper method for merge sort
-	 * @param left left auxiliary array
-	 * @param right right auxiliary array
-	 * @param list parent array
+	 * Helper method for merge sort.
+	 * @param left left auxiliary array.
+	 * @param right right auxiliary array.
+	 * @param list parent array.
 	 */
-	private static void merge(ArrayList<Integer> left, ArrayList<Integer> right,
+	private static void merge(ArrayList<Integer> left,
+	                          ArrayList<Integer> right,
 	                          ArrayList<Integer> list) {
 		int l = 0, r = 0, i = 0;
 

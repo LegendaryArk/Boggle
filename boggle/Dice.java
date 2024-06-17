@@ -41,6 +41,7 @@ public class Dice extends JLabel {
 	 * @param height height of dice.
 	 */
 	public Dice(char[] faces, int width, int height) {
+		// Instance variables.
 		this.faces = faces;
 		detectionBox = new JLabel();
 		random = new Random();
@@ -48,31 +49,44 @@ public class Dice extends JLabel {
 		roll();
 
 		// Set background images for the different states of the dice.
-		defaultBackground = new ImageIcon(getClass().getResource("assets/DieDefault.png"));
-		holdBackground = new ImageIcon(getClass().getResource("assets/DieHold.png"));
-		newBackground = new ImageIcon(getClass().getResource("assets/DieNew.png"));
-		oldBackground = new ImageIcon(getClass().getResource("assets/DieFound.png"));
-		
-		// 1 smaller pixel on the size to make sure it stays within the cell (can be larger due to rounding errors)
-		defaultBackground = new ImageIcon(defaultBackground.getImage().getScaledInstance(width - 1, height - 1, Image.SCALE_SMOOTH));
-		holdBackground = new ImageIcon(holdBackground.getImage().getScaledInstance(width - 1, height - 1, Image.SCALE_SMOOTH));
-		newBackground = new ImageIcon(newBackground.getImage().getScaledInstance(width - 1, height - 1, Image.SCALE_SMOOTH));
-		oldBackground = new ImageIcon(oldBackground.getImage().getScaledInstance(width - 1, height - 1, Image.SCALE_SMOOTH));
+		defaultBackground = new ImageIcon(getClass()
+				.getResource("assets/DieDefault.png"));
+		holdBackground = new ImageIcon(getClass()
+				.getResource("assets/DieHold.png"));
+		newBackground = new ImageIcon(getClass()
+				.getResource("assets/DieNew.png"));
+		oldBackground = new ImageIcon(getClass()
+				.getResource("assets/DieFound.png"));
 
-		// Set background opacity, focusability and layout
-		setOpaque(false);
-		setFocusable(false);
-		setIcon(defaultBackground);
-		setLayout(new GridBagLayout());
+		// 1 smaller pixel on the size to make sure it stays within the cell.
+		// (can be larger due to rounding errors).
+		defaultBackground = new ImageIcon(defaultBackground.getImage()
+				.getScaledInstance(width - 1, height - 1,
+						Image.SCALE_SMOOTH));
+		holdBackground = new ImageIcon(holdBackground.getImage()
+				.getScaledInstance(width - 1, height - 1,
+						Image.SCALE_SMOOTH));
+		newBackground = new ImageIcon(newBackground.getImage()
+				.getScaledInstance(width - 1, height - 1,
+						Image.SCALE_SMOOTH));
+		oldBackground = new ImageIcon(oldBackground.getImage()
+				.getScaledInstance(width - 1, height - 1,
+						Image.SCALE_SMOOTH));
 
-		// Set hitbox for the dice.
+		// Set up the button.
+		this.setOpaque(false);
+		this.setFocusable(false);
+		this.setIcon(defaultBackground);
+		this.setLayout(new GridBagLayout());
+
+		// Set the detection box for the dice.
 		detectionBox.setOpaque(false);
 		detectionBox.setFocusable(false);
 		detectionBox.setPreferredSize(new Dimension((int) (0.8 * getPreferredSize().width), (int) (0.8 * getPreferredSize().height)));
 		add(detectionBox, new GridBagConstraints());
 
 		// Set the attributes of the dice text.
-		setFont(new Font("Arial", Font.PLAIN, 75)); // May need to make font size dynamic as well
+		setFont(new Font("Arial", Font.PLAIN, 75));
 		setText(String.valueOf(faces[top]));
 		setHorizontalTextPosition(JButton.CENTER);
 		setVerticalTextPosition(JButton.CENTER);

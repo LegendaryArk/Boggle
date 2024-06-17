@@ -10,7 +10,7 @@ import java.awt.event.ActionEvent;
 /**
  * Interface for Clicking Buttons
  *
- * Intefaces: https://www.geeksforgeeks.org/interfaces-in-java/
+ * Interfaces: https://www.geeksforgeeks.org/interfaces-in-java/
  */
 public interface ButtonClicked {
 	/**

@@ -15,15 +15,15 @@ import java.io.IOException;
  * This class plays the exit animation and closes the game
  */
 public class ExitScreen extends JPanel {
-	// Exit animation
+	// Exit animation.
 	private ImageIcon exitAnimation;
-	// Exit background
+	// Exit background.
 	private JLabel background;
-	// Sound effect of exit animation
+	// Sound effect of exit animation.
 	private AudioInputStream exitSoundEffect;
-	// Clip for exit sound effect
+	// Clip for exit sound effect.
 	private Clip exitClip;
-	// Timer for exit animation life span
+	// Timer for exit animation life span.
 	private Timer exitTimer;
 
 	/**
@@ -32,7 +32,7 @@ public class ExitScreen extends JPanel {
 	 */
 	public ExitScreen(Boggle mainFrame) {
 
-		// Get the width and height of the frame
+		// Get the width and height of the screen.
 		int width = mainFrame.getScreenWidth();
 		int height = mainFrame.getScreenHeight();
 
@@ -40,21 +40,21 @@ public class ExitScreen extends JPanel {
 		this.setLayout(new GridBagLayout());
 		this.setPreferredSize(new Dimension(width, height));
 
-		// Instantiate the exitAnimation as the exit animation
+		// Instantiate the exitAnimation as the exit animation.
 		exitAnimation = new ImageIcon(
 				getClass().getResource("assets/Closing.gif"));
 		background = new JLabel();
-		// Scale the exitAnimation based on the width and height
+		// Resize the exitAnimation based on the width and height.
 		background.setIcon(new ImageIcon(exitAnimation.getImage()
 				.getScaledInstance(width, height, Image.SCALE_DEFAULT)));
 		// Set background to black
 		background.setBackground(Color.black);
-		// Add the background to in the GridBagConstraints
+		// Add the background to in the GridBagConstraints.
 		add(background, new GridBagConstraints());
 	}
 
 	/**
-	 * This method starts the exit animation
+	 * This method starts the exit animation.
 	 */
 	public void start() {
 		try {
@@ -78,9 +78,11 @@ public class ExitScreen extends JPanel {
 			System.err.println("Error: No line to read");
 			e.printStackTrace();
 		}
-		// Timer to close game after 4500 milliseconds.
+		// Timer to close game after 4.5 seconds.
+		// Inline method (lambda expressions).
+		// https://www.geeksforgeeks.org/lambda-expressions-java-8/.
 		exitTimer = new Timer(0, e -> System.exit(0));
-		exitTimer.setInitialDelay(4500);
+		exitTimer.setInitialDelay(4500); // Initial delay of 4.5 seconds.
 		exitTimer.start();
 
 		// Play exit sound.

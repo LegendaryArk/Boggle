@@ -82,7 +82,7 @@ public class GuideScreen extends JPanel {
 	// Panel for the first page of game info
 	private JPanel gameInformationOne;
 	// ID for game info page 1.
-	private final String GAME_Information_PAGE_1 = "Game Info Page 1";
+	private final String GAME_INFORMATION_PAGE_1 = "Game Info Page 1";
 	// Layered pane for game info page 1.
 	private JLayeredPane gameInformationOneLayeredPane;
 	// Image for the game info page 1.
@@ -99,7 +99,7 @@ public class GuideScreen extends JPanel {
 	// Panel for the second page of game info
 	private JPanel gameInformationTwo;
 	// ID for game info page 2
-	private String GAME_Information_PAGE_2 = "Game Information Page 2";
+	private String GAME_INFORMATION_PAGE_2 = "Game Information Page 2";
 	// Layered pane for game info page 2
 	private JLayeredPane gameInformationTwoLayeredPane;
 	// Image for game info page 2
@@ -118,7 +118,7 @@ public class GuideScreen extends JPanel {
 	// Panel for the third page of game info
 	private JPanel gameInformationThree;
 	// ID for game info page 3.
-	private String GAME_Information_PAGE_3 = "Game Information Page 3";
+	private String GAME_INFORMATION_PAGE_3 = "Game Information Page 3";
 	// Layered pane for game info page 3.
 	private JLayeredPane gameInformationThreeLayeredPane;
 	// Image for game info page 3.
@@ -225,7 +225,8 @@ public class GuideScreen extends JPanel {
 	 */
 	public GuideScreen(Boggle mainFrame) {
 		// Get the width and height of the frame
-		int width = mainFrame.getScreenWidth(), height = mainFrame.getScreenHeight();
+		int width = mainFrame.getScreenWidth();
+		int height = mainFrame.getScreenHeight();
 
 		// Instantiate cardLayout.
 		cardLayout = new CardLayout();
@@ -298,7 +299,9 @@ public class GuideScreen extends JPanel {
 		menuContent.setOpaque(false);
 
 		// Menu Return Button.
-		menuReturnButton = new OptionButton(0.06 * width, 0.06 * width,
+		// Inline method (lambda expressions).
+		// https://www.geeksforgeeks.org/lambda-expressions-java-8/.
+		menuReturnButton = new OptionButton(false, 0.06 * width, 0.06 * width,
 				returnButtonDefault, returnButtonHover, returnButtonPress,
 				e -> mainFrame.menuScreen());
 		constraints = new GridBagConstraints();
@@ -316,10 +319,13 @@ public class GuideScreen extends JPanel {
 				getClass().getResource("assets/GameInfoBtnHover.png"));
 		gameInformationButtonPress = new ImageIcon(
 				getClass().getResource("assets/GameInfoBtnPress.png"));
-		gameInformationButton = new OptionButton(0.5 * width, 0.15 * height,
+		// Inline method (lambda expressions).
+		// https://www.geeksforgeeks.org/lambda-expressions-java-8/.
+		gameInformationButton = new OptionButton(false,
+				0.5 * width, 0.15 * height,
 				gameInformationButtonDefault, gameInformationButtonHover,
 				gameInformationButtonPress,
-				e -> cardLayout.show(this, GAME_Information_PAGE_1));
+				e -> cardLayout.show(this, GAME_INFORMATION_PAGE_1));
 		constraints = new GridBagConstraints();
 		constraints.gridx = 0;
 		constraints.gridy = 0;
@@ -335,9 +341,11 @@ public class GuideScreen extends JPanel {
 				.getResource("assets/PointsBreakdownBtnHover.png"));
 		pointsBreakdownButtonPress = new ImageIcon(getClass()
 				.getResource("assets/PointsBreakdownBtnPress.png"));
-		pointsBreakdownButton = new OptionButton(0.5 * width, 0.15 * height,
-				pointsBreakdownButtonDefault, pointsBreakdownButtonHover,
-				pointsBreakdownButtonPress,
+		// Inline method (lambda expressions).
+		// https://www.geeksforgeeks.org/lambda-expressions-java-8/.
+		pointsBreakdownButton = new OptionButton(false, 0.5 * width,
+				0.15 * height, pointsBreakdownButtonDefault,
+				pointsBreakdownButtonHover, pointsBreakdownButtonPress,
 				e -> cardLayout.show(this, POINTS_BREAKDOWN_PAGE));
 		constraints = new GridBagConstraints();
 		constraints.gridx = 0;
@@ -353,9 +361,11 @@ public class GuideScreen extends JPanel {
 				.getResource("assets/SettingsInfoBtnHover.png"));
 		settingsInformationButtonPress = new ImageIcon(getClass()
 				.getResource("assets/SettingsInfoBtnPress.png"));
-		settingsInformationButton = new OptionButton(0.5 * width, 0.15 * height,
-				settingsInformationButtonDefault, settingsInformationButtonHover,
-				settingsInformationButtonPress,
+		// Inline method (lambda expressions).
+		// https://www.geeksforgeeks.org/lambda-expressions-java-8/.
+		settingsInformationButton = new OptionButton(false, 0.5 * width,
+				0.15 * height, settingsInformationButtonDefault,
+				settingsInformationButtonHover, settingsInformationButtonPress,
 				e -> cardLayout.show(this, SETTINGS_INFORMATION_PAGE_1));
 		constraints = new GridBagConstraints();
 		constraints.gridx = 0;
@@ -387,55 +397,68 @@ public class GuideScreen extends JPanel {
 		gameInformationOneLayeredPane = new JLayeredPane();
 		gameInformationOneLayeredPane.setBackground(Color.black);
 		gameInformationOneLayeredPane.setLayout(new GridBagLayout());
-		gameInformationOneLayeredPane.setPreferredSize(new Dimension(width, height));
+		gameInformationOneLayeredPane.setPreferredSize(
+				new Dimension(width, height));
 
 		// Game Information 1.
 		gameInformationOneImage = new ImageIcon(getClass()
 				.getResource("assets/GuideScreenGameInfo1.png"));
 		gameInformationOneLabel = new JLabel();
-		gameInformationOneLabel.setIcon(new ImageIcon(gameInformationOneImage.getImage()
-				.getScaledInstance(width, height, Image.SCALE_SMOOTH)));
+		gameInformationOneLabel.setIcon(new ImageIcon(gameInformationOneImage
+				.getImage().getScaledInstance(width, height,
+						Image.SCALE_SMOOTH)));
 		gameInformationOneLabel.setBackground(Color.black);
 		constraints = new GridBagConstraints();
 		constraints.gridx = 0;
 		constraints.gridy = 0;
 		constraints.gridwidth = 2;
 		constraints.gridheight = 1;
-		gameInformationOneLayeredPane.add(gameInformationOneLabel, constraints);
+		gameInformationOneLayeredPane.add(gameInformationOneLabel,
+				constraints);
 		gameInformationOneLayeredPane.setLayer(gameInformationOneLabel, 0);
 
 		// Game Information 1 Buttons.
 		gameInformationOneContent = new JPanel();
 		gameInformationOneContent.setLayout(new GridBagLayout());
 		gameInformationOneContent.setBackground(Color.black);
-		gameInformationOneContent.setPreferredSize(new Dimension(width, height));
+		gameInformationOneContent.setPreferredSize(
+				new Dimension(width, height));
 		gameInformationOneContent.setOpaque(false);
 
 		// Game Information 1 Return Button.
-		gameInformationOneReturnButton = new OptionButton(0.06 * width,
-				0.06 * width, returnButtonDefault, returnButtonHover, returnButtonPress,
-				e -> cardLayout.show(this, MENU_PAGE));
+		// Inline method (lambda expressions).
+		// https://www.geeksforgeeks.org/lambda-expressions-java-8/.
+		gameInformationOneReturnButton = new OptionButton(false, 0.06 * width,
+				0.06 * width, returnButtonDefault, returnButtonHover,
+				returnButtonPress, e -> cardLayout.show(this, MENU_PAGE));
 		constraints = new GridBagConstraints();
 		constraints.anchor = GridBagConstraints.FIRST_LINE_START;
 		constraints.gridx = 0;
 		constraints.gridy = 0;
-		constraints.insets = new Insets((int) (0.04 * height), (int) (0.04 * height), 0, 0);
+		constraints.insets = new Insets((int) (0.04 * height),
+				(int) (0.04 * height), 0, 0);
 		constraints.weightx = 1;
 		constraints.weighty = 1;
-		gameInformationOneContent.add(gameInformationOneReturnButton, constraints);
+		gameInformationOneContent.add(gameInformationOneReturnButton,
+				constraints);
 
 		// Game Information 1 Next Button.
-		gameInformationOneNextButton = new OptionButton(0.05 * width, 0.05 * width,
-				nextButtonDefault, nextButtonHover, nextButtonPress,
-				e -> cardLayout.show(this, GAME_Information_PAGE_2));
+		// Inline method (lambda expressions).
+		// https://www.geeksforgeeks.org/lambda-expressions-java-8/.
+		gameInformationOneNextButton = new OptionButton(false, 0.05 * width,
+				0.05 * width, nextButtonDefault, nextButtonHover,
+				nextButtonPress,
+				e -> cardLayout.show(this, GAME_INFORMATION_PAGE_2));
 		constraints = new GridBagConstraints();
 		constraints.anchor = GridBagConstraints.FIRST_LINE_END;
 		constraints.gridx = 1;
 		constraints.gridy = 0;
-		constraints.insets = new Insets((int) (0.22 * height), 0, 0, (int) (0.05 * height));
+		constraints.insets = new Insets((int) (0.22 * height), 0, 0,
+				(int) (0.05 * height));
 		constraints.weightx = 1;
 		constraints.weighty = 1;
-		gameInformationOneContent.add(gameInformationOneNextButton, constraints);
+		gameInformationOneContent.add(gameInformationOneNextButton,
+				constraints);
 
 		// Add the buttons to the layered pane.
 		gameInformationOneLayeredPane.add(gameInformationOneContent,
@@ -443,10 +466,11 @@ public class GuideScreen extends JPanel {
 		gameInformationOneLayeredPane.setLayer(gameInformationOneContent, 1);
 
 		// Add the screen to the panel.
-		gameInformationOne.add(gameInformationOneLayeredPane, new GridBagConstraints());
+		gameInformationOne.add(gameInformationOneLayeredPane,
+				new GridBagConstraints());
 
 		// Add the page to the main panel.
-		add(gameInformationOne, GAME_Information_PAGE_1);
+		add(gameInformationOne, GAME_INFORMATION_PAGE_1);
 
 		/* Game Information Page 2. */
 		gameInformationTwo = new JPanel();
@@ -458,66 +482,84 @@ public class GuideScreen extends JPanel {
 		gameInformationTwoLayeredPane = new JLayeredPane();
 		gameInformationTwoLayeredPane.setBackground(Color.black);
 		gameInformationTwoLayeredPane.setLayout(new GridBagLayout());
-		gameInformationTwoLayeredPane.setPreferredSize(new Dimension(width, height));
+		gameInformationTwoLayeredPane.setPreferredSize(
+				new Dimension(width, height));
 
 		// Game Information Page 2.
 		gameInformationTwoImage = new ImageIcon(getClass()
 				.getResource("assets/GuideScreenGameInfo2.png"));
 		gameInformationTwoLabel = new JLabel();
-		gameInformationTwoLabel.setIcon(new ImageIcon(gameInformationTwoImage.getImage()
-				.getScaledInstance(width, height, Image.SCALE_SMOOTH)));
+		gameInformationTwoLabel.setIcon(new ImageIcon(gameInformationTwoImage
+				.getImage().getScaledInstance(width, height,
+						Image.SCALE_SMOOTH)));
 		gameInformationTwoLabel.setBackground(Color.black);
 		constraints = new GridBagConstraints();
 		constraints.gridx = 0;
 		constraints.gridy = 0;
 		constraints.gridwidth = 2;
 		constraints.gridheight = 1;
-		gameInformationTwoLayeredPane.add(gameInformationTwoLabel, constraints);
+		gameInformationTwoLayeredPane.add(gameInformationTwoLabel,
+				constraints);
 		gameInformationTwoLayeredPane.setLayer(gameInformationTwoLabel, 0);
 
 		// Game Information Page 2 Buttons.
 		gameInformationTwoContent = new JPanel();
 		gameInformationTwoContent.setLayout(new GridBagLayout());
 		gameInformationTwoContent.setBackground(Color.black);
-		gameInformationTwoContent.setPreferredSize(new Dimension(width, height));
+		gameInformationTwoContent.setPreferredSize(
+				new Dimension(width, height));
 		gameInformationTwoContent.setOpaque(false);
 
 		// Game Information Page 2 Return Button.
-		gameInformationTowReturnButton = new OptionButton(0.06 * width, 0.06 * width,
-				returnButtonDefault, returnButtonHover, returnButtonPress,
-				e -> cardLayout.show(this, MENU_PAGE));
+		// Inline method (lambda expressions).
+		// https://www.geeksforgeeks.org/lambda-expressions-java-8/.
+		gameInformationTowReturnButton = new OptionButton(false, 0.06 * width,
+				0.06 * width, returnButtonDefault, returnButtonHover,
+				returnButtonPress, e -> cardLayout.show(this, MENU_PAGE));
 		constraints = new GridBagConstraints();
 		constraints.anchor = GridBagConstraints.FIRST_LINE_START;
 		constraints.gridx = 0;
 		constraints.gridy = 0;
-		constraints.insets = new Insets((int) (0.04 * height), (int) (0.04 * height), 0, 0);
-		gameInformationTwoContent.add(gameInformationTowReturnButton, constraints);
+		constraints.insets = new Insets((int) (0.04 * height),
+				(int) (0.04 * height), 0, 0);
+		gameInformationTwoContent.add(gameInformationTowReturnButton,
+				constraints);
 
 		// Game Information Page 2 Previous Button.
-		gameInformationTwoPreviousButton = new OptionButton(0.05 * width, 0.05 * width,
-				previousButtonDefault, previousButtonHover, previousButtonPress,
-				e -> cardLayout.show(this, GAME_Information_PAGE_1));
+		// Inline method (lambda expressions).
+		// https://www.geeksforgeeks.org/lambda-expressions-java-8/.
+		gameInformationTwoPreviousButton = new OptionButton(false,
+				0.05 * width, 0.05 * width, previousButtonDefault,
+				previousButtonHover, previousButtonPress,
+				e -> cardLayout.show(this, GAME_INFORMATION_PAGE_1));
 		constraints = new GridBagConstraints();
 		constraints.anchor = GridBagConstraints.FIRST_LINE_START;
 		constraints.gridx = 0;
 		constraints.gridy = 0;
-		constraints.insets = new Insets((int) (0.22 * height), (int) (0.05 * height), 0, 0);
+		constraints.insets = new Insets((int) (0.22 * height),
+				(int) (0.05 * height), 0, 0);
 		constraints.weightx = 1;
 		constraints.weighty = 1;
-		gameInformationTwoContent.add(gameInformationTwoPreviousButton, constraints);
+		gameInformationTwoContent.add(gameInformationTwoPreviousButton,
+				constraints);
 
 		// Game Information Page 2 Next Button.
-		gameInformationTwoNextButton = new OptionButton(0.05 * width, 0.05 * width,
-				nextButtonDefault, nextButtonHover, nextButtonPress,
-				e -> cardLayout.show(this, GAME_Information_PAGE_3));
+		// Inline method (lambda expressions).
+		// https://www.geeksforgeeks.org/lambda-expressions-java-8/.
+		gameInformationTwoNextButton = new OptionButton(false, 0.05 * width,
+				0.05 * width, nextButtonDefault, nextButtonHover,
+				nextButtonPress,
+				e -> cardLayout.show(this, GAME_INFORMATION_PAGE_3));
 		constraints = new GridBagConstraints();
 		constraints.anchor = GridBagConstraints.FIRST_LINE_END;
 		constraints.gridx = 1;
 		constraints.gridy = 0;
-		constraints.insets = new Insets((int) (0.22 * height), 0, 0, (int) (0.05 * height));
+		constraints.insets = new Insets((int) (0.22 * height), 0, 0,
+				(int) (0.05 * height));
 		constraints.weightx = 1;
 		constraints.weighty = 1;
-		gameInformationTwoContent.add(gameInformationTwoNextButton, constraints);
+		gameInformationTwoContent.add(gameInformationTwoNextButton,
+				constraints);
 
 		// Add the buttons to the layered pane.
 		gameInformationTwoLayeredPane.add(gameInformationTwoContent,
@@ -525,10 +567,11 @@ public class GuideScreen extends JPanel {
 		gameInformationTwoLayeredPane.setLayer(gameInformationTwoContent, 1);
 
 		// Add the screen to the panel.
-		gameInformationTwo.add(gameInformationTwoLayeredPane, new GridBagConstraints());
+		gameInformationTwo.add(gameInformationTwoLayeredPane,
+				new GridBagConstraints());
 
 		// Add the page to the main panel.
-		add(gameInformationTwo, GAME_Information_PAGE_2);
+		add(gameInformationTwo, GAME_INFORMATION_PAGE_2);
 
 		/* Game Information Page 3. */
 		gameInformationThree = new JPanel();
@@ -540,64 +583,81 @@ public class GuideScreen extends JPanel {
 		gameInformationThreeLayeredPane = new JLayeredPane();
 		gameInformationThreeLayeredPane.setBackground(Color.black);
 		gameInformationThreeLayeredPane.setLayout(new GridBagLayout());
-		gameInformationThreeLayeredPane.setPreferredSize(new Dimension(width, height));
+		gameInformationThreeLayeredPane.setPreferredSize(new Dimension(width,
+				height));
 
 		// Game Information Page 3.
 		gameInformationThreeImage = new ImageIcon(getClass()
 				.getResource("assets/GuideScreenGameInfo3.png"));
 		gameInformationThreeLabel = new JLabel();
-		gameInformationThreeLabel.setIcon(new ImageIcon(gameInformationThreeImage.getImage()
-				.getScaledInstance(width, height, Image.SCALE_SMOOTH)));
+		gameInformationThreeLabel.setIcon(new ImageIcon(
+				gameInformationThreeImage.getImage()
+						.getScaledInstance(width, height,
+								Image.SCALE_SMOOTH)));
 		gameInformationThreeLabel.setBackground(Color.black);
 		constraints = new GridBagConstraints();
 		constraints.gridx = 0;
 		constraints.gridy = 0;
 		constraints.gridwidth = 2;
 		constraints.gridheight = 1;
-		gameInformationThreeLayeredPane.add(gameInformationThreeLabel, constraints);
+		gameInformationThreeLayeredPane.add(gameInformationThreeLabel,
+				constraints);
 		gameInformationThreeLayeredPane.setLayer(gameInformationThreeLabel, 0);
 
 		// Game Information Page 3 Buttons.
 		gameInformationThreeContent = new JPanel();
 		gameInformationThreeContent.setLayout(new GridBagLayout());
 		gameInformationThreeContent.setBackground(Color.black);
-		gameInformationThreeContent.setPreferredSize(new Dimension(width, height));
+		gameInformationThreeContent.setPreferredSize(
+				new Dimension(width, height));
 		gameInformationThreeContent.setOpaque(false);
 
 		// Game Information Page 3 Return Button.
-		gameInformationThreeReturnButton = new OptionButton(0.06 * width, 0.06 * width,
-				returnButtonDefault, returnButtonHover, returnButtonPress,
+		// Inline method (lambda expressions).
+		// https://www.geeksforgeeks.org/lambda-expressions-java-8/.
+		gameInformationThreeReturnButton = new OptionButton(false,
+				0.06 * width, 0.06 * width, returnButtonDefault,
+				returnButtonHover, returnButtonPress,
 				e -> cardLayout.show(this, MENU_PAGE));
 		constraints = new GridBagConstraints();
 		constraints.anchor = GridBagConstraints.FIRST_LINE_START;
 		constraints.gridx = 0;
 		constraints.gridy = 0;
-		constraints.insets = new Insets((int) (0.04 * height), (int) (0.04 * height), 0, 0);
-		gameInformationThreeContent.add(gameInformationThreeReturnButton, constraints);
+		constraints.insets = new Insets((int) (0.04 * height),
+				(int) (0.04 * height), 0, 0);
+		gameInformationThreeContent.add(gameInformationThreeReturnButton,
+				constraints);
 
 		// Game Information Page 3 Previous Button.
-		gameInformationThreePreviousButton = new OptionButton(0.05 * width, 0.05 * width,
-				previousButtonDefault, previousButtonHover, previousButtonPress,
-				e -> cardLayout.show(this, GAME_Information_PAGE_2));
+		// Inline method (lambda expressions).
+		// https://www.geeksforgeeks.org/lambda-expressions-java-8/.
+		gameInformationThreePreviousButton = new OptionButton(false,
+				0.05 * width, 0.05 * width, previousButtonDefault,
+				previousButtonHover, previousButtonPress,
+				e -> cardLayout.show(this, GAME_INFORMATION_PAGE_2));
 		constraints = new GridBagConstraints();
 		constraints.anchor = GridBagConstraints.FIRST_LINE_START;
 		constraints.gridx = 0;
 		constraints.gridy = 0;
-		constraints.insets = new Insets((int) (0.22 * height), (int) (0.05 * height), 0, 0);
+		constraints.insets = new Insets((int) (0.22 * height),
+				(int) (0.05 * height), 0, 0);
 		constraints.weightx = 1;
 		constraints.weighty = 1;
-		gameInformationThreeContent.add(gameInformationThreePreviousButton, constraints);
+		gameInformationThreeContent.add(gameInformationThreePreviousButton,
+				constraints);
 
 		// Add the buttons to the layered pane.
 		gameInformationThreeLayeredPane.add(gameInformationThreeContent,
 				new GridBagConstraints());
-		gameInformationThreeLayeredPane.setLayer(gameInformationThreeContent, 1);
+		gameInformationThreeLayeredPane.setLayer(gameInformationThreeContent,
+				1);
 
 		// Add the screen to the panel.
-		gameInformationThree.add(gameInformationThreeLayeredPane, new GridBagConstraints());
+		gameInformationThree.add(gameInformationThreeLayeredPane,
+				new GridBagConstraints());
 
 		// Add the page to the main panel.
-		add(gameInformationThree, GAME_Information_PAGE_3);
+		add(gameInformationThree, GAME_INFORMATION_PAGE_3);
 
 		/* Points Breakdown Page. */
 		pointsBreakdown = new JPanel();
@@ -609,14 +669,16 @@ public class GuideScreen extends JPanel {
 		pointsBreakdownLayeredPane = new JLayeredPane();
 		pointsBreakdownLayeredPane.setBackground(Color.black);
 		pointsBreakdownLayeredPane.setLayout(new GridBagLayout());
-		pointsBreakdownLayeredPane.setPreferredSize(new Dimension(width, height));
+		pointsBreakdownLayeredPane.setPreferredSize(
+				new Dimension(width, height));
 
 		// Points Breakdown Page.
 		pointsBreakdownImage = new ImageIcon(getClass()
 				.getResource("assets/GuideScreenPointsBreakdown.png"));
 		pointsBreakdownLabel = new JLabel();
-		pointsBreakdownLabel.setIcon(new ImageIcon(pointsBreakdownImage.getImage()
-				.getScaledInstance(width, height, Image.SCALE_SMOOTH)));
+		pointsBreakdownLabel.setIcon(new ImageIcon(pointsBreakdownImage
+				.getImage().getScaledInstance(width, height,
+						Image.SCALE_SMOOTH)));
 		pointsBreakdownLabel.setBackground(Color.black);
 		constraints = new GridBagConstraints();
 		constraints.gridx = 0;
@@ -634,14 +696,18 @@ public class GuideScreen extends JPanel {
 		pointsBreakdownContent.setOpaque(false);
 
 		// Points Breakdown Page Return Button.
-		pointsBreakdownReturnButton = new OptionButton(0.06 * width, 0.06 * width,
-				returnButtonDefault, returnButtonHover, returnButtonPress,
+		// Inline method (lambda expressions).
+		// https://www.geeksforgeeks.org/lambda-expressions-java-8/.
+		pointsBreakdownReturnButton = new OptionButton(false, 0.06 * width,
+				0.06 * width, returnButtonDefault, returnButtonHover,
+				returnButtonPress,
 				e -> cardLayout.show(this, MENU_PAGE));
 		constraints = new GridBagConstraints();
 		constraints.anchor = GridBagConstraints.FIRST_LINE_START;
 		constraints.gridx = 0;
 		constraints.gridy = 0;
-		constraints.insets = new Insets((int) (0.04 * height), (int) (0.04 * height), 0, 0);
+		constraints.insets = new Insets((int) (0.04 * height),
+				(int) (0.04 * height), 0, 0);
 		constraints.weightx = 1;
 		constraints.weighty = 1;
 		pointsBreakdownContent.add(pointsBreakdownReturnButton, constraints);
@@ -652,7 +718,8 @@ public class GuideScreen extends JPanel {
 		pointsBreakdownLayeredPane.setLayer(pointsBreakdownContent, 1);
 
 		// Add the screen to the panel.
-		pointsBreakdown.add(pointsBreakdownLayeredPane, new GridBagConstraints());
+		pointsBreakdown.add(pointsBreakdownLayeredPane,
+				new GridBagConstraints());
 
 		// Add the page to the main panel.
 		add(pointsBreakdown, POINTS_BREAKDOWN_PAGE);
@@ -667,60 +734,76 @@ public class GuideScreen extends JPanel {
 		settingsInformationOneLayeredPane = new JLayeredPane();
 		settingsInformationOneLayeredPane.setBackground(Color.black);
 		settingsInformationOneLayeredPane.setLayout(new GridBagLayout());
-		settingsInformationOneLayeredPane.setPreferredSize(new Dimension(width, height));
+		settingsInformationOneLayeredPane.setPreferredSize(
+				new Dimension(width, height));
 
 		// Settings Information Page 1.
 		settingsInformationOneImage = new ImageIcon(getClass()
 				.getResource("assets/GuideScreenSettingsInfo1.png"));
 		settingsInformationOneLabel = new JLabel();
-		settingsInformationOneLabel.setIcon(new ImageIcon(settingsInformationOneImage
-				.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH)));
+		settingsInformationOneLabel.setIcon(
+				new ImageIcon(settingsInformationOneImage.getImage().
+						getScaledInstance(width, height, Image.SCALE_SMOOTH)));
 		settingsInformationOneLabel.setBackground(Color.black);
 		constraints = new GridBagConstraints();
 		constraints.gridx = 0;
 		constraints.gridy = 0;
 		constraints.gridwidth = 2;
 		constraints.gridheight = 1;
-		settingsInformationOneLayeredPane.add(settingsInformationOneLabel, constraints);
-		settingsInformationOneLayeredPane.setLayer(settingsInformationOneLabel, 0);
+		settingsInformationOneLayeredPane.add(settingsInformationOneLabel,
+				constraints);
+		settingsInformationOneLayeredPane.setLayer(settingsInformationOneLabel,
+				0);
 
 		// Settings Information Page 1 Buttons.
 		settingsInformationOneContent = new JPanel();
 		settingsInformationOneContent.setLayout(new GridBagLayout());
 		settingsInformationOneContent.setBackground(Color.black);
-		settingsInformationOneContent.setPreferredSize(new Dimension(width, height));
+		settingsInformationOneContent.setPreferredSize(new Dimension(width,
+				height));
 		settingsInformationOneContent.setOpaque(false);
 
 		// Settings Information Page 1 Return Button.
-		settingsInformationOneReturnButton = new OptionButton(0.06 * width, 0.06 * width,
+		// Inline method (lambda expressions).
+		// https://www.geeksforgeeks.org/lambda-expressions-java-8/.
+		settingsInformationOneReturnButton = new OptionButton(false,
+				0.06 * width, 0.06 * width,
 				returnButtonDefault, returnButtonHover, returnButtonPress,
 				e -> cardLayout.show(this, MENU_PAGE));
 		constraints = new GridBagConstraints();
 		constraints.anchor = GridBagConstraints.FIRST_LINE_START;
 		constraints.gridx = 0;
 		constraints.gridy = 0;
-		constraints.insets = new Insets((int) (0.04 * height), (int) (0.04 * height), 0, 0);
+		constraints.insets = new Insets((int) (0.04 * height),
+				(int) (0.04 * height), 0, 0);
 		constraints.weightx = 1;
 		constraints.weighty = 1;
-		settingsInformationOneContent.add(settingsInformationOneReturnButton, constraints);
+		settingsInformationOneContent.add(settingsInformationOneReturnButton,
+				constraints);
 
 		// Settings Information Page 1 Next Button.
-		settingsInformationOneNextButton = new OptionButton(0.05 * width, 0.05 * width,
+		// Inline method (lambda expressions).
+		// https://www.geeksforgeeks.org/lambda-expressions-java-8/.
+		settingsInformationOneNextButton = new OptionButton(false,
+				0.05 * width, 0.05 * width,
 				nextButtonDefault, nextButtonHover, nextButtonPress,
 				e -> cardLayout.show(this, SETTINGS_INFORMATION_PAGE_2));
 		constraints = new GridBagConstraints();
 		constraints.anchor = GridBagConstraints.FIRST_LINE_END;
 		constraints.gridx = 1;
 		constraints.gridy = 0;
-		constraints.insets = new Insets((int) (0.22 * height), 0, 0, (int) (0.05 * height));
+		constraints.insets = new Insets((int) (0.22 * height), 0, 0,
+				(int) (0.05 * height));
 		constraints.weightx = 1;
 		constraints.weighty = 1;
-		settingsInformationOneContent.add(settingsInformationOneNextButton, constraints);
+		settingsInformationOneContent.add(settingsInformationOneNextButton,
+				constraints);
 
 		// Add buttons to the layered pane.
 		settingsInformationOneLayeredPane.add(settingsInformationOneContent,
 				new GridBagConstraints());
-		settingsInformationOneLayeredPane.setLayer(settingsInformationOneContent, 1);
+		settingsInformationOneLayeredPane.setLayer(
+				settingsInformationOneContent, 1);
 
 		// Add the screen to the panel.
 		settingsInformationOne.add(settingsInformationOneLayeredPane,
@@ -739,71 +822,93 @@ public class GuideScreen extends JPanel {
 		settingsInformationTwoLayeredPane = new JLayeredPane();
 		settingsInformationTwoLayeredPane.setBackground(Color.black);
 		settingsInformationTwoLayeredPane.setLayout(new GridBagLayout());
-		settingsInformationTwoLayeredPane.setPreferredSize(new Dimension(width, height));
+		settingsInformationTwoLayeredPane.setPreferredSize(
+				new Dimension(width, height));
 
 		// Settings Information Page 2.
 		settingsInformationTwoImage = new ImageIcon(getClass()
 				.getResource("assets/GuideScreenSettingsInfo2.png"));
 		settingsInformationTwoLabel = new JLabel();
-		settingsInformationTwoLabel.setIcon(new ImageIcon(settingsInformationTwoImage
-				.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH)));
+		settingsInformationTwoLabel.setIcon(new ImageIcon(
+				settingsInformationTwoImage.getImage()
+						.getScaledInstance(width, height,
+								Image.SCALE_SMOOTH)));
 		settingsInformationTwoLabel.setBackground(Color.black);
 		constraints = new GridBagConstraints();
 		constraints.gridx = 0;
 		constraints.gridy = 0;
 		constraints.gridwidth = 2;
 		constraints.gridheight = 1;
-		settingsInformationTwoLayeredPane.add(settingsInformationTwoLabel, constraints);
-		settingsInformationTwoLayeredPane.setLayer(settingsInformationTwoLabel, 0);
+		settingsInformationTwoLayeredPane.add(settingsInformationTwoLabel,
+				constraints);
+		settingsInformationTwoLayeredPane.setLayer(settingsInformationTwoLabel,
+				0);
 
 		// Settings Information Page 2 Button.
 		settingsInformationTwoContent = new JPanel();
 		settingsInformationTwoContent.setLayout(new GridBagLayout());
 		settingsInformationTwoContent.setBackground(Color.black);
-		settingsInformationTwoContent.setPreferredSize(new Dimension(width, height));
+		settingsInformationTwoContent.setPreferredSize(
+				new Dimension(width, height));
 		settingsInformationTwoContent.setOpaque(false);
 
 		// Settings Information Page 2 Return Button.
-		settingsInformationTwoReturnButton = new OptionButton(0.06 * width, 0.06 * width,
+		// Inline method (lambda expressions).
+		// https://www.geeksforgeeks.org/lambda-expressions-java-8/.
+		settingsInformationTwoReturnButton = new OptionButton(false,
+				0.06 * width, 0.06 * width,
 				returnButtonDefault, returnButtonHover, returnButtonPress,
 				e -> cardLayout.show(this, MENU_PAGE));
 		constraints = new GridBagConstraints();
 		constraints.anchor = GridBagConstraints.FIRST_LINE_START;
 		constraints.gridx = 0;
 		constraints.gridy = 0;
-		constraints.insets = new Insets((int) (0.04 * height), (int) (0.04 * height), 0, 0);
-		settingsInformationTwoContent.add(settingsInformationTwoReturnButton, constraints);
+		constraints.insets = new Insets((int) (0.04 * height), (int) (0.04 * height),
+				0, 0);
+		settingsInformationTwoContent.add(settingsInformationTwoReturnButton,
+				constraints);
 
 		// Settings Information Page 2 Previous Button.
-		settingsInformationTwoPreviousButton = new OptionButton(0.05 * width, 0.05 * width,
+		// Inline method (lambda expressions).
+		// https://www.geeksforgeeks.org/lambda-expressions-java-8/.
+		settingsInformationTwoPreviousButton = new OptionButton(false,
+				0.05 * width, 0.05 * width,
 				previousButtonDefault, previousButtonHover, previousButtonPress,
 				e -> cardLayout.show(this, SETTINGS_INFORMATION_PAGE_1));
 		constraints = new GridBagConstraints();
 		constraints.anchor = GridBagConstraints.FIRST_LINE_START;
 		constraints.gridx = 0;
 		constraints.gridy = 0;
-		constraints.insets = new Insets((int) (0.22 * height), (int) (0.05 * height), 0, 0);
+		constraints.insets = new Insets((int) (0.22 * height),
+				(int) (0.05 * height), 0, 0);
 		constraints.weightx = 1;
 		constraints.weighty = 1;
-		settingsInformationTwoContent.add(settingsInformationTwoPreviousButton, constraints);
+		settingsInformationTwoContent.add(settingsInformationTwoPreviousButton,
+				constraints);
 
 		// Settings Information Page 2 Next Button.
-		settingsInformationTwoNextButton = new OptionButton(0.05 * width, 0.05 * width,
+		// Inline method (lambda expressions).
+		// https://www.geeksforgeeks.org/lambda-expressions-java-8/.
+		settingsInformationTwoNextButton = new OptionButton(false,
+				0.05 * width, 0.05 * width,
 				nextButtonDefault, nextButtonHover, nextButtonPress,
 				e -> cardLayout.show(this, SETTINGS_INFORMATION_PAGE_3));
 		constraints = new GridBagConstraints();
 		constraints.anchor = GridBagConstraints.FIRST_LINE_END;
 		constraints.gridx = 1;
 		constraints.gridy = 0;
-		constraints.insets = new Insets((int) (0.22 * height), 0, 0, (int) (0.05 * height));
+		constraints.insets = new Insets((int) (0.22 * height), 0, 0,
+				(int) (0.05 * height));
 		constraints.weightx = 1;
 		constraints.weighty = 1;
-		settingsInformationTwoContent.add(settingsInformationTwoNextButton, constraints);
+		settingsInformationTwoContent.add(settingsInformationTwoNextButton,
+				constraints);
 
 		// Add the buttons to the layered pane.
 		settingsInformationTwoLayeredPane.add(settingsInformationTwoContent,
 				new GridBagConstraints());
-		settingsInformationTwoLayeredPane.setLayer(settingsInformationTwoContent, 1);
+		settingsInformationTwoLayeredPane.setLayer(
+				settingsInformationTwoContent, 1);
 
 		// Add the screen to the panel.
 		settingsInformationTwo.add(settingsInformationTwoLayeredPane,
@@ -816,77 +921,101 @@ public class GuideScreen extends JPanel {
 		settingsInformationThree = new JPanel();
 		settingsInformationThree.setBackground(Color.black);
 		settingsInformationThree.setLayout(new GridBagLayout());
-		settingsInformationThree.setPreferredSize(new Dimension(width, height));
+		settingsInformationThree.setPreferredSize(
+				new Dimension(width, height));
 
 		// Settings Information Page 3 Layers.
 		settingsInformationThreeLayer = new JLayeredPane();
 		settingsInformationThreeLayer.setBackground(Color.black);
 		settingsInformationThreeLayer.setLayout(new GridBagLayout());
-		settingsInformationThreeLayer.setPreferredSize(new Dimension(width, height));
+		settingsInformationThreeLayer.setPreferredSize(
+				new Dimension(width, height));
 
 		// Settings Information Page 3.
 		settingsInformationThreeImage = new ImageIcon(getClass()
 				.getResource("assets/GuideScreenSettingsInfo3.png"));
 		settingsInformationThreeLabel = new JLabel();
-		settingsInformationThreeLabel.setIcon(new ImageIcon(settingsInformationThreeImage
-				.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH)));
+		settingsInformationThreeLabel.setIcon(new ImageIcon(
+				settingsInformationThreeImage.getImage()
+						.getScaledInstance(width, height,
+								Image.SCALE_SMOOTH)));
 		settingsInformationThreeLabel.setBackground(Color.black);
 		constraints = new GridBagConstraints();
 		constraints.gridx = 0;
 		constraints.gridy = 0;
 		constraints.gridwidth = 2;
 		constraints.gridheight = 1;
-		settingsInformationThreeLayer.add(settingsInformationThreeLabel, constraints);
-		settingsInformationThreeLayer.setLayer(settingsInformationThreeLabel, 0);
+		settingsInformationThreeLayer.add(settingsInformationThreeLabel,
+				constraints);
+		settingsInformationThreeLayer.setLayer(settingsInformationThreeLabel,
+				0);
 
 		// Settings Information Page 3 Buttons.
 		settingsInformationThreeContent = new JPanel();
 		settingsInformationThreeContent.setLayout(new GridBagLayout());
 		settingsInformationThreeContent.setBackground(Color.black);
-		settingsInformationThreeContent.setPreferredSize(new Dimension(width, height));
+		settingsInformationThreeContent.setPreferredSize(
+				new Dimension(width, height));
 		settingsInformationThreeContent.setOpaque(false);
 
 		// Settings Information Page 3 Return Button.
-		settingsInformationThreeReturnButton = new OptionButton(0.06 * width, 0.06 * width,
+		// Inline method (lambda expressions).
+		// https://www.geeksforgeeks.org/lambda-expressions-java-8/.
+		settingsInformationThreeReturnButton = new OptionButton(false,
+				0.06 * width, 0.06 * width,
 				returnButtonDefault, returnButtonHover, returnButtonPress,
 				e -> cardLayout.show(this, MENU_PAGE));
 		constraints = new GridBagConstraints();
 		constraints.anchor = GridBagConstraints.FIRST_LINE_START;
 		constraints.gridx = 0;
 		constraints.gridy = 0;
-		constraints.insets = new Insets((int) (0.04 * height), (int) (0.04 * height), 0, 0);
-		settingsInformationThreeContent.add(settingsInformationThreeReturnButton, constraints);
+		constraints.insets = new Insets((int) (0.04 * height),
+				(int) (0.04 * height), 0, 0);
+		settingsInformationThreeContent.add(
+				settingsInformationThreeReturnButton, constraints);
 
 		// Settings Information Page 3 Previous Button.
-		settingsInformationThreePreviousButton = new OptionButton(0.05 * width, 0.05 * width,
-				previousButtonDefault, previousButtonHover, previousButtonPress,
+		// Inline method (lambda expressions).
+		// https://www.geeksforgeeks.org/lambda-expressions-java-8/.
+		settingsInformationThreePreviousButton = new OptionButton(false,
+				0.05 * width, 0.05 * width,
+				previousButtonDefault, previousButtonHover,
+				previousButtonPress,
 				e -> cardLayout.show(this, SETTINGS_INFORMATION_PAGE_2));
 		constraints = new GridBagConstraints();
 		constraints.anchor = GridBagConstraints.FIRST_LINE_START;
 		constraints.gridx = 0;
 		constraints.gridy = 0;
-		constraints.insets = new Insets((int) (0.22 * height), (int) (0.05 * height), 0, 0);
+		constraints.insets = new Insets((int) (0.22 * height),
+				(int) (0.05 * height), 0, 0);
 		constraints.weightx = 1;
 		constraints.weighty = 1;
-		settingsInformationThreeContent.add(settingsInformationThreePreviousButton, constraints);
+		settingsInformationThreeContent.add(
+				settingsInformationThreePreviousButton, constraints);
 
 		// Settings Information Page 3 Next Button.
-		settingsInformationThreeNextButton = new OptionButton(0.05 * width, 0.05 * width,
+		// Inline method (lambda expressions).
+		// https://www.geeksforgeeks.org/lambda-expressions-java-8/.
+		settingsInformationThreeNextButton = new OptionButton(false,
+				0.05 * width, 0.05 * width,
 				nextButtonDefault, nextButtonHover, nextButtonPress,
 				e -> cardLayout.show(this, SETTINGS_INFORMATION_PAGE_4));
 		constraints = new GridBagConstraints();
 		constraints.anchor = GridBagConstraints.FIRST_LINE_END;
 		constraints.gridx = 1;
 		constraints.gridy = 0;
-		constraints.insets = new Insets((int) (0.22 * height), 0, 0, (int) (0.05 * height));
+		constraints.insets = new Insets((int) (0.22 * height), 0, 0,
+				(int) (0.05 * height));
 		constraints.weightx = 1;
 		constraints.weighty = 1;
-		settingsInformationThreeContent.add(settingsInformationThreeNextButton, constraints);
+		settingsInformationThreeContent.add(settingsInformationThreeNextButton,
+				constraints);
 
 		// Add the buttons to the layered pane.
 		settingsInformationThreeLayer.add(settingsInformationThreeContent,
 				new GridBagConstraints());
-		settingsInformationThreeLayer.setLayer(settingsInformationThreeContent, 1);
+		settingsInformationThreeLayer.setLayer(settingsInformationThreeContent,
+				1);
 
 		// Add the screen to the panel.
 		settingsInformationThree.add(settingsInformationThreeLayer,
@@ -905,58 +1034,76 @@ public class GuideScreen extends JPanel {
 		settingsInformationFourLayeredPane = new JLayeredPane();
 		settingsInformationFourLayeredPane.setBackground(Color.black);
 		settingsInformationFourLayeredPane.setLayout(new GridBagLayout());
-		settingsInformationFourLayeredPane.setPreferredSize(new Dimension(width, height));
+		settingsInformationFourLayeredPane.setPreferredSize(
+				new Dimension(width, height));
 
 		// Settings Information Page 4.
 		settingsInformationFourImage = new ImageIcon(getClass()
 				.getResource("assets/GuideScreenSettingsInfo4.png"));
 		settingsInformationFourLabel = new JLabel();
-		settingsInformationFourLabel.setIcon(new ImageIcon(settingsInformationFourImage
-				.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH)));
+		settingsInformationFourLabel.setIcon(new ImageIcon(
+				settingsInformationFourImage.getImage()
+						.getScaledInstance(width, height,
+								Image.SCALE_SMOOTH)));
 		settingsInformationFourLabel.setBackground(Color.black);
 		constraints = new GridBagConstraints();
 		constraints.gridx = 0;
 		constraints.gridy = 0;
 		constraints.gridwidth = 2;
 		constraints.gridheight = 1;
-		settingsInformationFourLayeredPane.add(settingsInformationFourLabel, constraints);
-		settingsInformationFourLayeredPane.setLayer(settingsInformationFourLabel, 0);
+		settingsInformationFourLayeredPane.add(settingsInformationFourLabel,
+				constraints);
+		settingsInformationFourLayeredPane.setLayer(
+				settingsInformationFourLabel, 0);
 
 		// Settings Information Page 4 Buttons.
 		settingsInformationFourContent = new JPanel();
 		settingsInformationFourContent.setLayout(new GridBagLayout());
 		settingsInformationFourContent.setBackground(Color.black);
-		settingsInformationFourContent.setPreferredSize(new Dimension(width, height));
+		settingsInformationFourContent.setPreferredSize(
+				new Dimension(width, height));
 		settingsInformationFourContent.setOpaque(false);
 
 		// Settings Information Page 4 Return Button.
-		settingsInformationFourReturnButton = new OptionButton(0.06 * width, 0.06 * width,
+		// Inline method (lambda expressions).
+		// https://www.geeksforgeeks.org/lambda-expressions-java-8/.
+		settingsInformationFourReturnButton = new OptionButton(false,
+				0.06 * width, 0.06 * width,
 				returnButtonDefault, returnButtonHover, returnButtonPress,
 				e -> cardLayout.show(this, MENU_PAGE));
 		constraints = new GridBagConstraints();
 		constraints.anchor = GridBagConstraints.FIRST_LINE_START;
 		constraints.gridx = 0;
 		constraints.gridy = 0;
-		constraints.insets = new Insets((int) (0.04 * height), (int) (0.04 * height), 0, 0);
-		settingsInformationFourContent.add(settingsInformationFourReturnButton, constraints);
+		constraints.insets = new Insets((int) (0.04 * height),
+				(int) (0.04 * height), 0, 0);
+		settingsInformationFourContent.add(settingsInformationFourReturnButton,
+				constraints);
 
 		// Settings Information Page 4 Previous Button.
-		settingsInformationFourPreviousBtn = new OptionButton(0.05 * width, 0.05 * width,
-				previousButtonDefault, previousButtonHover, previousButtonPress,
+		// Inline method (lambda expressions).
+		// https://www.geeksforgeeks.org/lambda-expressions-java-8/.
+		settingsInformationFourPreviousBtn = new OptionButton(false,
+				0.05 * width, 0.05 * width,
+				previousButtonDefault, previousButtonHover,
+				previousButtonPress,
 				e -> cardLayout.show(this, SETTINGS_INFORMATION_PAGE_3));
 		constraints = new GridBagConstraints();
 		constraints.anchor = GridBagConstraints.FIRST_LINE_START;
 		constraints.gridx = 0;
 		constraints.gridy = 0;
-		constraints.insets = new Insets((int) (0.22 * height), (int) (0.05 * height), 0, 0);
+		constraints.insets = new Insets((int) (0.22 * height),
+				(int) (0.05 * height), 0, 0);
 		constraints.weightx = 1;
 		constraints.weighty = 1;
-		settingsInformationFourContent.add(settingsInformationFourPreviousBtn, constraints);
+		settingsInformationFourContent.add(settingsInformationFourPreviousBtn,
+				constraints);
 
 		// Add the buttons to the layered pane.
 		settingsInformationFourLayeredPane.add(settingsInformationFourContent,
 				new GridBagConstraints());
-		settingsInformationFourLayeredPane.setLayer(settingsInformationFourContent, 1);
+		settingsInformationFourLayeredPane.setLayer(
+				settingsInformationFourContent, 1);
 
 		// Add the screen to the panel.
 		settingsInformationFour.add(settingsInformationFourLayeredPane,

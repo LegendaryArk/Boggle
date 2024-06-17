@@ -147,10 +147,14 @@ public class AI extends Player {
 						&& s.charAt(pos + 1) ==
 						board.getDiceGrid()[nr][nc].getTopFace()) {
 					visited[nr][nc] = true;
-					if (isHighlighting) indices.add(new Pair(nr, nc));
+					if (isHighlighting) {
+						indices.add(new Pair(nr, nc));
+					}
 					// search the next position of the word at the new indices.
 					search(nr, nc, s, pos + 1, isHighlighting);
-					if (isHighlighting) indices.remove(indices.size() - 1);
+					if (isHighlighting) {
+						indices.remove(indices.size() - 1);
+					}
 					visited[nr][nc] = false;
 				}
 			}
@@ -275,6 +279,8 @@ public class AI extends Player {
 		});
 
 		// Set the delay of the AI based on difficulty.
+		// Enhanced switch statement
+// https://www.geeksforgeeks.org/enhancements-for-switch-statement-in-java-13/
 		switch (difficulty) {
 			case 0 -> delay.setInitialDelay(
 					(int) (10000 * random.nextDouble(0.6, 1.4)));
@@ -282,7 +288,7 @@ public class AI extends Player {
 					(int) (6000 * random.nextDouble(0.6, 1.4)));
 			case 2 -> delay.setInitialDelay(
 					(int) (3000 * random.nextDouble(0.6, 1.4)));
-			case 3 -> delay.setInitialDelay(600); // Must be greater than 500
+			case 3 -> delay.setInitialDelay(600); // Must be greater than 500ms
 		}
 		delay.setRepeats(false);
 		delay.start();

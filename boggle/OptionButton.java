@@ -19,7 +19,8 @@ import java.io.IOException;
  * This class contains a method which creates a button given its dimensions,
  * ImageIcons.
  */
-public class OptionButton extends JButton implements ActionListener, MouseListener {
+public class OptionButton extends JButton
+		implements ActionListener, MouseListener {
 	// Size of the button
 	private Dimension size;
 
@@ -30,18 +31,23 @@ public class OptionButton extends JButton implements ActionListener, MouseListen
 	// Press icon for button.
 	private ImageIcon pressIcon;
 
-	// Click sound effect audio
+	// Click sound effect audio.
 	private AudioInputStream clickSoundEffect;
-	// Click sound clip
+	// Click sound clip.
 	private Clip clickClip;
 
-	// Button clicked action
-	ButtonClicked action;
+	// Button clicked action.
+	private ButtonClicked action;
+
+	// If the button is a radio button.
+	private boolean isRadioButton;
 
 	/**
 	 *
-	 * This method creates a button given its dimensions, ImageIcons, and action.
+	 * This method creates a button given its dimensions, ImageIcons, and
+	 * action.
 	 *
+	 * @param isRadioButton changes how the mouseReleased method works.
 	 * @param width width of button.
 	 * @param height height of button.
 	 * @param defaultIcon ImageIcon of the button when it is not hovered over.
@@ -49,18 +55,27 @@ public class OptionButton extends JButton implements ActionListener, MouseListen
 	 * @param pressIcon ImageIcon of the button when it is pressed.
 	 * @param action action.
 	 */
-	public OptionButton(double width, double height, ImageIcon defaultIcon, ImageIcon hoverIcon, ImageIcon pressIcon, ButtonClicked action) {
-		size = new Dimension((int) width, (int) height);
-
+	public OptionButton(boolean isRadioButton, double width, double height,
+	                    ImageIcon defaultIcon, ImageIcon hoverIcon,
+	                    ImageIcon pressIcon, ButtonClicked action) {
+		// Initialize instance variables.
+		this.isRadioButton = isRadioButton;
+		this.size = new Dimension((int) width, (int) height);
 		this.action = action;
 
-		// Resizing the ImageIcons.
+		// Resizing the icons.
 		this.defaultIcon = defaultIcon;
 		this.hoverIcon = hoverIcon;
 		this.pressIcon = pressIcon;
-		this.defaultIcon = new ImageIcon(defaultIcon.getImage().getScaledInstance(size.width, size.height, Image.SCALE_SMOOTH));
-		this.hoverIcon = new ImageIcon(hoverIcon.getImage().getScaledInstance(size.width, size.height, Image.SCALE_SMOOTH));
-		this.pressIcon = new ImageIcon(pressIcon.getImage().getScaledInstance(size.width, size.height, Image.SCALE_SMOOTH));
+		this.defaultIcon = new ImageIcon(defaultIcon.getImage()
+				.getScaledInstance(size.width, size.height,
+						Image.SCALE_SMOOTH));
+		this.hoverIcon = new ImageIcon(hoverIcon.getImage()
+				.getScaledInstance(size.width, size.height,
+						Image.SCALE_SMOOTH));
+		this.pressIcon = new ImageIcon(pressIcon.getImage()
+				.getScaledInstance(size.width, size.height,
+						Image.SCALE_SMOOTH));
 
 		// Setting the dimensions.
 		setMinimumSize(size);
@@ -83,7 +98,8 @@ public class OptionButton extends JButton implements ActionListener, MouseListen
 		// Getting the sfx of the button being clicked.
 		try {
 			// Path to the sound effects.
-			clickSoundEffect = AudioSystem.getAudioInputStream(getClass().getResourceAsStream("assets/ClickSound.wav"));
+			clickSoundEffect = AudioSystem.getAudioInputStream(getClass()
+					.getResourceAsStream("assets/ClickSound.wav"));
 			clickClip = AudioSystem.getClip();
 			// Open and play clip.
 			clickClip.open(clickSoundEffect);
@@ -91,7 +107,8 @@ public class OptionButton extends JButton implements ActionListener, MouseListen
 			// Catching possible errors.
 		} catch (UnsupportedAudioFileException e) {
 			// Handle if file type is invalid.
-			System.err.println("Error: Invalid file type, unable to play sound effect");
+			System.err.println(
+					"Error: Invalid file type, unable to play sound effect");
 			e.printStackTrace();
 		} catch (IOException e) {
 			// Handle if unable to read sound file.
@@ -140,10 +157,13 @@ public class OptionButton extends JButton implements ActionListener, MouseListen
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		clickClip.start();
+		setIcon(pressIcon);
 
 		action.clicked(e);
 
-		setIcon(defaultIcon);
+		if (!isRadioButton) {
+			setIcon(defaultIcon);
+		}
 	}
 
 	/**
@@ -161,9 +181,7 @@ public class OptionButton extends JButton implements ActionListener, MouseListen
 	 * @param e the event to be processed
 	 */
 	@Override
-	public void mousePressed(MouseEvent e) {
-		setIcon(pressIcon);
-	}
+	public void mousePressed(MouseEvent e) {}
 
 	/**
 	 * Invoked when a mouse button has been released on a component.
@@ -172,6 +190,12 @@ public class OptionButton extends JButton implements ActionListener, MouseListen
 	 */
 	@Override
 	public void mouseReleased(MouseEvent e) {
+		// If it is a radio button, do not reset the icon after mouse is
+		// released.
+		if (isRadioButton) {
+			return;
+		}
+
 		setIcon(defaultIcon);
 	}
 

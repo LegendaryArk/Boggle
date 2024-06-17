@@ -25,8 +25,6 @@ public class Clock {
 	private String secondString;
 	// Clock format for minutes.
 	private String minuteString;
-	// Board
-	private Board board;
 	// Main control loop of the timer.
 	private Timer timer;
 
@@ -41,26 +39,31 @@ public class Clock {
 		millisecondsRemaining = 0;
 		secondsRemaining = 0;
 		minutesRemaining = 0;
+		// Uses String.format to force 2 digits.
+		// https://www.w3schools.com/java/ref_string_format.asp
 		secondString = String.format("%02d", secondsRemaining);
 		minuteString = String.format("%02d", minutesRemaining);
 
 		// Instantiate timer.
 		timer = new Timer(1000, e -> {
-			// Inline method (lambda).
+			// Inline method (lambda expressions).
 			// https://www.geeksforgeeks.org/lambda-expressions-java-8/.
 
-			// Decrease time for every 1000 milliseconds.
+			// Decrease time for every 1 second.
 			millisecondsRemaining -= 1000;
 
 			// Calculate the timer in minutes and seconds.
 			minutesRemaining = (millisecondsRemaining / 60000) % 60;
 			secondsRemaining = (millisecondsRemaining / 1000) % 60;
 			// Format and update the clock.
+			// Uses String.format to force 2 digits.
+			// https://www.w3schools.com/java/ref_string_format.asp
 			secondString = String.format("%02d", secondsRemaining);
 			minuteString = String.format("%02d", minutesRemaining);
 			timeLabel.setText(minuteString + ":" + secondString);
 
-			// Set time text to red if clock is less than or equal to 10 seconds.
+			// Set time text to red if clock is less than or equal to 10
+			// seconds.
 			if (millisecondsRemaining <= 10000) {
 				timeLabel.setForeground(Color.RED);
 			}
@@ -73,7 +76,6 @@ public class Clock {
 
 		this.timeLabel = timeLabel;
 		reset(startTime);
-		this.board = board;
 	}
 
 	/**
@@ -101,6 +103,8 @@ public class Clock {
 		minutesRemaining = (millisecondsRemaining / 60000) % 60;
 		secondsRemaining = (millisecondsRemaining / 1000) % 60;
 		// Format and update the clock
+		// Uses String.format to force 2 digits.
+		// https://www.w3schools.com/java/ref_string_format.asp
 		minuteString = String.format("%02d", minutesRemaining);
 		secondString = String.format("%02d", secondsRemaining);
 		timeLabel.setText(minuteString + ":" + secondString);
@@ -118,6 +122,8 @@ public class Clock {
 		minutesRemaining = (time / 60000) % 60;
 		secondsRemaining = (time / 1000) % 60;
 		// Format and update the clock
+		// Uses String.format to force 2 digits.
+		// https://www.w3schools.com/java/ref_string_format.asp
 		minuteString = String.format("%02d", minutesRemaining);
 		secondString = String.format("%02d", secondsRemaining);
 		timeLabel.setText(minuteString + ":" + secondString);
