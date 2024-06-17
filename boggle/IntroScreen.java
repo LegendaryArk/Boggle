@@ -81,20 +81,14 @@ public class IntroScreen extends JPanel {
 
 		// Read the facts text file.
 		facts = new ArrayList<>();
-		try {
-			Scanner sc = new Scanner(
-					new File("src/Boggle/boggle/resources/funFacts.txt"));
-			while (sc.hasNextLine()) {
-				// Add facts to the ArrayList
-				facts.add(sc.nextLine());
-			}
-			// Close scanner
-			sc.close();
-		} catch (FileNotFoundException e) {
-			// Handle if the file is not found
-			e.printStackTrace();
-			System.err.println("Error: Unable to find and load dictionary");
+		Scanner sc = new Scanner(getClass()
+				.getResourceAsStream("resources/funFacts.txt"));
+		while (sc.hasNextLine()) {
+			// Add facts to the ArrayList
+			facts.add(sc.nextLine());
 		}
+		// Close scanner
+		sc.close();
 
 		// Set the pane for the fun fact text
 		fact = new JTextPane();

@@ -80,15 +80,6 @@ public class GameScreen extends JPanel {
 	// Press Shake Button Icon.
 	private ImageIcon shakePress;
 
-	// Settings Button.
-	private OptionButton settingsButton;
-	// Default Settings Button Icon.
-	private ImageIcon settingsDefault;
-	// Hover Settings Button Icon.
-	private ImageIcon settingsHover;
-	// Press Settings Button Icon.
-	private ImageIcon settingsPress;
-
 	// Calm background music.
 	private AudioInputStream calmBackgroundMusic;
 	// Intense background music.
@@ -408,35 +399,6 @@ public class GameScreen extends JPanel {
 		// Adding the shake button to the content panel.
 		content.add(shakeButton, constraints);
 
-		// Instantiate settings button images.
-		settingsDefault = new ImageIcon(getClass()
-				.getResource("assets/SettingsBtnDefault.png"));
-		settingsHover = new ImageIcon(getClass()
-				.getResource("assets/SettingsBtnHover.png"));
-		settingsPress = new ImageIcon(getClass()
-				.getResource("assets/SettingsBtnPress.png"));
-
-		// Instantiating the settings button.
-		settingsButton = new OptionButton(false, 0.05 * width, 0.05 * width,
-				settingsDefault, settingsHover, settingsPress, e -> {
-			// Inline method (lambda expressions).
-			// https://www.geeksforgeeks.org/lambda-expressions-java-8/.
-
-			pauseGame();
-			mainFrame.settingsScreen(1);
-		});
-		// Position the settings button using GridBagLayout.
-		constraints = new GridBagConstraints();
-		constraints.anchor = GridBagConstraints.LINE_START;
-		constraints.gridx = 4;
-		constraints.gridy = 5;
-		constraints.insets = new Insets(
-				0, (int) (0.016 * width), (int) (0.04 * height), 0);
-		constraints.weightx = 1;
-		constraints.weighty = 0;
-		// Adding the settings button to the content panel.
-		content.add(settingsButton, constraints);
-
 		// Setting the dimensions of the boardBackground panel.
 		boardBackground = new JPanel();
 		boardBackground.setMinimumSize(
@@ -516,10 +478,6 @@ public class GameScreen extends JPanel {
 	 * This method will play the background music.
 	 */
 	public void startBackgroundMusic() {
-		// Skip if the background music is running.
-		if (backgroundMusicClip != null && backgroundMusicClip.isRunning()) {
-			return;
-		}
 		try {
 			// Set the background music of calm and intense.
 			calmBackgroundMusic = AudioSystem.getAudioInputStream(getClass()

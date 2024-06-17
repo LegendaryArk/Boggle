@@ -215,24 +215,15 @@ public class SettingsScreen extends JPanel {
 	private OptionButton calmMusicButton;
 	// Intense music option radio button.
 	private OptionButton intenseMusicButton;
-	
-	// The previous screen that the menu return button leads to.
-	// 0 - Menu Screen, 1 - Game Screen.
-	private int previousScreen;
 
 	/**
 	 * Constructor.
 	 * @param mainFrame The parent frame of the game.
-	 * @param prevScreen The previous screen that the menu return button leads
-	 *                      to.
-	 *                   0 - Menu Screen, 1 - Game Screen.
 	 */
-	public SettingsScreen(Boggle mainFrame, int prevScreen) {
+	public SettingsScreen(Boggle mainFrame) {
 		// Dimensions of the screen.
 		int width = mainFrame.getScreenWidth();
 		int height = mainFrame.getScreenHeight();
-
-		this.previousScreen = prevScreen;
 
 		// Layout used to switch between different pages.
 		this.cardLayout = new CardLayout();
@@ -318,13 +309,8 @@ public class SettingsScreen extends JPanel {
 			// Inline method (lambda expressions).
 			// https://www.geeksforgeeks.org/lambda-expressions-java-8/.
 
-			// Enhanced switch statement
-// https://www.geeksforgeeks.org/enhancements-for-switch-statement-in-java-13/
 			mainFrame.updateSettings();
-			switch (this.previousScreen) {
-				case 0 -> mainFrame.menuScreen();
-				case 1 -> mainFrame.gameScreen(true, mainFrame.isAI());
-			}
+			mainFrame.menuScreen();
 		});
 		constraints = new GridBagConstraints();
 		constraints.anchor = GridBagConstraints.FIRST_LINE_START;
@@ -1133,14 +1119,6 @@ public class SettingsScreen extends JPanel {
 
 		// Add the music settings page to the main panel.
 		add(music, MUSIC_PAGE);
-	}
-
-	/**
-	 * Sets the previous screen to return to when the return button is pressed.
-	 * @param prevScreen 0 - Menu Screen, 1 - Game Screen.
-	 */
-	public void setPrevScreen(int prevScreen) {
-		this.previousScreen = prevScreen;
 	}
 
 	/**

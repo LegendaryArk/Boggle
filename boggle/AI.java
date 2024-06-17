@@ -105,6 +105,11 @@ public class AI extends Player {
 		if (pos == s.length() - 1) {
 			// If not highlighting.
 			if (!isHighlighting) {
+				// If the word has already been found.
+				if (board.getWordsFound().contains(s)) {
+					return;
+				}
+
 				// If the length is distinct.
 				if (!lengths.contains(s.length())) {
 					lengths.add(s.length());

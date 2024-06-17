@@ -417,25 +417,15 @@ public class Board implements MouseListener {
 	 * This method initializes the dictionary array
 	 */
 	public void initializeDictionary() {
-		try {
-			// Read lines from dictionary.txt.
-			Scanner sc = new Scanner(
-					new File("src/Boggle/boggle/resources/dictionary.txt"));
-			while (sc.hasNextLine()) {
-				// Add each word and upper case them.
-				dictionary.add(sc.nextLine().toUpperCase());
-			}
-			// Close scanner.
-			sc.close();
-		} catch (FileNotFoundException e) {
-			// Handle if dictionary is not found.
-			System.err.println(
-					"Fatal error: Unable to find and load dictionary");
-			e.printStackTrace();
-			// Exit game because the game cannot be played without the
-			// dictionary.
-			System.exit(0);
+		// Read lines from dictionary.txt.
+		Scanner sc = new Scanner(getClass()
+				.getResourceAsStream("resources/dictionary.txt"));
+		while (sc.hasNextLine()) {
+			// Add each word and upper case them.
+			dictionary.add(sc.nextLine().toUpperCase());
 		}
+		// Close scanner.
+		sc.close();
 	}
 
 	/**
@@ -558,7 +548,8 @@ public class Board implements MouseListener {
 					// End player 2 turn.
 					playerTwo.endTurn();
 					// Increment player 2 timer.
-					playerTwo.getTimer().increment(mainFrame.getTimeIncrement());
+					playerTwo.getTimer().increment(
+							mainFrame.getTimeIncrement());
 				} else {
 					// End AI turn.
 					ai.endTurn();

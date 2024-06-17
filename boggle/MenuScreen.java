@@ -204,7 +204,7 @@ public class MenuScreen extends JPanel {
 		settingsButton = new OptionButton(false, 0.23 * width,
 				0.1 * height,
 				settingsDefault, settingsHover, settingsPress,
-				e -> mainFrame.settingsScreen(0));
+				e -> mainFrame.settingsScreen());
 		contraints = new GridBagConstraints();
 		contraints.anchor = GridBagConstraints.FIRST_LINE_END;
 		contraints.gridx = 0;

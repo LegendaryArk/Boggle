@@ -58,8 +58,8 @@ public class Boggle extends JFrame {
 	 * Constructor
 	 */
 	public Boggle() {
-		System.out.println("Launching Boggle... Get ready to play! " +
-				"(This process may take a few seconds.)");
+		System.out.println("Launching Boggle... Get ready to play!");
+		System.out.println("Verifying files... (This may take a few seconds)");
 
 		// Set the dimensions of the screen based on the aspect ratio.
 		screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
@@ -72,7 +72,7 @@ public class Boggle extends JFrame {
 			screenWidth = (int) (screenHeight * ASPECT_RATIO);
 		}
 		// Set the screen and overlay.
-		settingsScreen = new SettingsScreen(this, 0);
+		settingsScreen = new SettingsScreen(this);
 		updateSettings();
 		// Set the intro screen.
 		introScreen = new IntroScreen(this);
@@ -167,10 +167,8 @@ public class Boggle extends JFrame {
 
 	/**
 	 * This methdod switches to the settings screen.
-	 * @param previousScreen to return to the previous screen.
 	 */
-	public void settingsScreen(int previousScreen) {
-		settingsScreen.setPrevScreen(previousScreen);
+	public void settingsScreen() {
 		this.setContentPane(settingsScreen);
 		repaint();
 	}
