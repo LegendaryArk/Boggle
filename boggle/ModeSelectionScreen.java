@@ -56,13 +56,13 @@ public class ModeSelectionScreen extends JPanel {
 		GridBagConstraints constraints;
 
 		// Setting the colour and dimensions of the background.
-		this.setBackground(Color.black);
+		this.setBackground(Color.BLACK);
 		this.setLayout(new GridBagLayout());
 		this.setPreferredSize(new Dimension(width, height));
 
 		// Setting the colour and dimensions of the LayeredPane.
 		layeredPane = new JLayeredPane();
-		layeredPane.setBackground(Color.black);
+		layeredPane.setBackground(Color.BLACK);
 		layeredPane.setLayout(new GridBagLayout());
 		layeredPane.setPreferredSize(new Dimension(width, height));
 
@@ -72,7 +72,7 @@ public class ModeSelectionScreen extends JPanel {
 				getResource("assets/GameOptionScreenBg.png"));
 		background.setIcon(new ImageIcon(backgroundImage.getImage()
 				.getScaledInstance(width, height, Image.SCALE_SMOOTH)));
-		background.setBackground(Color.black);
+		background.setBackground(Color.BLACK);
 		// Setting its position using GridBagLayout.
 		constraints = new GridBagConstraints();
 		constraints.gridx = 0;

@@ -41,7 +41,7 @@ public class Pair {
 	/**
 	 * This is a setter method that sets the first value of
 	 * the pair.
-	 * @param x
+	 * @param x The new x value
 	 */
 	public void setX(int x) {
 		this.x = x;
@@ -50,7 +50,7 @@ public class Pair {
 	/**
 	 * This is a setter method that sets the second value of
 	 * the pair.
-	 * @param y
+	 * @param y The new y value
 	 */
 	public void setY(int y) {
 		this.y = y;

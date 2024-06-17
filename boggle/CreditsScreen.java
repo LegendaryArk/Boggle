@@ -50,13 +50,13 @@ public class CreditsScreen extends JPanel {
 		GridBagConstraints constraints;
 
 		// Setting the layout and dimensions of the Panel.
-		this.setBackground(Color.black);
+		this.setBackground(Color.BLACK);
 		this.setLayout(new GridBagLayout());
 		this.setPreferredSize(new Dimension(width, height));
 
 		// Setting the colour and dimensions of the LayeredPane.
 		layeredPane = new JLayeredPane();
-		layeredPane.setBackground(Color.black);
+		layeredPane.setBackground(Color.BLACK);
 		layeredPane.setLayout(new GridBagLayout());
 		layeredPane.setPreferredSize(new Dimension(width, height));
 
@@ -68,7 +68,7 @@ public class CreditsScreen extends JPanel {
 		creditsBackground = new JLabel();
 		creditsBackground.setIcon(new ImageIcon(creditsAnimation.getImage().
 				getScaledInstance(width, height, Image.SCALE_DEFAULT)));
-		creditsBackground.setBackground(Color.black);
+		creditsBackground.setBackground(Color.BLACK);
 		constraints = new GridBagConstraints();
 		constraints.gridx = 0;
 		constraints.gridy = 0;

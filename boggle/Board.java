@@ -11,8 +11,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Random;
 import java.util.Scanner;
@@ -175,8 +173,9 @@ public class Board implements MouseListener {
 	 * @param passButton button to skip turn.
 	 */
 	public Board(Boggle mainFrame, JPanel background, JLabel wordDisplay,
-	             WordTable wordTable, JLabel playerOneLabel, JLabel playerOnePointsDisplay,
-	             JLabel playerOneTimeDisplay, boolean isAI, JLabel playerTwoLabel,
+	             WordTable wordTable, JLabel playerOneLabel,
+	             JLabel playerOnePointsDisplay, JLabel playerOneTimeDisplay,
+	             boolean isAI, JLabel playerTwoLabel,
 	             JLabel playerTwoPointsDisplay, JLabel playerTwoTimeDisplay,
 	             OptionButton passButton) {
 		// Set the game mode based on if player vs AI is chosen.
@@ -199,7 +198,8 @@ public class Board implements MouseListener {
 
 		// Initialize player 1 with their title, points and clock.
 		this.playerOne = new Player(playerOneLabel, playerOnePointsDisplay,
-				new Clock(playerOneTimeDisplay, mainFrame.getInitialTime(), this));
+				new Clock(playerOneTimeDisplay, mainFrame.getInitialTime(),
+						this));
 		if (!isAI) {
 			// Initialize player 2 with their title. points and clock.
 			this.playerTwo = new Player(playerTwoLabel, playerTwoPointsDisplay,
@@ -429,6 +429,25 @@ public class Board implements MouseListener {
 	}
 
 	/**
+	 * Gets the first player
+	 *
+	 * @return the first player
+	 */
+	public Player getPlayerOne() {
+		return playerOne;
+	}
+
+	/**
+	 * Gets the second player
+	 * @return Either the second player or the AI
+	 */
+	public Player getPlayerTwo() {
+		// Uses shorthand if-else blocks (ternary operator).
+		// https://www.w3schools.com/java/java_conditions_shorthand.asp.
+		return isAI ? ai : playerTwo;
+	}
+
+	/**
 	 * This method gets the dice grid.
 	 * @return the dice.
 	 */
@@ -577,16 +596,6 @@ public class Board implements MouseListener {
 					// Start AI's turn.
 					System.out.println("Lambda Boggle's Turn");
 					ai.startTurn();
-					// Set a timer for AI's turn.
-					Timer waitUntil = new Timer(100, e -> {
-						// Wait until the AI has found a word.
-						if (!ai.isWordFound()) return;
-						// Switch the turn to player 1.
-						switchTurn();
-						// Stops looping.
-						((Timer) e.getSource()).stop();
-					});
-					waitUntil.start();
 					return;
 				}
 				break;
@@ -605,6 +614,7 @@ public class Board implements MouseListener {
 		} else {
 			// Pause AI timer.
 			ai.getTimer().pause();
+			ai.stopSearching();
 		}
 	}
 
@@ -624,6 +634,7 @@ public class Board implements MouseListener {
 				} else {
 					// Start AI timer.
 					ai.getTimer().start();
+					ai.startTurn();
 				}
 			}
 		}
@@ -948,6 +959,31 @@ public class Board implements MouseListener {
 			wordSelected = "";
 			// Set the word display to the current selected word.
 			wordDisplay.setText(wordSelected);
+
+			// Check if player 1 reaches target points.
+			if (playerOne.getPoints() >= mainFrame.getTargetPoints()) {
+				// Display player 1 win screen.
+				System.out.println("Player 1 Wins");
+				mainFrame.endgameScreen(1);
+			}
+			// Check if player 2 reaches target points.
+			else if (!isAI && playerTwo.getPoints() >=
+					mainFrame.getTargetPoints()) {
+				// Display player 2 win screen.
+				System.out.println("Player 2 Wins");
+				mainFrame.endgameScreen(2);
+			}
+			// Check if AI reaches target points.
+			else if (isAI && ai.getPoints() >= mainFrame.getTargetPoints()) {
+				// Display AI win screen
+				System.out.println("Lambda Boggle Wins");
+				mainFrame.endgameScreen(3);
+			}
+
+			if (state == 1) {
+				// Switch the turn to the next player.
+				switchTurn();
+			}
 		});
 
 		if (state != 0) {
@@ -959,26 +995,6 @@ public class Board implements MouseListener {
 		}
 		clearSelected.setRepeats(false);
 		clearSelected.start();
-
-		// Check if player 1 reaches target points.
-		if (playerOne.getPoints() >= mainFrame.getTargetPoints()) {
-			// Display player 1 win screen.
-			System.out.println("Player 1 Wins");
-			mainFrame.endgameScreen(1);
-		}
-		// Check if player 2 reaches target points.
-		else if (!isAI && playerTwo.getPoints() >=
-				mainFrame.getTargetPoints()) {
-			// Display player 2 win screen.
-			System.out.println("Player 2 Wins");
-			mainFrame.endgameScreen(2);
-		}
-		// Check if AI reaches target points.
-		else if (isAI && ai.getPoints() >= mainFrame.getTargetPoints()) {
-			// Display AI win screen
-			System.out.println("Lambda Boggle Wins");
-			mainFrame.endgameScreen(3);
-		}
 	}
 
 	/**
@@ -1076,8 +1092,6 @@ public class Board implements MouseListener {
 				state = 1;
 				// Process the valid word.
 				processValidWord(wordSelected);
-				// Switch the turn to the next player.
-				switchTurn();
 			} else {
 				// Print if the word is already entered.
 				System.out.println("Already entered");

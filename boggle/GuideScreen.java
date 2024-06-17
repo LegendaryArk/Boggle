@@ -256,23 +256,23 @@ public class GuideScreen extends JPanel {
 				getClass().getResource("assets/NextBtnPress.png"));
 
 		// Set background colour to black
-		this.setBackground(Color.black);
+		this.setBackground(Color.BLACK);
 		this.setLayout(cardLayout);
 		// Set dimensions of the screen
 		this.setPreferredSize(new Dimension(width, height));
 
-
+		// Used to set the location of the components.
 		GridBagConstraints constraints;
 
 		/* Menu Page. */
 		menu = new JPanel();
-		menu.setBackground(Color.black);
+		menu.setBackground(Color.BLACK);
 		menu.setLayout(new GridBagLayout());
 		menu.setPreferredSize(new Dimension(width, height));
 
 		// Menu Layered.
 		menuLayeredPane = new JLayeredPane();
-		menuLayeredPane.setBackground(Color.black);
+		menuLayeredPane.setBackground(Color.BLACK);
 		menuLayeredPane.setLayout(new GridBagLayout());
 		menuLayeredPane.setPreferredSize(new Dimension(width, height));
 
@@ -282,7 +282,7 @@ public class GuideScreen extends JPanel {
 		menuBackground = new JLabel();
 		menuBackground.setIcon(new ImageIcon(menuBackgroundImage.getImage()
 				.getScaledInstance(width, height, Image.SCALE_SMOOTH)));
-		menuBackground.setBackground(Color.black);
+		menuBackground.setBackground(Color.BLACK);
 		constraints = new GridBagConstraints();
 		constraints.gridx = 0;
 		constraints.gridy = 0;
@@ -294,7 +294,7 @@ public class GuideScreen extends JPanel {
 		// Menu Buttons.
 		menuContent = new JPanel();
 		menuContent.setLayout(new GridBagLayout());
-		menuContent.setBackground(Color.black);
+		menuContent.setBackground(Color.BLACK);
 		menuContent.setPreferredSize(new Dimension(width, height));
 		menuContent.setOpaque(false);
 
@@ -389,13 +389,13 @@ public class GuideScreen extends JPanel {
 
 		/* Game Information Page 1. */
 		gameInformationOne = new JPanel();
-		gameInformationOne.setBackground(Color.black);
+		gameInformationOne.setBackground(Color.BLACK);
 		gameInformationOne.setLayout(new GridBagLayout());
 		gameInformationOne.setPreferredSize(new Dimension(width, height));
 
 		// Game Information Page 1 Layers.
 		gameInformationOneLayeredPane = new JLayeredPane();
-		gameInformationOneLayeredPane.setBackground(Color.black);
+		gameInformationOneLayeredPane.setBackground(Color.BLACK);
 		gameInformationOneLayeredPane.setLayout(new GridBagLayout());
 		gameInformationOneLayeredPane.setPreferredSize(
 				new Dimension(width, height));
@@ -407,7 +407,7 @@ public class GuideScreen extends JPanel {
 		gameInformationOneLabel.setIcon(new ImageIcon(gameInformationOneImage
 				.getImage().getScaledInstance(width, height,
 						Image.SCALE_SMOOTH)));
-		gameInformationOneLabel.setBackground(Color.black);
+		gameInformationOneLabel.setBackground(Color.BLACK);
 		constraints = new GridBagConstraints();
 		constraints.gridx = 0;
 		constraints.gridy = 0;
@@ -420,7 +420,7 @@ public class GuideScreen extends JPanel {
 		// Game Information 1 Buttons.
 		gameInformationOneContent = new JPanel();
 		gameInformationOneContent.setLayout(new GridBagLayout());
-		gameInformationOneContent.setBackground(Color.black);
+		gameInformationOneContent.setBackground(Color.BLACK);
 		gameInformationOneContent.setPreferredSize(
 				new Dimension(width, height));
 		gameInformationOneContent.setOpaque(false);
@@ -474,13 +474,13 @@ public class GuideScreen extends JPanel {
 
 		/* Game Information Page 2. */
 		gameInformationTwo = new JPanel();
-		gameInformationTwo.setBackground(Color.black);
+		gameInformationTwo.setBackground(Color.BLACK);
 		gameInformationTwo.setLayout(new GridBagLayout());
 		gameInformationTwo.setPreferredSize(new Dimension(width, height));
 
 		// Game Information Page 2 Layers.
 		gameInformationTwoLayeredPane = new JLayeredPane();
-		gameInformationTwoLayeredPane.setBackground(Color.black);
+		gameInformationTwoLayeredPane.setBackground(Color.BLACK);
 		gameInformationTwoLayeredPane.setLayout(new GridBagLayout());
 		gameInformationTwoLayeredPane.setPreferredSize(
 				new Dimension(width, height));
@@ -492,7 +492,7 @@ public class GuideScreen extends JPanel {
 		gameInformationTwoLabel.setIcon(new ImageIcon(gameInformationTwoImage
 				.getImage().getScaledInstance(width, height,
 						Image.SCALE_SMOOTH)));
-		gameInformationTwoLabel.setBackground(Color.black);
+		gameInformationTwoLabel.setBackground(Color.BLACK);
 		constraints = new GridBagConstraints();
 		constraints.gridx = 0;
 		constraints.gridy = 0;
@@ -505,7 +505,7 @@ public class GuideScreen extends JPanel {
 		// Game Information Page 2 Buttons.
 		gameInformationTwoContent = new JPanel();
 		gameInformationTwoContent.setLayout(new GridBagLayout());
-		gameInformationTwoContent.setBackground(Color.black);
+		gameInformationTwoContent.setBackground(Color.BLACK);
 		gameInformationTwoContent.setPreferredSize(
 				new Dimension(width, height));
 		gameInformationTwoContent.setOpaque(false);
@@ -575,13 +575,13 @@ public class GuideScreen extends JPanel {
 
 		/* Game Information Page 3. */
 		gameInformationThree = new JPanel();
-		gameInformationThree.setBackground(Color.black);
+		gameInformationThree.setBackground(Color.BLACK);
 		gameInformationThree.setLayout(new GridBagLayout());
 		gameInformationThree.setPreferredSize(new Dimension(width, height));
 
 		// Game Information Page 3 Layers.
 		gameInformationThreeLayeredPane = new JLayeredPane();
-		gameInformationThreeLayeredPane.setBackground(Color.black);
+		gameInformationThreeLayeredPane.setBackground(Color.BLACK);
 		gameInformationThreeLayeredPane.setLayout(new GridBagLayout());
 		gameInformationThreeLayeredPane.setPreferredSize(new Dimension(width,
 				height));
@@ -594,7 +594,7 @@ public class GuideScreen extends JPanel {
 				gameInformationThreeImage.getImage()
 						.getScaledInstance(width, height,
 								Image.SCALE_SMOOTH)));
-		gameInformationThreeLabel.setBackground(Color.black);
+		gameInformationThreeLabel.setBackground(Color.BLACK);
 		constraints = new GridBagConstraints();
 		constraints.gridx = 0;
 		constraints.gridy = 0;
@@ -607,7 +607,7 @@ public class GuideScreen extends JPanel {
 		// Game Information Page 3 Buttons.
 		gameInformationThreeContent = new JPanel();
 		gameInformationThreeContent.setLayout(new GridBagLayout());
-		gameInformationThreeContent.setBackground(Color.black);
+		gameInformationThreeContent.setBackground(Color.BLACK);
 		gameInformationThreeContent.setPreferredSize(
 				new Dimension(width, height));
 		gameInformationThreeContent.setOpaque(false);
@@ -661,13 +661,13 @@ public class GuideScreen extends JPanel {
 
 		/* Points Breakdown Page. */
 		pointsBreakdown = new JPanel();
-		pointsBreakdown.setBackground(Color.black);
+		pointsBreakdown.setBackground(Color.BLACK);
 		pointsBreakdown.setLayout(new GridBagLayout());
 		pointsBreakdown.setPreferredSize(new Dimension(width, height));
 
 		// Points Breakdown Page Layers.
 		pointsBreakdownLayeredPane = new JLayeredPane();
-		pointsBreakdownLayeredPane.setBackground(Color.black);
+		pointsBreakdownLayeredPane.setBackground(Color.BLACK);
 		pointsBreakdownLayeredPane.setLayout(new GridBagLayout());
 		pointsBreakdownLayeredPane.setPreferredSize(
 				new Dimension(width, height));
@@ -679,7 +679,7 @@ public class GuideScreen extends JPanel {
 		pointsBreakdownLabel.setIcon(new ImageIcon(pointsBreakdownImage
 				.getImage().getScaledInstance(width, height,
 						Image.SCALE_SMOOTH)));
-		pointsBreakdownLabel.setBackground(Color.black);
+		pointsBreakdownLabel.setBackground(Color.BLACK);
 		constraints = new GridBagConstraints();
 		constraints.gridx = 0;
 		constraints.gridy = 0;
@@ -691,7 +691,7 @@ public class GuideScreen extends JPanel {
 		// Points Breakdown Page Buttons.
 		pointsBreakdownContent = new JPanel();
 		pointsBreakdownContent.setLayout(new GridBagLayout());
-		pointsBreakdownContent.setBackground(Color.black);
+		pointsBreakdownContent.setBackground(Color.BLACK);
 		pointsBreakdownContent.setPreferredSize(new Dimension(width, height));
 		pointsBreakdownContent.setOpaque(false);
 
@@ -726,13 +726,13 @@ public class GuideScreen extends JPanel {
 
 		/* Settings Information Page 1. */
 		settingsInformationOne = new JPanel();
-		settingsInformationOne.setBackground(Color.black);
+		settingsInformationOne.setBackground(Color.BLACK);
 		settingsInformationOne.setLayout(new GridBagLayout());
 		settingsInformationOne.setPreferredSize(new Dimension(width, height));
 
 		// Settings Information Page 1 Layers.
 		settingsInformationOneLayeredPane = new JLayeredPane();
-		settingsInformationOneLayeredPane.setBackground(Color.black);
+		settingsInformationOneLayeredPane.setBackground(Color.BLACK);
 		settingsInformationOneLayeredPane.setLayout(new GridBagLayout());
 		settingsInformationOneLayeredPane.setPreferredSize(
 				new Dimension(width, height));
@@ -744,7 +744,7 @@ public class GuideScreen extends JPanel {
 		settingsInformationOneLabel.setIcon(
 				new ImageIcon(settingsInformationOneImage.getImage().
 						getScaledInstance(width, height, Image.SCALE_SMOOTH)));
-		settingsInformationOneLabel.setBackground(Color.black);
+		settingsInformationOneLabel.setBackground(Color.BLACK);
 		constraints = new GridBagConstraints();
 		constraints.gridx = 0;
 		constraints.gridy = 0;
@@ -758,7 +758,7 @@ public class GuideScreen extends JPanel {
 		// Settings Information Page 1 Buttons.
 		settingsInformationOneContent = new JPanel();
 		settingsInformationOneContent.setLayout(new GridBagLayout());
-		settingsInformationOneContent.setBackground(Color.black);
+		settingsInformationOneContent.setBackground(Color.BLACK);
 		settingsInformationOneContent.setPreferredSize(new Dimension(width,
 				height));
 		settingsInformationOneContent.setOpaque(false);
@@ -814,13 +814,13 @@ public class GuideScreen extends JPanel {
 
 		/* Settings Information Page 2. */
 		settingsInformationTwo = new JPanel();
-		settingsInformationTwo.setBackground(Color.black);
+		settingsInformationTwo.setBackground(Color.BLACK);
 		settingsInformationTwo.setLayout(new GridBagLayout());
 		settingsInformationTwo.setPreferredSize(new Dimension(width, height));
 
 		// Settings Information Page 2 Layers.
 		settingsInformationTwoLayeredPane = new JLayeredPane();
-		settingsInformationTwoLayeredPane.setBackground(Color.black);
+		settingsInformationTwoLayeredPane.setBackground(Color.BLACK);
 		settingsInformationTwoLayeredPane.setLayout(new GridBagLayout());
 		settingsInformationTwoLayeredPane.setPreferredSize(
 				new Dimension(width, height));
@@ -833,7 +833,7 @@ public class GuideScreen extends JPanel {
 				settingsInformationTwoImage.getImage()
 						.getScaledInstance(width, height,
 								Image.SCALE_SMOOTH)));
-		settingsInformationTwoLabel.setBackground(Color.black);
+		settingsInformationTwoLabel.setBackground(Color.BLACK);
 		constraints = new GridBagConstraints();
 		constraints.gridx = 0;
 		constraints.gridy = 0;
@@ -847,7 +847,7 @@ public class GuideScreen extends JPanel {
 		// Settings Information Page 2 Button.
 		settingsInformationTwoContent = new JPanel();
 		settingsInformationTwoContent.setLayout(new GridBagLayout());
-		settingsInformationTwoContent.setBackground(Color.black);
+		settingsInformationTwoContent.setBackground(Color.BLACK);
 		settingsInformationTwoContent.setPreferredSize(
 				new Dimension(width, height));
 		settingsInformationTwoContent.setOpaque(false);
@@ -919,14 +919,14 @@ public class GuideScreen extends JPanel {
 
 		/* Settings Information Page 3 */
 		settingsInformationThree = new JPanel();
-		settingsInformationThree.setBackground(Color.black);
+		settingsInformationThree.setBackground(Color.BLACK);
 		settingsInformationThree.setLayout(new GridBagLayout());
 		settingsInformationThree.setPreferredSize(
 				new Dimension(width, height));
 
 		// Settings Information Page 3 Layers.
 		settingsInformationThreeLayer = new JLayeredPane();
-		settingsInformationThreeLayer.setBackground(Color.black);
+		settingsInformationThreeLayer.setBackground(Color.BLACK);
 		settingsInformationThreeLayer.setLayout(new GridBagLayout());
 		settingsInformationThreeLayer.setPreferredSize(
 				new Dimension(width, height));
@@ -939,7 +939,7 @@ public class GuideScreen extends JPanel {
 				settingsInformationThreeImage.getImage()
 						.getScaledInstance(width, height,
 								Image.SCALE_SMOOTH)));
-		settingsInformationThreeLabel.setBackground(Color.black);
+		settingsInformationThreeLabel.setBackground(Color.BLACK);
 		constraints = new GridBagConstraints();
 		constraints.gridx = 0;
 		constraints.gridy = 0;
@@ -953,7 +953,7 @@ public class GuideScreen extends JPanel {
 		// Settings Information Page 3 Buttons.
 		settingsInformationThreeContent = new JPanel();
 		settingsInformationThreeContent.setLayout(new GridBagLayout());
-		settingsInformationThreeContent.setBackground(Color.black);
+		settingsInformationThreeContent.setBackground(Color.BLACK);
 		settingsInformationThreeContent.setPreferredSize(
 				new Dimension(width, height));
 		settingsInformationThreeContent.setOpaque(false);
@@ -1026,13 +1026,13 @@ public class GuideScreen extends JPanel {
 
 		/* Settings Information Page 4. */
 		settingsInformationFour = new JPanel();
-		settingsInformationFour.setBackground(Color.black);
+		settingsInformationFour.setBackground(Color.BLACK);
 		settingsInformationFour.setLayout(new GridBagLayout());
 		settingsInformationFour.setPreferredSize(new Dimension(width, height));
 
 		// Settings Information Page 4 Layers.
 		settingsInformationFourLayeredPane = new JLayeredPane();
-		settingsInformationFourLayeredPane.setBackground(Color.black);
+		settingsInformationFourLayeredPane.setBackground(Color.BLACK);
 		settingsInformationFourLayeredPane.setLayout(new GridBagLayout());
 		settingsInformationFourLayeredPane.setPreferredSize(
 				new Dimension(width, height));
@@ -1045,7 +1045,7 @@ public class GuideScreen extends JPanel {
 				settingsInformationFourImage.getImage()
 						.getScaledInstance(width, height,
 								Image.SCALE_SMOOTH)));
-		settingsInformationFourLabel.setBackground(Color.black);
+		settingsInformationFourLabel.setBackground(Color.BLACK);
 		constraints = new GridBagConstraints();
 		constraints.gridx = 0;
 		constraints.gridy = 0;
@@ -1059,7 +1059,7 @@ public class GuideScreen extends JPanel {
 		// Settings Information Page 4 Buttons.
 		settingsInformationFourContent = new JPanel();
 		settingsInformationFourContent.setLayout(new GridBagLayout());
-		settingsInformationFourContent.setBackground(Color.black);
+		settingsInformationFourContent.setBackground(Color.BLACK);
 		settingsInformationFourContent.setPreferredSize(
 				new Dimension(width, height));
 		settingsInformationFourContent.setOpaque(false);

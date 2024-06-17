@@ -7,8 +7,6 @@
 package boggle;
 
 import javax.swing.*;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
@@ -42,6 +40,8 @@ public class AI extends Player {
 	private Random random;
 	// Minimum word length of a valid word.
 	private int minimumWordLength;
+	// Code to find word on the board with a delay
+	private boolean isFindingWord;
 
 	/**
 	 * Constructor
@@ -67,6 +67,7 @@ public class AI extends Player {
 		lengths = new ArrayList<>();
 		options = new ArrayList<>();
 		random = new Random();
+		isFindingWord = false;
 
 		// Read dictionary into ArrayList.
 		Scanner sc = new Scanner(getClass()
@@ -94,6 +95,8 @@ public class AI extends Player {
 	 */
 	private void search(int r, int c, String s, int pos,
 	                    boolean isHighlighting) {
+		if (!isFindingWord) return;
+
 		// If the index is at the end of the word.
 		if (pos == s.length() - 1) {
 			// If not highlighting.
@@ -194,11 +197,15 @@ public class AI extends Player {
 		currentWord = "";
 		wordFound = false;
 		wordHighlighted = false;
+		isFindingWord = true;
 		// Start turn.
 		super.startTurn();
 
 		// Set a timer with delay depending on the difficulty.
-		Timer delay = new Timer(0, e -> {
+		Timer findWord = new Timer(0, e -> {
+			// Inline method (lambda expressions).
+			// https://www.geeksforgeeks.org/lambda-expressions-java-8/.
+
 			// Iterate through each word in the dictionary.
 			for (String s : dictionary) {
 				// If word is empty.
@@ -234,6 +241,8 @@ public class AI extends Player {
 				options.set(randomIndex, temp);
 			}
 
+			if (lengths.isEmpty()) return;
+
 			// Remove all lengths less than the minimum word length.
 			while (lengths.get(0) < minimumWordLength) {
 				lengths.remove(0);
@@ -241,6 +250,8 @@ public class AI extends Player {
 
 			// Choice of length depending on difficulty.
 			int length = 0;
+			// Enhanced switch statement
+// https://www.geeksforgeeks.org/enhancements-for-switch-statement-in-java-13/
 			switch (difficulty) {
 				// Get minimum word length.
 				case 0 -> length = lengths.get(0);
@@ -262,7 +273,13 @@ public class AI extends Player {
 					currentWord = s;
 				}
 			}
-
+			
+			// Check if AI was stopped prematurely through stopSearching()
+			if (!isFindingWord) {
+				currentWord = "";
+				((Timer) e.getSource()).stop();
+			}
+			isFindingWord = false;
 			// Highlight current word.
 			highlightCurrentWord();
 			// Display current word.
@@ -277,26 +294,27 @@ public class AI extends Player {
 		});
 
 		// Set the delay of the AI based on difficulty.
+		// Must be greater than 500 ms
 		// Enhanced switch statement
 // https://www.geeksforgeeks.org/enhancements-for-switch-statement-in-java-13/
 		switch (difficulty) {
-			case 0 -> delay.setInitialDelay(
+			case 0 -> findWord.setInitialDelay(
 					(int) (10000 * random.nextDouble(0.6, 1.4)));
-			case 1 -> delay.setInitialDelay(
+			case 1 -> findWord.setInitialDelay(
 					(int) (6000 * random.nextDouble(0.6, 1.4)));
-			case 2 -> delay.setInitialDelay(
+			case 2 -> findWord.setInitialDelay(
 					(int) (3000 * random.nextDouble(0.6, 1.4)));
-			case 3 -> delay.setInitialDelay(600); // Must be greater than 500ms
+			case 3 -> findWord.setInitialDelay(600);
 		}
-		delay.setRepeats(false);
-		delay.start();
+		findWord.setRepeats(false);
+		findWord.start();
 	}
 
 	/**
-	 * This method returns if a word has been found
-	 * @return if a word has been found
+	 * Prematurely stops the AI from searching for a word
+	 * (e.g. when the game is stopped while the AI is taking its turn)
 	 */
-	public boolean isWordFound() {
-		return wordFound;
+	public void stopSearching() {
+		isFindingWord = false;
 	}
 }

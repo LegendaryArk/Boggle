@@ -58,8 +58,8 @@ public class Boggle extends JFrame {
 	 * Constructor
 	 */
 	public Boggle() {
-		System.out.println("Launching Boggle... Get ready to play!");
-		System.out.println("Verifying files... (This may take a few seconds)");
+		System.out.println("Verifying resources and assets... " +
+				"(This may take a few seconds)");
 
 		// Set the dimensions of the screen based on the aspect ratio.
 		screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
@@ -92,6 +92,9 @@ public class Boggle extends JFrame {
 		endgameScreen = new EndGameScreen(this, 2);
 		// Set exit screen.
 		exitScreen = new ExitScreen(this);
+
+		System.out.println("Launching Boggle! Get ready to play!");
+
 		// Set the initial content to the intro screen.
 		this.setContentPane(introScreen);
 
@@ -99,7 +102,7 @@ public class Boggle extends JFrame {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		this.setUndecorated(true);
-		this.setBackground(Color.black);
+		this.setBackground(Color.BLACK);
 		this.setResizable(false);
 		this.setTitle("Boggle");
 		this.setVisible(true);
@@ -132,10 +135,11 @@ public class Boggle extends JFrame {
 	public void gameScreen(boolean reset, boolean isAI) {
 		this.setContentPane(gameScreen);
 		if (reset) {
+			gameScreen.stopBackgroundMusic();
 			gameScreen.resetGame(isAI);
+			gameScreen.startBackgroundMusic();
 		}
 		gameScreen.resumeGame();
-		gameScreen.startBackgroundMusic();
 		repaint();
 	}
 

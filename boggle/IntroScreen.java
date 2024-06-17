@@ -14,8 +14,6 @@ import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 import java.awt.*;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
@@ -53,14 +51,14 @@ public class IntroScreen extends JPanel {
 		int height = mainFrame.getScreenHeight();
 
 		// Set the colour, layout, bounds and dimensions of the background.
-		this.setBackground(Color.black);
+		this.setBackground(Color.BLACK);
 		this.setLayout(new GridBagLayout());
 		this.setBounds(0, 0, width, height);
 		this.setPreferredSize(new Dimension(width, height));
 
 		// Set the colour, layout, bounds and dimensions of the layered pane.
 		layeredPane = new JLayeredPane();
-		layeredPane.setBackground(Color.black);
+		layeredPane.setBackground(Color.BLACK);
 		layeredPane.setLayout(new GridBagLayout());
 		layeredPane.setPreferredSize(new Dimension(width, height));
 
@@ -72,7 +70,7 @@ public class IntroScreen extends JPanel {
 				bg.getImage().getScaledInstance(width, height,
 						Image.SCALE_DEFAULT)));
 		// Set colour of the intro gif.
-		introAnimation.setBackground(Color.black);
+		introAnimation.setBackground(Color.BLACK);
 		constraints = new GridBagConstraints();
 		constraints.gridx = 0;
 		constraints.gridy = 0;
@@ -147,6 +145,9 @@ public class IntroScreen extends JPanel {
 
 		// Timer to close intro animation after 4.8 seconds
 		Timer timer = new Timer(0, e -> {
+			// Inline method (lambda expressions).
+			// https://www.geeksforgeeks.org/lambda-expressions-java-8/.
+
 			// Stop and close the intro clip
 			introClip.stop();
 			introClip.close();
@@ -160,6 +161,8 @@ public class IntroScreen extends JPanel {
 		timer.start();
 
 		// Timer to display the fact after 2.5 seconds
+		// Inline method (lambda expressions).
+		// https://www.geeksforgeeks.org/lambda-expressions-java-8/.
 		Timer timer2 = new Timer(0, e -> fact.setVisible(true));
 		// Set timer for 2500 milliseconds
 		timer2.setInitialDelay(2500);

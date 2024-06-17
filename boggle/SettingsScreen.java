@@ -264,19 +264,19 @@ public class SettingsScreen extends JPanel {
 		GridBagConstraints constraints;
 
 		// Panel setup.
-		this.setBackground(Color.black);
+		this.setBackground(Color.BLACK);
 		this.setLayout(cardLayout);
 		this.setPreferredSize(new Dimension(width, height));
 
 		/* Menu Screen. */
 		menu = new JPanel();
-		menu.setBackground(Color.black);
+		menu.setBackground(Color.BLACK);
 		menu.setLayout(new GridBagLayout());
 		menu.setPreferredSize(new Dimension(width, height));
 
 		// Settings Menu Layer Pane.
 		menuLayeredPane = new JLayeredPane();
-		menuLayeredPane.setBackground(Color.black);
+		menuLayeredPane.setBackground(Color.BLACK);
 		menuLayeredPane.setLayout(new GridBagLayout());
 		menuLayeredPane.setPreferredSize(new Dimension(width, height));
 
@@ -286,7 +286,7 @@ public class SettingsScreen extends JPanel {
 		menuBackground = new JLabel();
 		menuBackground.setIcon(new ImageIcon(menuBackgroundImage.getImage()
 				.getScaledInstance(width, height, Image.SCALE_SMOOTH)));
-		menuBackground.setBackground(Color.black);
+		menuBackground.setBackground(Color.BLACK);
 		constraints = new GridBagConstraints();
 		constraints.gridx = 0;
 		constraints.gridy = 0;
@@ -298,7 +298,7 @@ public class SettingsScreen extends JPanel {
 		// Menu Buttons.
 		menuContent = new JPanel();
 		menuContent.setLayout(new GridBagLayout());
-		menuContent.setBackground(Color.black);
+		menuContent.setBackground(Color.BLACK);
 		menuContent.setPreferredSize(new Dimension(width, height));
 		menuContent.setOpaque(false);
 
@@ -413,13 +413,13 @@ public class SettingsScreen extends JPanel {
 
 		/* General Settings Page */
 		general = new JPanel();
-		general.setBackground(Color.black);
+		general.setBackground(Color.BLACK);
 		general.setLayout(new GridBagLayout());
 		general.setPreferredSize(new Dimension(width, height));
 
 		// General Settings Layered Pane.
 		generalLayer = new JLayeredPane();
-		generalLayer.setBackground(Color.black);
+		generalLayer.setBackground(Color.BLACK);
 		generalLayer.setLayout(new GridBagLayout());
 		generalLayer.setPreferredSize(new Dimension(width, height));
 
@@ -430,7 +430,7 @@ public class SettingsScreen extends JPanel {
 		generalBackground.setIcon(new ImageIcon(generalBackgroundImage
 				.getImage()
 				.getScaledInstance(width, height, Image.SCALE_SMOOTH)));
-		generalBackground.setBackground(Color.black);
+		generalBackground.setBackground(Color.BLACK);
 		constraints = new GridBagConstraints();
 		constraints.gridx = 0;
 		constraints.gridy = 0;
@@ -442,7 +442,7 @@ public class SettingsScreen extends JPanel {
 		// General Settings' Displays and Buttons
 		generalContent = new JPanel();
 		generalContent.setLayout(new GridBagLayout());
-		generalContent.setBackground(Color.black);
+		generalContent.setBackground(Color.BLACK);
 		generalContent.setPreferredSize(new Dimension(width, height));
 		generalContent.setOpaque(false);
 
@@ -610,13 +610,13 @@ public class SettingsScreen extends JPanel {
 
 		/* Time Control Settings Page */
 		time = new JPanel();
-		time.setBackground(Color.black);
+		time.setBackground(Color.BLACK);
 		time.setLayout(new GridBagLayout());
 		time.setPreferredSize(new Dimension(width, height));
 
 		// Time Control Settings Layered Pane.
 		timeLayer = new JLayeredPane();
-		timeLayer.setBackground(Color.black);
+		timeLayer.setBackground(Color.BLACK);
 		timeLayer.setLayout(new GridBagLayout());
 		timeLayer.setPreferredSize(new Dimension(width, height));
 
@@ -626,7 +626,7 @@ public class SettingsScreen extends JPanel {
 		timeBackground = new JLabel();
 		timeBackground.setIcon(new ImageIcon(timeBackgroundImage.getImage()
 				.getScaledInstance(width, height, Image.SCALE_SMOOTH)));
-		timeBackground.setBackground(Color.black);
+		timeBackground.setBackground(Color.BLACK);
 		constraints = new GridBagConstraints();
 		constraints.gridx = 0;
 		constraints.gridy = 0;
@@ -638,7 +638,7 @@ public class SettingsScreen extends JPanel {
 		// Time Control Settings' Displays and Buttons.
 		timeContent = new JPanel();
 		timeContent.setLayout(new GridBagLayout());
-		timeContent.setBackground(Color.black);
+		timeContent.setBackground(Color.BLACK);
 		timeContent.setPreferredSize(new Dimension(width, height));
 		timeContent.setOpaque(false);
 
@@ -830,13 +830,13 @@ public class SettingsScreen extends JPanel {
 
 		/* AI Difficulty Settings Page. */
 		difficulty = new JPanel();
-		difficulty.setBackground(Color.black);
+		difficulty.setBackground(Color.BLACK);
 		difficulty.setLayout(new GridBagLayout());
 		difficulty.setPreferredSize(new Dimension(width, height));
 
 		// AI Difficulty Settings Layered Pane.
 		difficultyLayer = new JLayeredPane();
-		difficultyLayer.setBackground(Color.black);
+		difficultyLayer.setBackground(Color.BLACK);
 		difficultyLayer.setLayout(new GridBagLayout());
 		difficultyLayer.setPreferredSize(new Dimension(width, height));
 
@@ -847,7 +847,7 @@ public class SettingsScreen extends JPanel {
 		difficultyBackground.setIcon(new ImageIcon(difficultyBackgroundImage
 				.getImage().getScaledInstance(width, height,
 						Image.SCALE_SMOOTH)));
-		difficultyBackground.setBackground(Color.black);
+		difficultyBackground.setBackground(Color.BLACK);
 		constraints = new GridBagConstraints();
 		constraints.gridx = 0;
 		constraints.gridy = 0;
@@ -859,7 +859,7 @@ public class SettingsScreen extends JPanel {
 		// AI Difficulty Settings' Buttons.
 		difficultyContent = new JPanel();
 		difficultyContent.setLayout(new GridBagLayout());
-		difficultyContent.setBackground(Color.black);
+		difficultyContent.setBackground(Color.BLACK);
 		difficultyContent.setPreferredSize(new Dimension(width, height));
 		difficultyContent.setOpaque(false);
 
@@ -887,7 +887,6 @@ public class SettingsScreen extends JPanel {
 
 			// Reset other radio buttons and select easy difficulty radio
 			// button.
-//			easyButton.setIcon(easyButton.getPressIcon());
 			mediumButton.setIcon(mediumButton.getDefaultIcon());
 			hardButton.setIcon(hardButton.getDefaultIcon());
 			impossibleButton.setIcon(impossibleButton.getDefaultIcon());
@@ -991,13 +990,13 @@ public class SettingsScreen extends JPanel {
 
 		/* Music Settings Page */
 		music = new JPanel();
-		music.setBackground(Color.black);
+		music.setBackground(Color.BLACK);
 		music.setLayout(new GridBagLayout());
 		music.setPreferredSize(new Dimension(width, height));
 
 		// Music Settings Layered Pane.
 		musicLayer = new JLayeredPane();
-		musicLayer.setBackground(Color.black);
+		musicLayer.setBackground(Color.BLACK);
 		musicLayer.setLayout(new GridBagLayout());
 		musicLayer.setPreferredSize(new Dimension(width, height));
 
@@ -1007,7 +1006,7 @@ public class SettingsScreen extends JPanel {
 		musicBackground = new JLabel();
 		musicBackground.setIcon(new ImageIcon(musicBackgroundImage.getImage()
 				.getScaledInstance(width, height, Image.SCALE_SMOOTH)));
-		musicBackground.setBackground(Color.black);
+		musicBackground.setBackground(Color.BLACK);
 		constraints = new GridBagConstraints();
 		constraints.gridx = 0;
 		constraints.gridy = 0;
@@ -1019,7 +1018,7 @@ public class SettingsScreen extends JPanel {
 		// Music Settings' Buttons.
 		musicContent = new JPanel();
 		musicContent.setLayout(new GridBagLayout());
-		musicContent.setBackground(Color.black);
+		musicContent.setBackground(Color.BLACK);
 		musicContent.setPreferredSize(new Dimension(width, height));
 		musicContent.setOpaque(false);
 
@@ -1064,30 +1063,6 @@ public class SettingsScreen extends JPanel {
 		constraints.weighty = 1;
 		musicContent.add(defaultMusicButton, constraints);
 
-		// Calm Music Radio Button.
-		calmMusicButton = new OptionButton(true,
-				0.05 * width, 0.05 * width,
-				radioButtonDefault, radioButtonHover, radioButtonSelect, e -> {
-			// Inline method (lambda expressions).
-			// https://www.geeksforgeeks.org/lambda-expressions-java-8/.
-
-			// Reset other radio buttons and select calm music radio button.
-			defaultMusicButton.setIcon(defaultMusicButton.getDefaultIcon());
-			calmMusicButton.setIcon(calmMusicButton.getPressIcon());
-			intenseMusicButton.setIcon(intenseMusicButton.getDefaultIcon());
-			musicType = 1;
-			System.out.println("Switched Music to Calm");
-		});
-		constraints = new GridBagConstraints();
-		constraints.anchor = GridBagConstraints.FIRST_LINE_START;
-		constraints.gridx = 0;
-		constraints.gridy = 1;
-		constraints.insets = new Insets(
-				(int) (0.045 * height), (int) (0.24 * width), 0, 0);
-		constraints.weightx = 1;
-		constraints.weighty = 1;
-		musicContent.add(calmMusicButton, constraints);
-
 		// Intense Music Radio Button.
 		intenseMusicButton = new OptionButton(true,
 				0.05 * width, 0.05 * width,
@@ -1099,8 +1074,32 @@ public class SettingsScreen extends JPanel {
 			defaultMusicButton.setIcon(defaultMusicButton.getDefaultIcon());
 			calmMusicButton.setIcon(calmMusicButton.getDefaultIcon());
 			intenseMusicButton.setIcon(intenseMusicButton.getPressIcon());
-			musicType = 2;
+			musicType = 1;
 			System.out.println("Switched Music to Intense");
+		});
+		constraints = new GridBagConstraints();
+		constraints.anchor = GridBagConstraints.FIRST_LINE_START;
+		constraints.gridx = 0;
+		constraints.gridy = 1;
+		constraints.insets = new Insets(
+				(int) (0.045 * height), (int) (0.24 * width), 0, 0);
+		constraints.weightx = 1;
+		constraints.weighty = 1;
+		musicContent.add(intenseMusicButton, constraints);
+
+		// Calm Music Radio Button.
+		calmMusicButton = new OptionButton(true,
+				0.05 * width, 0.05 * width,
+				radioButtonDefault, radioButtonHover, radioButtonSelect, e -> {
+			// Inline method (lambda expressions).
+			// https://www.geeksforgeeks.org/lambda-expressions-java-8/.
+
+			// Reset other radio buttons and select calm music radio button.
+			defaultMusicButton.setIcon(defaultMusicButton.getDefaultIcon());
+			calmMusicButton.setIcon(calmMusicButton.getPressIcon());
+			intenseMusicButton.setIcon(intenseMusicButton.getDefaultIcon());
+			musicType = 2;
+			System.out.println("Switched Music to Calm");
 		});
 		constraints = new GridBagConstraints();
 		constraints.anchor = GridBagConstraints.LAST_LINE_START;
@@ -1110,7 +1109,7 @@ public class SettingsScreen extends JPanel {
 				0, (int) (0.24 * width), (int) (0.19 * height), 0);
 		constraints.weightx = 1;
 		constraints.weighty = 1;
-		musicContent.add(intenseMusicButton, constraints);
+		musicContent.add(calmMusicButton, constraints);
 
 		// Add the buttons to the music settings page.
 		musicLayer.add(musicContent, new GridBagConstraints());

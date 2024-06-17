@@ -36,7 +36,7 @@ public class ExitScreen extends JPanel {
 		int width = mainFrame.getScreenWidth();
 		int height = mainFrame.getScreenHeight();
 
-		this.setBackground(Color.black);
+		this.setBackground(Color.BLACK);
 		this.setLayout(new GridBagLayout());
 		this.setPreferredSize(new Dimension(width, height));
 
@@ -48,7 +48,7 @@ public class ExitScreen extends JPanel {
 		background.setIcon(new ImageIcon(exitAnimation.getImage()
 				.getScaledInstance(width, height, Image.SCALE_DEFAULT)));
 		// Set background to black
-		background.setBackground(Color.black);
+		background.setBackground(Color.BLACK);
 		// Add the background to in the GridBagConstraints.
 		add(background, new GridBagConstraints());
 	}

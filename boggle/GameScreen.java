@@ -106,13 +106,13 @@ public class GameScreen extends JPanel {
 		GridBagConstraints constraints;
 
 		// Set background, layout and dimensions of game screen.
-		this.setBackground(Color.black);
+		this.setBackground(Color.BLACK);
 		this.setLayout(new GridBagLayout());
 		this.setPreferredSize(new Dimension(width, height));
 
 		// Set background, layout and dimensions of game screen.
 		layeredPane = new JLayeredPane();
-		layeredPane.setBackground(Color.black);
+		layeredPane.setBackground(Color.BLACK);
 		layeredPane.setLayout(new GridBagLayout());
 		layeredPane.setPreferredSize(new Dimension(width, height));
 
@@ -122,7 +122,7 @@ public class GameScreen extends JPanel {
 				.getResource("assets/GameScreenBg.png"));
 		background.setIcon(new ImageIcon(backgroundImage.getImage()
 				.getScaledInstance(width, height, Image.SCALE_SMOOTH)));
-		background.setBackground(Color.black);
+		background.setBackground(Color.BLACK);
 		constraints = new GridBagConstraints();
 		constraints.gridx = 0;
 		constraints.gridy = 0;
@@ -463,6 +463,12 @@ public class GameScreen extends JPanel {
 	 * @param isAI to set game.
 	 */
 	public void resetGame(boolean isAI) {
+		// Set it to be player one's turn
+		board.getPlayerOne().startTurn();
+		board.getPlayerOne().getTimer().pause();
+		board.getPlayerTwo().endTurn();
+		board.setTurn(0);
+
 		// Set the player text based on the game mode.
 		// Uses shorthand if-else blocks (ternary operator).
 		// https://www.w3schools.com/java/java_conditions_shorthand.asp.
@@ -504,12 +510,12 @@ public class GameScreen extends JPanel {
 					}
 					break;
 				case 1:
-					// Play the calm background music.
-					backgroundMusicClip.open(calmBackgroundMusic);
-					break;
-				case 2:
 					// Play the intense background music.
 					backgroundMusicClip.open(intenseBackgroundMusic);
+					break;
+				case 2:
+					// Play the calm background music.
+					backgroundMusicClip.open(calmBackgroundMusic);
 					break;
 			}
 		} catch (Exception e) {
@@ -525,6 +531,10 @@ public class GameScreen extends JPanel {
 	 * This method will stop the background music.
 	 */
 	public void stopBackgroundMusic() {
+		if (backgroundMusicClip == null) {
+			return;
+		}
+
 		// Stop and close background music clip.
 		backgroundMusicClip.stop();
 		backgroundMusicClip.close();

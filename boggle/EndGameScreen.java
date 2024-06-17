@@ -81,13 +81,13 @@ public class EndGameScreen extends JPanel {
 		GridBagConstraints constraints;
 		
 		// Set background colour, layout and dimensions of panel.
-		this.setBackground(Color.black);
+		this.setBackground(Color.BLACK);
 		this.setLayout(new GridBagLayout());
 		this.setPreferredSize(new Dimension(width, height));
 		
 		// Set background colour, layout and dimensions of layers.
 		layeredPane = new JLayeredPane();
-		layeredPane.setBackground(Color.black);
+		layeredPane.setBackground(Color.BLACK);
 		layeredPane.setLayout(new GridBagLayout());
 		layeredPane.setPreferredSize(new Dimension(width, height));
 		
@@ -126,6 +126,8 @@ public class EndGameScreen extends JPanel {
 		
 		// Set the background image based on the winner.
 		background = new JLabel();
+		// Enhanced switch statement
+// https://www.geeksforgeeks.org/enhancements-for-switch-statement-in-java-13/
 		switch (winner) {
 			case 1 -> background.setIcon(playerOneAnimation); // Player 1 win.
 			case 2 -> background.setIcon(playerTwoAnimation); // Player 2 win.
@@ -133,7 +135,7 @@ public class EndGameScreen extends JPanel {
 		}
 
 		// Set background colour and grid constraints.
-		background.setBackground(Color.black);
+		background.setBackground(Color.BLACK);
 		constraints = new GridBagConstraints();
 		constraints.gridx = 0;
 		constraints.gridy = 0;
@@ -149,6 +151,8 @@ public class EndGameScreen extends JPanel {
 				.getResource("assets/EndMenuBtnHover.png"));
 		menuButtonPress = new ImageIcon(getClass()
 				.getResource("assets/EndMenuBtnPress.png"));
+		// Inline method (lambda expressions).
+		// https://www.geeksforgeeks.org/lambda-expressions-java-8/.
 		menuButton = new OptionButton(false, 0.2 * width, 0.1 * height,
 				menuButtonDefault, menuButtonHover, menuButtonPress,
 				e -> mainFrame.menuScreen());
@@ -169,6 +173,8 @@ public class EndGameScreen extends JPanel {
 				.getResource("assets/PlayAgainBtnHover.png"));
 		playAgainButtonPress = new ImageIcon(getClass()
 				.getResource("assets/PlayAgainBtnPress.png"));
+		// Inline method (lambda expressions).
+		// https://www.geeksforgeeks.org/lambda-expressions-java-8/.
 		playAgainButton = new OptionButton(false, 0.2 * width, 0.1 * height,
 				playAgainButtonDefault, playAgainButtonHover,
 				playAgainButtonPress,
@@ -190,6 +196,8 @@ public class EndGameScreen extends JPanel {
 				.getResource("assets/EndExitBtnHover.png"));
 		exitButtonPress = new ImageIcon(getClass()
 				.getResource("assets/EndExitBtnPress.png"));
+		// Inline method (lambda expressions).
+		// https://www.geeksforgeeks.org/lambda-expressions-java-8/.
 		exitButton = new OptionButton(false, 0.2 * width, 0.1 * height,
 				exitButtonDefault, exitButtonHover, exitButtonPress,
 				e -> mainFrame.exitScreen());

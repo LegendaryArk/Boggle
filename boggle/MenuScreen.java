@@ -101,13 +101,13 @@ public class MenuScreen extends JPanel {
 		GridBagConstraints contraints;
 
 		// Set up the main panel.
-		this.setBackground(Color.black);
+		this.setBackground(Color.BLACK);
 		this.setLayout(new GridBagLayout());
 		this.setPreferredSize(new Dimension(width, height));
 
 		// Layered Pane
 		layers = new JLayeredPane();
-		layers.setBackground(Color.black);
+		layers.setBackground(Color.BLACK);
 		layers.setLayout(new GridBagLayout());
 		layers.setPreferredSize(new Dimension(width, height));
 
@@ -117,7 +117,7 @@ public class MenuScreen extends JPanel {
 		background = new JLabel();
 		background.setIcon(new ImageIcon(backgroundImage.getImage()
 				.getScaledInstance(width, height, Image.SCALE_SMOOTH)));
-		background.setBackground(Color.black);
+		background.setBackground(Color.BLACK);
 		contraints = new GridBagConstraints();
 		contraints.gridx = 0;
 		contraints.gridy = 0;
