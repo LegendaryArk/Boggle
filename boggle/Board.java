@@ -1095,7 +1095,8 @@ public class Board implements MouseListener {
 		// Stop selection
 		startedSelection = false;
 		// Print the current word selected.
-		System.out.println(wordSelected);
+		System.out.println("Player " + (playerTurn + 1) + " selected: " +
+				wordSelected);
 
 		int state;
 		// Check if word is valid.

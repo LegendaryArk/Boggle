@@ -335,7 +335,7 @@ public class AI extends Player {
 			// Clear board.
 			board.clearBoard(1);
 			// Debugging output.
-			System.out.println(currentWord);
+			System.out.println("Lambda Boggle selected: " + currentWord);
 			// A word has been found.
 			wordFound = true;
 		});
