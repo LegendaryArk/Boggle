@@ -481,7 +481,6 @@ public class GameScreen extends JPanel {
 		playerTwoLabel.setText(isAI ? "λBoggle" : "Player 2");
 		// Clear the word list.
 		wordTable.clear();
-		board.setTurn(0);
 		// Set the game mode of the board.
 		board.setAI(isAI);
 		// Show the pass and shake buttons.

@@ -514,6 +514,10 @@ public class Board implements MouseListener {
 	 */
 	public void setTurn(int turn) {
 		playerTurn = turn;
+
+		if (ai != null && ai.isSearching()) {
+			ai.stopSearching();
+		}
 	}
 
 	/**
@@ -581,7 +585,7 @@ public class Board implements MouseListener {
 					ai.getTimer().increment(mainFrame.getTimeIncrement());
 					// Set pass button visible.
 					passButton.setVisible(true);
-					// Set shake button visble.
+					// Set shake button visible.
 					shakeButton.setVisible(true);
 				}
 				System.out.println("Player 1's Turn");

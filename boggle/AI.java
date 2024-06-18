@@ -260,15 +260,30 @@ public class AI extends Player {
 					// Inline method (lambda expressions).
 				// https://www.geeksforgeeks.org/lambda-expressions-java-8/.
 
+					// Do not continue if AI was stopped prematurely during the
+					// delay
+					if (!isFindingWord) {
+						return;
+					}
+
 					board.shuffle();
 
 					// AI passes its turn after a delay.
-					// Inline method (lambda expressions).
-				// https://www.geeksforgeeks.org/lambda-expressions-java-8/.
 					Timer switchTurnDelay = new Timer(Math.min(
 							(board.getPlayerTwo().getTimer()
 									.getMillisecondsRemaining() - 500) / 2,
-							2000), event2 -> board.switchTurn());
+							2000), event2 -> {
+						// Inline method (lambda expressions).
+				// https://www.geeksforgeeks.org/lambda-expressions-java-8/.
+
+						// Do not call switchTurn if AI was stopped prematurely
+						// during the delay
+						if (!isFindingWord) {
+							return;
+						}
+
+						board.switchTurn();
+					});
 					switchTurnDelay.setRepeats(false);
 					switchTurnDelay.start();
 				});
@@ -345,6 +360,10 @@ public class AI extends Player {
 			findWord.setRepeats(false);
 			findWord.start();
 		}
+	}
+
+	public boolean isSearching() {
+		return isFindingWord;
 	}
 
 	/**

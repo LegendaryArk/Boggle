@@ -77,6 +77,9 @@ public class EndGameScreen extends JPanel {
 		this.width = mainFrame.getScreenWidth();
 		this.height = mainFrame.getScreenHeight();
 
+		// Stops the game.
+		mainFrame.getGameScreen().pauseGame();
+
 		// The constraints used to position the components.
 		GridBagConstraints constraints;
 		

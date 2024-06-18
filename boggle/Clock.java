@@ -90,7 +90,6 @@ public class Clock {
 	 */
 	public void pause() {
 		timer.stop();
-		timeLabel.setForeground(Color.WHITE);
 	}
 
 	/**
