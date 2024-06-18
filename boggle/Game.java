@@ -7,12 +7,13 @@
 package boggle;
 
 /**
- * This class is the main class of the game.
+ * This class creates an instance of Boggle to run the game.
  */
 public class Game {
+
 	/**
-	 * The main method of the game.
-	 * @param args The arguments of the main method.
+	 * The method creates an instance of Boggle to run the game.
+	 * @param args
 	 */
 	public static void main(String[] args) {
 		Boggle game = new Boggle();

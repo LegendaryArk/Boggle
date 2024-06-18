@@ -206,10 +206,9 @@ public class SettingsScreen extends JPanel {
 	private OptionButton musicReturnButton;
 
 	// The type of music that is in the background when playing the game.
-	// 0 - depends on the game mode and AI difficulty, 1 - calm music,
-	// 2 - intense music.
+	// 0 - default music, 1 - calm music, 2 - intense music.
 	private int musicType;
-	// Default Music Option Radio Button.
+	// Default music option radio button.
 	private OptionButton defaultMusicButton;
 	// Calm music option radio button.
 	private OptionButton calmMusicButton;
@@ -494,6 +493,9 @@ public class SettingsScreen extends JPanel {
 			// https://www.geeksforgeeks.org/lambda-expressions-java-8/.
 
 			minimumWordLength++; // Increase minimum word length by 1.
+			if (minimumWordLength > 6) { // Maximum minimum word length is 6.
+				minimumWordLength = 6;
+			}
 			minimumWordLengthDisplay.setText(String.valueOf(minimumWordLength));
 		});
 		constraints = new GridBagConstraints();
@@ -800,8 +802,8 @@ public class SettingsScreen extends JPanel {
 			// https://www.geeksforgeeks.org/lambda-expressions-java-8/.
 
 			timeIncrement -= 1000; // Decrease by 1 second
-			if (timeIncrement < 0) { // Minimum time increment of 0 seconds
-				timeIncrement = 0;
+			if (timeIncrement < 2000) { // Minimum time increment of 1 seconds
+				timeIncrement = 2000;
 			}
 
 			// Uses String.format to force 2 digits.

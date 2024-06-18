@@ -81,8 +81,7 @@ public class ExitScreen extends JPanel {
 		// Timer to close game after 4.5 seconds.
 		// Inline method (lambda expressions).
 		// https://www.geeksforgeeks.org/lambda-expressions-java-8/.
-		exitTimer = new Timer(0, e -> System.exit(0));
-		exitTimer.setInitialDelay(4500); // Initial delay of 4.5 seconds.
+		exitTimer = new Timer(4500, e -> System.exit(0));
 		exitTimer.start();
 
 		// Play exit sound.

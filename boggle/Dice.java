@@ -82,7 +82,9 @@ public class Dice extends JLabel {
 		// Set the detection box for the dice.
 		detectionBox.setOpaque(false);
 		detectionBox.setFocusable(false);
-		detectionBox.setPreferredSize(new Dimension((int) (0.8 * getPreferredSize().width), (int) (0.8 * getPreferredSize().height)));
+		detectionBox.setPreferredSize(new Dimension(
+				(int) (0.8 * getPreferredSize().width),
+				(int) (0.8 * getPreferredSize().height)));
 		add(detectionBox, new GridBagConstraints());
 
 		// Set the attributes of the dice text.

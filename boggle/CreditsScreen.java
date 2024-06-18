@@ -123,15 +123,14 @@ public class CreditsScreen extends JPanel {
 		creditsBackground.setIcon(new ImageIcon(creditsAnimation.getImage()
 				.getScaledInstance(width, height, Image.SCALE_DEFAULT)));
 
-		// Stop animation after 2 seconds.
-		Timer stopAnimation = new Timer(0, e -> {
+		// Stop animation after 7 seconds.
+		Timer stopAnimation = new Timer(7000, e -> {
 			// Inline method (lambda expressions).
 			// https://www.geeksforgeeks.org/lambda-expressions-java-8/.
 
 			creditsBackground.setIcon(new ImageIcon(creditsImage.getImage()
 					.getScaledInstance(width, height, Image.SCALE_SMOOTH)));
 		});
-		stopAnimation.setInitialDelay(7000); // 2 seconds delay
 		stopAnimation.setRepeats(false);
 		stopAnimation.start();
 	}

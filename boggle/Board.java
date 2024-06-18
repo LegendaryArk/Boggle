@@ -129,6 +129,8 @@ public class Board implements MouseListener {
 	private WordTable wordTable;
 	// Button to skip a turn
 	private OptionButton passButton;
+	// Button to shuffle the board.
+	private OptionButton shakeButton;
 
 	// Player 2 title.
 	private JLabel playerTwoLabel;
@@ -177,11 +179,13 @@ public class Board implements MouseListener {
 	             JLabel playerOnePointsDisplay, JLabel playerOneTimeDisplay,
 	             boolean isAI, JLabel playerTwoLabel,
 	             JLabel playerTwoPointsDisplay, JLabel playerTwoTimeDisplay,
-	             OptionButton passButton) {
+	             OptionButton passButton, OptionButton shakeButton) {
 		// Set the game mode based on if player vs AI is chosen.
 		this.isAI = isAI;
 		// Set pass button.
 		this.passButton = passButton;
+		// Set shake button.
+		this.shakeButton = shakeButton;
 		// Set player 2 label, points and time.
 		this.playerTwoLabel = playerTwoLabel;
 		this.playerTwoPointsDisplay = playerTwoPointsDisplay;
@@ -569,6 +573,7 @@ public class Board implements MouseListener {
 					// Increment player 2 timer.
 					playerTwo.getTimer().increment(
 							mainFrame.getTimeIncrement());
+					shakeButton.setVisible(true);
 				} else {
 					// End AI turn.
 					ai.endTurn();
@@ -576,6 +581,8 @@ public class Board implements MouseListener {
 					ai.getTimer().increment(mainFrame.getTimeIncrement());
 					// Set pass button visible.
 					passButton.setVisible(true);
+					// Set shake button visble.
+					shakeButton.setVisible(true);
 				}
 				System.out.println("Player 1's Turn");
 				// Start player 1's turn.
@@ -590,9 +597,12 @@ public class Board implements MouseListener {
 					// Start Player 2's turn.
 					System.out.println("Player 2's Turn");
 					playerTwo.startTurn();
+					shakeButton.setVisible(true);
 				} else {
 					// Remove pass button from game screen.
 					passButton.setVisible(false);
+					// Remove shake button from game screen.
+					shakeButton.setVisible(false);
 					// Start AI's turn.
 					System.out.println("Lambda Boggle's Turn");
 					ai.startTurn();
@@ -660,6 +670,8 @@ public class Board implements MouseListener {
 				dice[x][y].roll();
 			}
 		}
+		// Each player can only shuffle once per turn.
+		shakeButton.setVisible(false);
 	}
 
 	/**
@@ -799,22 +811,22 @@ public class Board implements MouseListener {
 		validWordClip.start();
 
 		// Set points based on the points for the word.
-		int pts = getPoints(s);
+		int points = getPoints(s);
 		// Add points to the game screen table.
 		wordsFound.add(s);
-		wordTable.addWord(s, pts);
+		wordTable.addWord(s, points);
 		switch (playerTurn) {
 			case 0:
 				// Add player 1's points.
-				playerOne.addPoints(pts);
+				playerOne.addPoints(points);
 				break;
 			case 1:
 				if (!isAI) {
 					// Add player 2's points.
-					playerTwo.addPoints(pts);
+					playerTwo.addPoints(points);
 				} else {
 					// Add ai's points.
-					ai.addPoints(pts);
+					ai.addPoints(points);
 				}
 				break;
 		}
@@ -1119,30 +1131,6 @@ public class Board implements MouseListener {
 		if (!startedSelection) {
 			return;
 		}
-		
-		try {
-			// Set sound effect for selecting dice
-			selectDiceSoundEffect = AudioSystem.getAudioInputStream(getClass().
-					getResourceAsStream("assets/SelectDice.wav"));
-			selectDiceClip = AudioSystem.getClip();
-			// Open and play select dice sound effect.
-			selectDiceClip.open(selectDiceSoundEffect);
-		} catch (UnsupportedAudioFileException ex) {
-			// Handle if file type is invalid.
-			System.err.println(
-					"Error: Invalid file type, unable to play sound effect");
-			ex.printStackTrace();
-		} catch (IOException ex) {
-			// Handle if unable to read sound file.
-			System.err.println("Error: Unable to read sound file");
-			ex.printStackTrace();
-		} catch (LineUnavailableException ex) {
-			// Handle if there is no line to read.
-			System.err.println("Error: No line to read");
-			ex.printStackTrace();
-		}
-		// Play the sound effect.
-		selectDiceClip.start();
 
 		// Iterate through the board.
 		for (int i = 0; i < 5; i++) {
@@ -1154,7 +1142,34 @@ public class Board implements MouseListener {
 					if (dice[i][j].isSelected()) {
 						return;
 					}
-					
+
+					try {
+						// Set sound effect for selecting dice
+						selectDiceSoundEffect =
+								AudioSystem.getAudioInputStream(getClass()
+										.getResourceAsStream(
+										"assets/SelectDice.wav"));
+						selectDiceClip = AudioSystem.getClip();
+						// Open and play select dice sound effect.
+						selectDiceClip.open(selectDiceSoundEffect);
+					} catch (UnsupportedAudioFileException ex) {
+						// Handle if file type is invalid.
+						System.err.println("Error: Invalid file type, " +
+								"unable to play sound effect");
+						ex.printStackTrace();
+					} catch (IOException ex) {
+						// Handle if unable to read sound file.
+						System.err.println("Error: Unable to read sound file");
+						ex.printStackTrace();
+					} catch (LineUnavailableException ex) {
+						// Handle if there is no line to read.
+						System.err.println("Error: No line to read");
+						ex.printStackTrace();
+					}
+					// Play the sound effect.
+					selectDiceClip.start();
+
+
 					// Set positions for the previous to current die.
 					int dx = py - j, dy = px - i;
 					// Connect the current die with previous die.

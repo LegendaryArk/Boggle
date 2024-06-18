@@ -144,7 +144,7 @@ public class IntroScreen extends JPanel {
 		introClip.start();
 
 		// Timer to close intro animation after 4.8 seconds
-		Timer timer = new Timer(0, e -> {
+		Timer timer = new Timer(4800, e -> {
 			// Inline method (lambda expressions).
 			// https://www.geeksforgeeks.org/lambda-expressions-java-8/.
 
@@ -154,8 +154,6 @@ public class IntroScreen extends JPanel {
 			// Switch frame to the menu screen
 			mainFrame.menuScreen();
 		});
-		// Set timer for 4.8 seconds
-		timer.setInitialDelay(4800);
 		timer.setRepeats(false);
 		// Start the timer
 		timer.start();
@@ -163,9 +161,7 @@ public class IntroScreen extends JPanel {
 		// Timer to display the fact after 2.5 seconds
 		// Inline method (lambda expressions).
 		// https://www.geeksforgeeks.org/lambda-expressions-java-8/.
-		Timer timer2 = new Timer(0, e -> fact.setVisible(true));
-		// Set timer for 2500 milliseconds
-		timer2.setInitialDelay(2500);
+		Timer timer2 = new Timer(2500, e -> fact.setVisible(true));
 		timer2.setRepeats(false);
 		// Start the timer
 		timer2.start();

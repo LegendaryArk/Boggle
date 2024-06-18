@@ -156,6 +156,8 @@ public class OptionButton extends JButton
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		clickClip.stop();
+		clickClip.setFramePosition(0);
 		clickClip.start();
 		setIcon(pressIcon);
 

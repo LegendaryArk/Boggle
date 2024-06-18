@@ -80,6 +80,8 @@ public class GameScreen extends JPanel {
 	// Press Shake Button Icon.
 	private ImageIcon shakePress;
 
+	// Default background music.
+	private AudioInputStream defaultBackgroundMusic;
 	// Calm background music.
 	private AudioInputStream calmBackgroundMusic;
 	// Intense background music.
@@ -163,9 +165,9 @@ public class GameScreen extends JPanel {
 		wordTableBackground = new JPanel();
 		wordTableBackground.setLayout(new GridBagLayout());
 		wordTableBackground.setMinimumSize(
-				new Dimension((int) (0.22 * width), (int) (1.2 * height)));
+				new Dimension((int) (0.22 * width), 3 * height));
 		wordTableBackground.setPreferredSize(
-				new Dimension((int) (0.22 * width), (int) (1.2 * height)));
+				new Dimension((int) (0.22 * width), 3 * height));
 		wordTableBackground.setOpaque(false);
 		constraints = new GridBagConstraints();
 		constraints.anchor = GridBagConstraints.FIRST_LINE_START;
@@ -223,7 +225,8 @@ public class GameScreen extends JPanel {
 		playerOneTimeDisplay.setPreferredSize(new Dimension(
 				(int) (0.109375 * width), (int) (0.111 * height)));
 		playerOneTimeDisplay.setHorizontalAlignment(JLabel.CENTER);
-		playerOneTimeDisplay.setFont(new Font("Verdana", Font.PLAIN, 40));
+		playerOneTimeDisplay.setFont(new Font("Verdana", Font.BOLD, 40));
+		playerOneTimeDisplay.setForeground(Color.WHITE);
 		constraints = new GridBagConstraints();
 		constraints.anchor = GridBagConstraints.FIRST_LINE_START;
 		constraints.gridwidth = 1;
@@ -243,7 +246,8 @@ public class GameScreen extends JPanel {
 		playerOnePointsDisplay.setPreferredSize(new Dimension(
 				(int) (0.109375 * width), (int) (0.111 * height)));
 		playerOnePointsDisplay.setHorizontalAlignment(JLabel.CENTER);
-		playerOnePointsDisplay.setFont(new Font("Verdana", Font.PLAIN, 40));
+		playerOnePointsDisplay.setFont(new Font("Verdana", Font.BOLD, 40));
+		playerOnePointsDisplay.setForeground(Color.WHITE);
 		constraints = new GridBagConstraints();
 		constraints.anchor = GridBagConstraints.FIRST_LINE_START;
 		constraints.gridwidth = 1;
@@ -288,7 +292,8 @@ public class GameScreen extends JPanel {
 		playerTwoTimeDisplay.setPreferredSize(new Dimension(
 				(int) (0.109375 * width), (int) (0.111 * height)));
 		playerTwoTimeDisplay.setHorizontalAlignment(JLabel.CENTER);
-		playerTwoTimeDisplay.setFont(new Font("Verdana", Font.PLAIN, 40));
+		playerTwoTimeDisplay.setFont(new Font("Verdana", Font.BOLD, 40));
+		playerTwoTimeDisplay.setForeground(Color.WHITE);
 		constraints = new GridBagConstraints();
 		constraints.anchor = GridBagConstraints.FIRST_LINE_START;
 		constraints.gridwidth = 1;
@@ -308,7 +313,8 @@ public class GameScreen extends JPanel {
 		playerTwoPointsDisplay.setPreferredSize(new Dimension(
 				(int) (0.109375 * width), (int) (0.111 * height)));
 		playerTwoPointsDisplay.setHorizontalAlignment(JLabel.CENTER);
-		playerTwoPointsDisplay.setFont(new Font("Verdana", Font.PLAIN, 40));
+		playerTwoPointsDisplay.setFont(new Font("Verdana", Font.BOLD, 40));
+		playerTwoPointsDisplay.setForeground(Color.WHITE);
 		constraints = new GridBagConstraints();
 		constraints.anchor = GridBagConstraints.FIRST_LINE_START;
 		constraints.gridwidth = 1;
@@ -320,30 +326,6 @@ public class GameScreen extends JPanel {
 		constraints.insets = new Insets(
 				(int) (0.086 * height), 0, 0, (int) (0.024 * width));
 		content.add(playerTwoPointsDisplay, constraints);
-
-		// Instantiate pass button images.
-		passDefault = new ImageIcon(getClass()
-				.getResource("assets/PassBtnDefault.png"));
-		passHover = new ImageIcon(getClass()
-				.getResource("assets/PassBtnHover.png"));
-		passPress = new ImageIcon(getClass()
-				.getResource("assets/PassBtnPress.png"));
-
-		// Instantiating the pass button.
-		// Inline method (lambda expressions).
-		// https://www.geeksforgeeks.org/lambda-expressions-java-8/.
-		passButton = new OptionButton(false, 0.05 * width, 0.05 * width,
-				passDefault, passHover, passPress, e -> board.switchTurn());
-		// Position the pass button using GridBagLayout.
-		constraints = new GridBagConstraints();
-		constraints.anchor = GridBagConstraints.LINE_END;
-		constraints.gridx = 3;
-		constraints.gridy = 4;
-		constraints.insets = new Insets(
-				(int) (0.055 * height), 0, 0, (int) (0.025 * width));
-		constraints.weightx = 1;
-		constraints.weighty = 0;
-		content.add(passButton, constraints);
 
 		// Instantiate pause button images.
 		pauseDefault = new ImageIcon(getClass()
@@ -366,13 +348,37 @@ public class GameScreen extends JPanel {
 		constraints = new GridBagConstraints();
 		constraints.anchor = GridBagConstraints.LINE_END;
 		constraints.gridx = 3;
+		constraints.gridy = 4;
+		constraints.insets = new Insets(
+				(int) (0.055 * height), 0, 0, (int) (0.025 * width));
+		constraints.weightx = 1;
+		constraints.weighty = 0;
+		// Adding the pause button to the content panel.
+		content.add(pauseButton, constraints);
+
+		// Instantiate pass button images.
+		passDefault = new ImageIcon(getClass()
+				.getResource("assets/PassBtnDefault.png"));
+		passHover = new ImageIcon(getClass()
+				.getResource("assets/PassBtnHover.png"));
+		passPress = new ImageIcon(getClass()
+				.getResource("assets/PassBtnPress.png"));
+
+		// Instantiating the pass button.
+		// Inline method (lambda expressions).
+		// https://www.geeksforgeeks.org/lambda-expressions-java-8/.
+		passButton = new OptionButton(false, 0.05 * width, 0.05 * width,
+				passDefault, passHover, passPress, e -> board.switchTurn());
+		// Position the pass button using GridBagLayout.
+		constraints = new GridBagConstraints();
+		constraints.anchor = GridBagConstraints.LINE_END;
+		constraints.gridx = 3;
 		constraints.gridy = 5;
 		constraints.insets = new Insets(
 				0, 0, (int) (0.04 * height), (int) (0.025 * width));
 		constraints.weightx = 1;
 		constraints.weighty = 0;
-		// Adding the pause button to the content panel.
-		content.add(pauseButton, constraints);
+		content.add(passButton, constraints);
 
 		// Instantiate shake button images.
 		shakeDefault = new ImageIcon(getClass()
@@ -423,7 +429,7 @@ public class GameScreen extends JPanel {
 		board = new Board(mainFrame, boardBackground, wordDisplay, wordTable,
 				playerOneLabel, playerOnePointsDisplay, playerOneTimeDisplay,
 				isAI, playerTwoLabel, playerTwoPointsDisplay,
-				playerTwoTimeDisplay, passButton);
+				playerTwoTimeDisplay, passButton, shakeButton);
 
 		// Adding the content Label to the LayeredPane.
 		layeredPane.add(content, new GridBagConstraints());
@@ -478,6 +484,9 @@ public class GameScreen extends JPanel {
 		board.setTurn(0);
 		// Set the game mode of the board.
 		board.setAI(isAI);
+		// Show the pass and shake buttons.
+		passButton.setVisible(true);
+		shakeButton.setVisible(true);
 	}
 
 	/**
@@ -485,7 +494,9 @@ public class GameScreen extends JPanel {
 	 */
 	public void startBackgroundMusic() {
 		try {
-			// Set the background music of calm and intense.
+			// Set the background music of default, calm, and intense.
+			defaultBackgroundMusic = AudioSystem.getAudioInputStream(getClass()
+					.getResource("assets/DefaultBGM.wav"));
 			calmBackgroundMusic = AudioSystem.getAudioInputStream(getClass()
 					.getResource("assets/CalmBGM.wav"));
 			intenseBackgroundMusic = AudioSystem.getAudioInputStream(getClass()
@@ -494,20 +505,7 @@ public class GameScreen extends JPanel {
 			backgroundMusicClip = AudioSystem.getClip();
 			switch (mainFrame.getBackgroundMusicType()) {
 				case 0:
-					if (isAI()) {
-						// Set calm bgm music if difficulty is easy or medium.
-						if (mainFrame.getAIDifficulty() <= 1) {
-							backgroundMusicClip.open(calmBackgroundMusic);
-						}
-						// Set intense bgm if difficulty is hard or impossible.
-						else {
-							backgroundMusicClip.open(intenseBackgroundMusic);
-						}
-					}
-					else {
-						// Handle other exception as intense bgm.
-						backgroundMusicClip.open(intenseBackgroundMusic);
-					}
+					backgroundMusicClip.open(defaultBackgroundMusic);
 					break;
 				case 1:
 					// Play the intense background music.
@@ -519,11 +517,11 @@ public class GameScreen extends JPanel {
 					break;
 			}
 		} catch (Exception e) {
-			// Handle if unable to open the bgm.
-			System.err.println("Error: Unable to start BGM");
+			// Handle if unable to open the background music.
+			System.err.println("Error: Unable to start background music");
 			e.printStackTrace();
 		}
-		// Loop the bgm indefinitely.
+		// Loop the background music indefinitely.
 		backgroundMusicClip.loop(Clip.LOOP_CONTINUOUSLY);
 	}
 
@@ -531,6 +529,8 @@ public class GameScreen extends JPanel {
 	 * This method will stop the background music.
 	 */
 	public void stopBackgroundMusic() {
+		// Background Music Clip had not been initialized yet. No music to
+		// stop.
 		if (backgroundMusicClip == null) {
 			return;
 		}
@@ -539,12 +539,13 @@ public class GameScreen extends JPanel {
 		backgroundMusicClip.stop();
 		backgroundMusicClip.close();
 		try {
-			// Close calm and intense bgm.
+			// Close default, calm, and intense background music.
+			defaultBackgroundMusic.close();
 			calmBackgroundMusic.close();
 			intenseBackgroundMusic.close();
 		} catch (IOException e) {
-			// Handle if unable to stop bgm.
-			System.err.println("Error: Unable to reset BGM");
+			// Handle if unable to stop background music.
+			System.err.println("Error: Unable to reset background music");
 			e.printStackTrace();
 		}
 	}

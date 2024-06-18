@@ -212,7 +212,7 @@ public class EndGameScreen extends JPanel {
 		layeredPane.setLayer(exitButton, 1);
 
 		// Timer to switch from animation to screen for 2 seconds.
-		Timer stopGif = new Timer(0, e -> {
+		Timer stopGif = new Timer(2000, e -> {
 			// Inline method (lambda expressions).
 			// https://www.geeksforgeeks.org/lambda-expressions-java-8/.
 
@@ -226,8 +226,6 @@ public class EndGameScreen extends JPanel {
 			}
 		});
 
-		// Set the delay to 2 seconds.
-		stopGif.setInitialDelay(2000);
 		// Star timer.
 		stopGif.start();
 		

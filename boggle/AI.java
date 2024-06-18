@@ -23,7 +23,7 @@ public class AI extends Player {
 	// If a word has been found.
 	private boolean wordFound;
 	// Dictionary provided.
-	private ArrayList<String> dictionary;
+	private WordList dictionary;
 	// If indices (i, j) has been visited in the search.
 	private boolean[][] visited;
 	// Stores indices of the board of the current word.
@@ -40,7 +40,7 @@ public class AI extends Player {
 	private Random random;
 	// Minimum word length of a valid word.
 	private int minimumWordLength;
-	// Code to find word on the board with a delay
+	// Stores if the AI is finding a word.
 	private boolean isFindingWord;
 
 	/**
@@ -52,7 +52,7 @@ public class AI extends Player {
 	 * @param timer timer of AI
 	 */
 	public AI(Board board, int difficulty, int minimumWordLength,
-	          JLabel AIDisplay, JLabel pointsDisplay, Clock timer) {
+			  JLabel AIDisplay, JLabel pointsDisplay, Clock timer) {
 		// Instantiate variables.
 		super(AIDisplay, pointsDisplay, timer);
 		this.board = board;
@@ -61,7 +61,7 @@ public class AI extends Player {
 		currentWord = "";
 		wordHighlighted = false;
 		wordFound = false;
-		dictionary = new ArrayList<>();
+		dictionary = new WordList();
 		indices = new ArrayList<>();
 		visited = new boolean[5][5];
 		lengths = new ArrayList<>();
@@ -80,7 +80,7 @@ public class AI extends Player {
 					s = s.substring(0, i) + s.substring(i + 1);
 				}
 			}
-			dictionary.add(s.toUpperCase());
+			dictionary.add(s);
 		}
 		sc.close();
 	}
@@ -94,8 +94,11 @@ public class AI extends Player {
 	 * @param isHighlighting if it is highlighting the word on the board
 	 */
 	private void search(int r, int c, String s, int pos,
-	                    boolean isHighlighting) {
-		if (!isFindingWord) return;
+						boolean isHighlighting) {
+		// If not finding a word.
+		if (!isFindingWord) {
+			return;
+		}
 
 		// If the index is at the end of the word.
 		if (pos == s.length() - 1) {
@@ -105,11 +108,11 @@ public class AI extends Player {
 				if (board.getWordsFound().contains(s)) {
 					return;
 				}
-
 				// If the length is distinct.
 				if (!lengths.contains(s.length())) {
 					lengths.add(s.length());
 				}
+				// Add word to list of options.
 				options.add(s);
 			} else { // If highlighting.
 				// If a word has not already been highlighted
@@ -166,6 +169,8 @@ public class AI extends Player {
 	 * This method highlights the current word.
 	 */
 	public void highlightCurrentWord() {
+		// If current word is empty.
+		if (currentWord.isEmpty()) return;
 		// Iterate through all possible starting indices.
 		for (int i = 0; i < 5; i++) {
 			for (int j = 0; j < 5; j++) {
@@ -198,6 +203,9 @@ public class AI extends Player {
 		wordFound = false;
 		wordHighlighted = false;
 		isFindingWord = true;
+		options.clear();
+		lengths.clear();
+
 		// Start turn.
 		super.startTurn();
 
@@ -208,8 +216,9 @@ public class AI extends Player {
 
 			// Iterate through each word in the dictionary.
 			for (String s : dictionary) {
-				// If word is empty.
-				if (s.isEmpty()) {
+				// If word is empty or if the length of the word is less than
+				// the minimum word length.
+				if (s.isEmpty() || s.length() < minimumWordLength) {
 					continue;
 				}
 				// If the word has not been found.
@@ -232,7 +241,6 @@ public class AI extends Player {
 
 			// Sort the lengths using Merge Sort.
 			Boggle.sort(lengths);
-
 			// Shuffle the options.
 			for (int i = options.size(); i > 1; i--) {
 				int randomIndex = random.nextInt(i);
@@ -241,11 +249,32 @@ public class AI extends Player {
 				options.set(randomIndex, temp);
 			}
 
-			if (lengths.isEmpty()) return;
+			// If there are no words on the board that have length
+			// greater or equal to the minimum word length.
+			if (lengths.isEmpty()) {
+				// AI shuffles the board after a delay.
+				Timer shuffleDelay = new Timer(Math.min(
+						(board.getPlayerTwo().getTimer()
+								.getMillisecondsRemaining() - 500) / 2,
+						2000), event -> {
+					// Inline method (lambda expressions).
+				// https://www.geeksforgeeks.org/lambda-expressions-java-8/.
 
-			// Remove all lengths less than the minimum word length.
-			while (lengths.get(0) < minimumWordLength) {
-				lengths.remove(0);
+					board.shuffle();
+
+					// AI passes its turn after a delay.
+					// Inline method (lambda expressions).
+				// https://www.geeksforgeeks.org/lambda-expressions-java-8/.
+					Timer switchTurnDelay = new Timer(Math.min(
+							(board.getPlayerTwo().getTimer()
+									.getMillisecondsRemaining() - 500) / 2,
+							2000), event2 -> board.switchTurn());
+					switchTurnDelay.setRepeats(false);
+					switchTurnDelay.start();
+				});
+				shuffleDelay.setRepeats(false);
+				shuffleDelay.start();
+				return;
 			}
 
 			// Choice of length depending on difficulty.
@@ -273,15 +302,17 @@ public class AI extends Player {
 					currentWord = s;
 				}
 			}
-			
+
 			// Check if AI was stopped prematurely through stopSearching()
 			if (!isFindingWord) {
 				currentWord = "";
 				((Timer) e.getSource()).stop();
 			}
-			isFindingWord = false;
+
 			// Highlight current word.
 			highlightCurrentWord();
+			// Stop finding words.
+			isFindingWord = false;
 			// Display current word.
 			board.getWordDisplay().setText(currentWord);
 			// Process current word (always valid).
@@ -290,6 +321,7 @@ public class AI extends Player {
 			board.clearBoard(1);
 			// Debugging output.
 			System.out.println(currentWord);
+			// A word has been found.
 			wordFound = true;
 		});
 
@@ -297,17 +329,22 @@ public class AI extends Player {
 		// Must be greater than 500 ms
 		// Enhanced switch statement
 // https://www.geeksforgeeks.org/enhancements-for-switch-statement-in-java-13/
+		int delay = 0;
 		switch (difficulty) {
-			case 0 -> findWord.setInitialDelay(
-					(int) (10000 * random.nextDouble(0.6, 1.4)));
-			case 1 -> findWord.setInitialDelay(
-					(int) (6000 * random.nextDouble(0.6, 1.4)));
-			case 2 -> findWord.setInitialDelay(
-					(int) (3000 * random.nextDouble(0.6, 1.4)));
-			case 3 -> findWord.setInitialDelay(600);
+			case 0 -> delay = (int) (10000 * random.nextDouble(0.6, 1.4));
+			case 1 -> delay = (int) (6000 * random.nextDouble(0.6, 1.4));
+			case 2 -> delay = (int) (3000 * random.nextDouble(0.6, 1.4));
+			case 3 -> delay = 600;
 		}
-		findWord.setRepeats(false);
-		findWord.start();
+
+		// If the time it will for take the AI to find a word is less than the
+		// time it has left on the clock, find a word.
+		if (board.getPlayerTwo().getTimer().getMillisecondsRemaining() >=
+				delay + 500) {
+			findWord.setInitialDelay(delay);
+			findWord.setRepeats(false);
+			findWord.start();
+		}
 	}
 
 	/**

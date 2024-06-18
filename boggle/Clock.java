@@ -36,6 +36,7 @@ public class Clock {
 	 */
 	public Clock(JLabel timeLabel, int startTime, Board board) {
 		// Initialize variables.
+		this.timeLabel = timeLabel;
 		millisecondsRemaining = 0;
 		secondsRemaining = 0;
 		minutesRemaining = 0;
@@ -73,8 +74,7 @@ public class Clock {
 				board.switchTurn();
 			}
 		});
-
-		this.timeLabel = timeLabel;
+		// Set timer to start time.
 		reset(startTime);
 	}
 
@@ -90,7 +90,7 @@ public class Clock {
 	 */
 	public void pause() {
 		timer.stop();
-		timeLabel.setForeground(Color.BLACK);
+		timeLabel.setForeground(Color.WHITE);
 	}
 
 	/**
@@ -100,6 +100,10 @@ public class Clock {
 	public void increment(int increment) {
 		// Increase time by the increment
 		millisecondsRemaining += increment;
+		if (millisecondsRemaining >= 11000) {
+			timeLabel.setForeground(Color.WHITE);
+		}
+
 		// Calculate the timer in minutes and seconds.
 		minutesRemaining = (millisecondsRemaining / 60000) % 60;
 		secondsRemaining = (millisecondsRemaining / 1000) % 60;
@@ -112,13 +116,27 @@ public class Clock {
 	}
 
 	/**
+	 * The number of milliseconds remaining on the timer.
+	 * @return milliseconds remaining on the timer.
+	 */
+	public int getMillisecondsRemaining() {
+		return millisecondsRemaining;
+	}
+
+	/**
 	 * This method resets the timer.
 	 * @param time The time to reset the timer to.
 	 */
 	public void reset(int time) {
+		// Pause the timer.
 		pause();
 		// Set the remaining time to the saved time
 		millisecondsRemaining = time;
+		if (millisecondsRemaining <= 10000) {
+			timeLabel.setForeground(Color.RED);
+		} else {
+			timeLabel.setForeground(Color.WHITE);
+		}
 		// Calculate the timer in minutes and seconds.
 		minutesRemaining = (time / 60000) % 60;
 		secondsRemaining = (time / 1000) % 60;

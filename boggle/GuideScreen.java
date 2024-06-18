@@ -863,8 +863,8 @@ public class GuideScreen extends JPanel {
 		constraints.anchor = GridBagConstraints.FIRST_LINE_START;
 		constraints.gridx = 0;
 		constraints.gridy = 0;
-		constraints.insets = new Insets((int) (0.04 * height), (int) (0.04 * height),
-				0, 0);
+		constraints.insets = new Insets((int) (0.04 * height),
+				(int) (0.04 * height), 0, 0);
 		settingsInformationTwoContent.add(settingsInformationTwoReturnButton,
 				constraints);
 

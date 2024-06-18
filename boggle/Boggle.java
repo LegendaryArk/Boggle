@@ -115,7 +115,9 @@ public class Boggle extends JFrame {
 	 * This method switches to the menu screen.
 	 */
 	public void menuScreen() {
+		System.out.println("Switched to the menu screen");
 		this.setContentPane(menuScreen);
+		gameScreen.stopBackgroundMusic();
 		menuScreen.startBackgroundMusic();
 		repaint();
 	}
@@ -124,6 +126,7 @@ public class Boggle extends JFrame {
 	 * This method switches to the mode selection screen.
 	 */
 	public void modeSelectionScreen() {
+		System.out.println("Selecting game mode");
 		this.setContentPane(modeSelectionScreen);
 		repaint();
 	}
@@ -133,6 +136,7 @@ public class Boggle extends JFrame {
 	 * @param isAI if player selects player vs AI.
 	 */
 	public void gameScreen(boolean reset, boolean isAI) {
+		System.out.println("Starting the game");
 		this.setContentPane(gameScreen);
 		if (reset) {
 			gameScreen.stopBackgroundMusic();
@@ -147,6 +151,7 @@ public class Boggle extends JFrame {
 	 * This method switches to the pause overlay screen.
 	 */
 	public void pauseOverlay() {
+		System.out.println("Game paused");
 		this.setContentPane(pauseOverlay);
 		repaint();
 	}
@@ -156,6 +161,7 @@ public class Boggle extends JFrame {
 	 * @param winner to display the winner.
 	 */
 	public void endgameScreen(int winner) {
+		System.out.println("Game ended");
 		endgameScreen = new EndGameScreen(this, winner);
 		this.setContentPane(endgameScreen);
 		repaint();
@@ -165,6 +171,7 @@ public class Boggle extends JFrame {
 	 * This method switches to the guide screen.
 	 */
 	public void guideScreen() {
+		System.out.println("Switched to the guide screen");
 		this.setContentPane(guideScreen);
 		repaint();
 	}
@@ -173,6 +180,7 @@ public class Boggle extends JFrame {
 	 * This methdod switches to the settings screen.
 	 */
 	public void settingsScreen() {
+		System.out.println("Switched to the settings screen");
 		this.setContentPane(settingsScreen);
 		repaint();
 	}
@@ -181,6 +189,7 @@ public class Boggle extends JFrame {
 	 * This method switches to the credits screen.
 	 */
 	public void creditsScreen() {
+		System.out.println("Switched to the credits screen");
 		this.setContentPane(creditsScreen);
 		creditsScreen.start();
 		repaint();
@@ -190,6 +199,12 @@ public class Boggle extends JFrame {
 	 * This method switches to the exit screen.
 	 */
 	public void exitScreen() {
+		System.out.println("Exiting the game");
+
+		// Stop Background Music
+		gameScreen.stopBackgroundMusic();
+		menuScreen.stopBackgroundMusic();
+
 		this.setContentPane(exitScreen);
 		repaint();
 		exitScreen.start();
@@ -357,12 +372,15 @@ public class Boggle extends JFrame {
 	 * @param list ArrayList of integers.
 	 */
 	public static void sort(ArrayList<Integer> list) {
+		// If the size of the list is less than or equal to one.
 		if (list.size() <= 1) {
 			return;
 		}
 
+		// Instantiate left and right child lists.
 		ArrayList<Integer> left = new ArrayList<>(), right = new ArrayList<>();
 
+		// Split list into left and right child lists.
 		int m = list.size() / 2;
 		for (int i = 0; i < list.size(); i++) {
 			if (i < m) {
@@ -372,8 +390,11 @@ public class Boggle extends JFrame {
 			}
 		}
 
+		// Sort left child list.
 		sort(left);
+		// Sort right child list.
 		sort(right);
+		// Merge child lists into parent list.
 		merge(left, right, list);
 	}
 
@@ -386,8 +407,11 @@ public class Boggle extends JFrame {
 	private static void merge(ArrayList<Integer> left,
 	                          ArrayList<Integer> right,
 	                          ArrayList<Integer> list) {
+		// Instantiates pointers.
 		int l = 0, r = 0, i = 0;
 
+		// Iterate through both child lists simultaneously, adding the smaller
+		// element to the parent list.
 		while (l < left.size() && r < right.size()) {
 			if (left.get(l) < right.get(r)) {
 				list.set(i++, left.get(l++));
@@ -396,9 +420,11 @@ public class Boggle extends JFrame {
 			}
 		}
 
+		// Add the remaining elements from the left list to the parent list.
 		while (l < left.size()) {
 			list.set(i++, left.get(l++));
 		}
+		// Add the remaining elements from the right list to the parent list.
 		while (r < right.size()) {
 			list.set(i++, right.get(r++));
 		}
